@@ -1,0 +1,15 @@
+
+.img-hover-section{
+    position: relative !important;
+}
+.img-hover-section i{
+    position: absolute;
+    margin: auto;
+
+}
+.hidden-ch-photo-icon{
+    opacity: 0;
+}
+.img-hover-ch-photo{
+    filter: brightness(0.7);
+}

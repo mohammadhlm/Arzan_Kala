@@ -1,0 +1,111 @@
+<div class="card-body card-dashboard">
+    <div class="d-flex">
+        <p class="card-text">
+            مشاهده لیست محصولات
+        </p>
+        <p class="card-text ml-auto mr-1">
+            تعداد محصولات:
+            {{ products_list.paginator.count }}
+        </p>
+    </div>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="wt-8-th">تعداد</th>
+                <th style="width: 6rem">تصویر</th>
+                <th class="wt-8-th">نام محصول</th>
+                <th class="wt-8-th">قیمت تخفیف</th>
+                <th class="wt-8-th">قیمت محصول</th>
+                <th class="wt-8-th">تاریخ انتشار</th>
+                <th class="wt-8-th">تاریخ بروز رسانی</th>
+                <th class="wt-8-th">تاریخ ایجاد</th>
+                <th class="wt-8-th">تعداد موجود</th>
+                <th class="wt-8-th">تعداد فروش</th>
+                <th class="wt-8-th">وضعیت</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for product in products_list %}
+                <tr class="">
+                    {# Counter #}
+                    <td class="mx-1 text-center">{{ forloop.counter }}</td>
+                    {# Img #}
+                    <td>
+                        <img src="{{ product.photo.url }}" alt=""
+                             width="50%" style="height: 2rem!important;">
+                    </td>
+                    {# Name #}
+                    <td class="align-middle align-items-center">
+                                                            <span data-toggle="tooltip"
+                                                                  title="{{ product.name }}"></span>
+                        {{ product.name|truncatewords:10 }}</td>
+                    {# Price #}
+                    <td class="align-middle align-items-center text-center">
+                        {% if product.discounted_price is None %}
+                            <i class="feather icon-x text-danger"></i>
+                        {% elif product %}{{ product.discounted_price }}{% endif %}
+                    </td>
+                    {# Price #}
+                    <td class="align-middle align-items-center text-center">{{ product.final_price }}</td>
+                    {# Public Date #}
+                    <td class="align-middle align-items-center text-center">{{ product.publication_date }}</td>
+                    {# Update Date #}
+                    <td class="align-middle align-items-center text-center">{{ product.update_date }}</td>
+                    {# Created Time #}
+                    <td class="align-middle align-items-center text-center">{{ product.production_date }}</td>
+                    {# Count #}
+                    <td class="align-middle align-items-center text-center">{{ product.inventory }}</td>
+                    <td class="align-middle align-items-center text-center">{{ product.sold }}</td>
+                    {# STATUS #}
+                    <td class="align-middle align-items-center">
+                        {% if product.status == "NS" %}
+                            <i class="feather icon-x text-danger"></i>
+                        {% elif product.status == "PB" %}انتشار
+                        {% elif product.status == "AC" %}بایگانی
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {# ----------Pagination----------- #}
+    {% if list_users.has_other_pages %}
+        {# Pre Buttons #}
+        <ul class="pagination justify-content-center mt-2">
+            {% if list_users.has_previous %}
+                <li class="page-item prev-item">
+                    <a class="page-link"
+                       href="?page{{ list_users.previous_page_number }}"></a>
+                </li>
+            {% else %}
+                <li class="page-item prev-item disabled">
+                    <a class="page-link" href="#"></a>
+                </li>
+            {% endif %}
+
+            {% for page in list_users.paginator.page_range %}
+                <li class="page-item {% if list_users.number == page %}active{% endif %}">
+                    <a class="page-link"
+                       href="{% if list_users.number != page %}?page=
+                                                               {{ page }}{% else %}#{% endif %}">{{ page }}</a>
+                </li>
+            {% endfor %}
+
+
+            {# ---Next Buttons----- #}
+            {% if list_users.has_next %}
+                <li class="page-item next-item">
+                    <a class="page-link"
+                       href="?page{{ list_users.next_page_number }}"></a>
+                </li>
+            {% else %}
+                <li class="page-item next-item disabled">
+                    <a class="page-link" href="#"></a>
+                </li>
+            {% endif %}
+        </ul>
+    {% endif %}
+    {# ---------End Pagination--------- #}
+</div>

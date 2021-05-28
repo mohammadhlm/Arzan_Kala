@@ -1,0 +1,195 @@
+{% extends '__main__.html' %}
+{% load static %}
+{% load render_partial %}
+
+
+{% block title_about_us %}
+    <title>
+        درباره ما
+    </title>
+{% endblock %}
+
+
+<!-- START HEADER -->
+{% block header_about_us %}
+{% render_partial 'Apps.SiteSettings_Apps__Ak.RenderPartial.views.header_one' %}
+{% endblock %}
+<!-- END HEADER -->
+
+<!-- START SECTION BREADCRUMB -->
+{% block breadcrumb_about_us %}
+<div class="breadcrumb_section bg_gray page-title-mini">
+    <div class="container">
+        <!-- STRART CONTAINER -->
+        <div class="row align-items-center">
+        	<div class="col-md-6">
+                <div class="page-title">
+            		<h1>درباره ما</h1>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <ol class="breadcrumb justify-content-md-end">
+                    <li class="breadcrumb-item"><a href="{% url 'Ak_Main:Home_Page' %}">خانه</a></li>
+                    <li class="breadcrumb-item active">درباره ما</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- END CONTAINER-->
+</div>
+{% endblock %}
+<!-- END SECTION BREADCRUMB -->
+
+
+
+<!-- START MAIN CONTENT -->
+{% block content_about_us %}
+    {#<!-- STAT SECTION ABOUT --> #}
+    <div class="section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="about_img scene mb-4 mb-lg-0">
+                        <img src="{{ About_Us_Qs.who_are_we_img.url }}" alt="about_img"/>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="heading_s1">
+                        <h2>{{ About_Us_Qs.who_are_we_title }}</h2>
+                    </div>
+                    {{ About_Us_Qs.who_are_we }}
+                </div>
+            </div>
+        </div>
+    </div>
+    {#<!-- END SECTION ABOUT --> #}
+
+    {#<!-- START SECTION WHY CHOOSE --> #}
+    <div class="section bg_light_blue2 pb_70">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6 col-md-8">
+                    <div class="heading_s1 text-center">
+                        <h2>{{ About_Us_Qs.why_us_title }}</h2>
+                    </div>
+                    <p class="text-center leads">{{ About_Us_Qs.why_us_text }}</p>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-4 col-sm-6">
+                    <div class="icon_box icon_box_style4 box_shadow1">
+                        <div class="icon">
+                            <i class="ti-pencil-alt"></i>
+                        </div>
+                        <div class="icon_box_content">
+                            <h5>{{ About_Us_Qs.info_card_one_title }}</h5>
+                            <p>{{ About_Us_Qs.info_card_one }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                    <div class="icon_box icon_box_style4 box_shadow1">
+                        <div class="icon">
+                            <i class="ti-layers"></i>
+                        </div>
+                        <div class="icon_box_content">
+                            <h5>{{ About_Us_Qs.info_card_two_title }}</h5>
+                            <p>{{ About_Us_Qs.info_card_two }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                    <div class="icon_box icon_box_style4 box_shadow1">
+                        <div class="icon">
+                            <i class="ti-email"></i>
+                        </div>
+                        <div class="icon_box_content">
+                            <h5>{{ About_Us_Qs.info_card_three_title }}</h5>
+                            <p>{{ About_Us_Qs.info_card_three }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {#<!-- END SECTION WHY CHOOSE --> #}
+
+    {#<!-- START SECTION SHOP INFO -->#}
+    <div class="section pb_70">
+        <div class="container">
+            <div class="row no-gutters">
+                <div class="col-lg-4">
+                    <div class="icon_box icon_box_style1">
+                        <div class="icon">
+                            <i class="flaticon-shipped"></i>
+                        </div>
+                        <div class="icon_box_content">
+                            <h5>{{ About_Us_Qs.store_services_title_one }}</h5>
+                            <p>{{ About_Us_Qs.store_services_text_one }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="icon_box icon_box_style1">
+                        <div class="icon">
+                            <i class="flaticon-money-back"></i>
+                        </div>
+                        <div class="icon_box_content">
+                            <h5>{{ About_Us_Qs.store_services_title_two }}</h5>
+                            <p>{{ About_Us_Qs.store_services_text_two }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="icon_box icon_box_style1">
+                        <div class="icon">
+                            <i class="flaticon-support"></i>
+                        </div>
+                        <div class="icon_box_content">
+                            <h5>{{ About_Us_Qs.store_services_title_three }}</h5>
+                            <p>{{ About_Us_Qs.store_services_text_three }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {#<!-- END SECTION SHOP INFO -->#}
+
+    {#    <!-- START SECTION SUBSCRIBE NEWSLETTER -->#}
+    {% include 'All_Template_Main/Content/Subscribe_News_Letters.html' %}
+    {#    <!-- START SECTION SUBSCRIBE NEWSLETTER -->#}
+
+{% endblock %}
+<!-- END MAIN CONTENT -->
+
+
+{% block script_about_us %}
+    {#    <!-- Latest jQuery -->#}
+    <script src="{% static 'site_assets/js/jquery-1.12.4.min.js' %}"></script>
+    {#    <!-- popper min js -->#}
+    <script src="{% static 'site_assets/js/popper.min.js' %}"></script>
+    {#    <!-- Latest compiled and minified Bootstrap -->#}
+    <script src="{% static 'site_assets/bootstrap/js/bootstrap.min.js' %}"></script>
+    {#    <!-- owl-carousel min js  -->#}
+    <script src="{% static 'site_assets/owlcarousel/js/owl.carousel.min.js' %}"></script>
+    {#    <!-- magnific-popup min js  -->#}
+    <script src="{% static 'site_assets/js/magnific-popup.min.js' %}"></script>
+    {#    <!-- waypoints min js  -->#}
+    <script src="{% static 'site_assets/js/waypoints.min.js' %}"></script>
+    {#    <!-- parallax js  -->#}
+    <script src="{% static 'site_assets/js/parallax.js' %}"></script>
+    {#    <!-- countdown js  -->#}
+    <script src="{% static 'site_assets/js/jquery.countdown.min.js' %}"></script>
+    {#    <!-- imagesloaded js -->#}
+    <script src="{% static 'site_assets/js/imagesloaded.pkgd.min.js' %}"></script>
+    {#    <!-- isotope min js -->#}
+    <script src="{% static 'site_assets/js/isotope.min.js' %}"></script>
+    {#    <!-- jquery.dd.min js -->#}
+    <script src="{% static 'site_assets/js/jquery.dd.min.js' %}"></script>
+    {#    <!-- slick js -->#}
+    <script src="{% static 'site_assets/js/slick.min.js' %}"></script>
+    {#    <!-- elevatezoom js -->#}
+    <script src="{% static 'site_assets/js/jquery.elevatezoom.js' %}"></script>
+    {#    <!-- scripts js -->#}
+    <script src="{% static 'site_assets/js/scripts.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,95 @@
+{% load static %}
+<!--Render Partial Tag-->
+{% load render_partial %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Meta -->
+   {% include 'All_Template_Main/Header_Main/Meta_Tags_Header_Main__.html' %}
+    <!-- SITE TITLE -->
+    <title>ARZAN KALA |
+    {% block title_home_page %}{% endblock %}
+
+    </title>
+   {% include 'All_Template_Main/Header_Main/CSS_Refrence_Header_Main__.html' %}
+</head>
+
+<body dir="rtl">
+
+<!-- LOADER -->
+<div class="preloader">
+    <div class="lds-ellipsis">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+</div>
+<!-- END LOADER -->
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">به سایت ارزان کالا خوش آمدید</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-justify custom-text-welcome-modal">
+                سلام کاربر عزیز
+                <span class="custom-fullname-welcome-modal">
+              محمد حاصل مهری
+          </span>
+                <br>
+                ضمن خوش آمد گویی برای ثبت نام شما در این سایت ما پیوندی را به ایمیل شما ( sectech.ir@gamil.com ) جهت
+                تایید حساب کاربری ارسال کرده ایم،
+                <br>
+                لطفا روی پیوند ارسال شده کلیک کنید و همچنین از قسمت پنل کاربری اطلاعات خود را تکمیل نمایید.
+                <br>
+                توجه داشته باشید تا زمانی که حساب کاربری خود را تایید نکنید قادر به خرید محصول در این سایت نخواهید بود.
+                <br>
+                اگر ایمیل تایید حساب کاربری را در قسمت inbox مشاهده نکردید به قسمت هرزنامه ها مراجعه کنید،
+                <br>
+                <span class="custom-warn-welcome-modal-2">
+              چنانچه در قسمت هرزنامه ها هم موفق به دریافت نشدید از پنل کاربری روی گزینه ارسال مجدد لینک فعال سازی حساب کاربری کلیک کنید.
+                </span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-outline-danger" data-dismiss="modal">خروج</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--End Modal-->
+
+<!-- START HEADER -->
+{% block dashboard_header %}{% endblock %}
+<!-- END HEADER -->
+
+{#--BreadCrupb--#}
+{% block breadcrumb_dashboard %}{% endblock %}
+
+
+<!-- START SECTION BANNER -->
+<!-- END SECTION BANNER -->
+
+<!-- END MAIN CONTENT -->
+<div class="main_content">
+{% block dashboard_content %}{% endblock %}
+</div>
+<!-- END MAIN CONTENT -->
+
+<!-- START FOOTER -->
+{% render_partial 'Apps.SiteSettings_Apps__Ak.RenderPartial.views.Footer' %}
+<!-- END FOOTER -->
+
+<a href="#" class="scrollup" style="display: none;"><i class="ion-ios-arrow-up"></i></a>
+
+{% block dashboard_script %}{% endblock %}
+{# Toaster Component Js #}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+</body>
+
+</html>

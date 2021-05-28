@@ -1,0 +1,207 @@
+{% extends 'AdminPanel/__Main__/base.html' %}
+{% load static %}
+
+
+<!--Title-->
+{% block title_invoice %}
+    مشاهده فاکتور
+{% endblock %}
+
+<!-- Start: Page CSS-->
+{% block page_css_invoice %}
+<link rel="stylesheet" type="text/css" href="{% static 'AdminPanel/app-assets/css-rtl/pages/invoice.min.css' %}">
+{% endblock %}
+<!-- END: Page CSS-->
+
+
+<!-- BEGIN: Content-->
+{% block invoice_content %}
+    <div class="app-content content">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper">
+            <div class="content-header row">
+                <div class="content-header-left col-md-9 col-12 mb-2">
+                    <div class="row breadcrumbs-top">
+                        <div class="col-12">
+                            <h2 class="content-header-title float-left mb-0">فاکتور</h2>
+                            <div class="breadcrumb-wrapper col-12">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="index.html">خانه</a>
+                                    </li>
+                                    <li class="breadcrumb-item"><a href="#">صفحات پیشنهادی</a>
+                                    </li>
+                                    <li class="breadcrumb-item active"> فاکتور</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-header-right text-md-right col-md-3 col-12 d-md-block d-none">
+                    <div class="form-group breadcrum-right">
+                        <div class="dropdown">
+                            <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="feather icon-settings"></i></button>
+                            <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="#">گفتگو</a><a class="dropdown-item" href="#">ایمیل</a><a class="dropdown-item" href="#">تقویم</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content-body"><!-- invoice functionality start -->
+                <section class="invoice-print mb-1">
+                    <div class="row">
+
+                        <fieldset class="col-12 col-md-5 mb-1 mb-md-0">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="ایمیل" aria-describedby="button-addon2">
+                                <div class="input-group-append" id="button-addon2">
+                                    <button class="btn btn-outline-primary" type="button">ارسال فاکتور</button>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <div class="col-12 col-md-7 d-flex flex-column flex-md-row justify-content-end">
+                            <button class="btn btn-primary btn-print mb-1 mb-md-0"> <i class="feather icon-file-text"></i>  چاپ</button>
+                            <button class="btn btn-outline-primary  ml-0 ml-md-1"> <i class="feather icon-download"></i> دریافت</button>
+                        </div>
+                    </div>
+                </section>
+                <!-- invoice functionality end -->
+                <!-- invoice page -->
+                <section class="card invoice-page">
+                    <div id="invoice-template" class="card-body">
+                        <!-- Invoice Company Details -->
+                        <div id="invoice-company-details" class="row">
+                            <div class="col-sm-6 col-12 text-left pt-1">
+                                <div class="media pt-1">
+                                    <img src="{{ site_contact_info.BlackLogoSiteHeader.url }}" alt="company logo" />
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-12 text-right">
+                                <h1>فاکتور</h1>
+                                <div class="invoice-details mt-2">
+                                    <h6>شماره فاکتور</h6>
+                                    <p>1398/001</p>
+                                    <h6 class="mt-2">تاریخ فاکتور</h6>
+                                    <p>{{ invoice.jalali_created_time }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!--/ Invoice Company Details -->
+
+                        <!-- Invoice Recipient Details -->
+                        <div id="invoice-customer-details" class="row pt-2">
+                            <div class="col-sm-6 col-12 text-left">
+                                <h5>گیرنده</h5>
+                                <div class="recipient-info my-2">
+                                    <p>{{ invoice.user.get_full_name }}</p>
+                                    <p>{{ invoice.user.profile.location_first }}</p>
+                                    <p>{{ invoice.user.profile.postal_code }}</p>
+                                </div>
+
+                                {% if invoice.user.profile.phone_number or invoice.user.email %}
+                                <div class="recipient-contact pb-2">
+                                    {% if invoice.user.profile.phone_number %}
+                                    <p>
+                                        <i class="feather icon-phone"></i>
+                                        {{ invoice.user.profile.phone_number }}
+                                    </p>
+                                    {% endif %}
+
+                                    <p>
+                                        <i class="feather icon-mail"></i>
+                                        {{ invoice.user.email }}
+                                    </p>
+                                </div>
+                                {% endif %}
+
+                            </div>
+                            <div class="col-sm-6 col-12 text-right">
+                                <h5>سایت فروشگاهی ارزان کالا</h5>
+                                <div class="company-info my-2">
+                                    <p>{{ site_contact_info.location_first }}</p>
+                                </div>
+                                <div class="company-contact">
+                                    <p>
+                                        <i class="feather icon-mail"></i>
+                                        {{ site_contact_info.EmailSupportSite }}
+                                    </p>
+                                    <p>
+                                        <i class="feather icon-phone"></i>
+                                        {{ site_contact_info.SiteSupportContactNumber }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <!--/ Invoice Recipient Details -->
+
+                        <!-- Invoice Items Details -->
+                        <div id="invoice-items-details" class="pt-1 invoice-items-table">
+                            <div class="row">
+                                <div class="table-responsive col-12">
+                                    <table class="table table-borderless">
+                                        <thead>
+                                        <tr>
+                                            <th>نام محصول</th>
+                                            <th>تعداد محصول</th>
+                                            <th>قیمت محصول</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for cart_item in invoice.cart_item_set.all %}
+                                        <tr>تاریخ فاکتور
+                                            <td>
+                                                <a href="{{ cart_item.product.get_absolute_url }}">
+                                                    {{ cart_item.product.name }}
+                                                </a>
+                                            </td>
+                                            <td>{{ cart_item.count }}</td>
+                                            <td>{{ cart_item.total }} ريال</td>
+                                        </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="invoice-total-details" class="invoice-total-table">
+                            <div class="row">
+                                <div class="col-7 offset-5">
+                                    <div class="table-responsive">
+                                        <table class="table table-borderless">
+                                            <tbody>
+                                            <tr>
+                                                <th>مجموع فاکتور</th>
+                                                <td>{{ invoice.total_product_price }} ريال</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Invoice Footer -->
+                        <div id="invoice-footer" class="text-right pt-3">
+                            <p> مبلغ را به مبلغ مشاغل زیر انتقال دهید. لطفاً شماره فاکتور را در چک خود وارد کنید.<p class="bank-details mb-0">
+                            <span class="mr-4">بانک:<strong>FTSBUS33</strong></span>
+                            <span>شماره حساب بین المللی:<strong>G882-1111-2222-3333</strong></span>
+                        </p>
+                        </div>
+                        <!--/ Invoice Footer -->
+
+                    </div>
+                </section>
+                <!-- invoice page end -->
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+<!-- END: Content-->
+
+
+
+<!-- BEGIN: Page JS-->
+{% block page_js_invoice %}
+<script src="{% static 'AdminPanel/app-assets/js/scripts/pages/invoice.min.js' %}"></script>
+{% endblock %}
+<!-- END: Page JS-->

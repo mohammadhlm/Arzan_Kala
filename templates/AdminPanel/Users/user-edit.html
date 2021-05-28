@@ -1,0 +1,257 @@
+{% extends 'AdminPanel/__Main__/base.html' %}
+{% load static %}
+
+<!--Title-->
+{% block title_edit_user %}
+    ویرایش کاربر
+{% endblock %}
+
+
+<!-- BEGIN: Vendor CSS-->
+{% block vendor_css_edit_user %}
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'AdminPanel/app-assets/css-rtl/plugins/forms/validation/form-validation.css' %}">
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'AdminPanel/app-assets/vendors/css/forms/select/select2.min.css' %}">
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'AdminPanel/app-assets/vendors/css/pickers/pickadate/pickadate.css' %}">
+    {# Toaster Component #}
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'AdminPanel/app-assets/vendors/css/extensions/toastr.css' %}">
+{% endblock %}
+<!-- END: Vendor CSS-->
+
+
+<!-- BEGIN: Page CSS-->
+{% block page_css_edit_user %}
+    <link rel="stylesheet" type="text/css" href="{% static 'AdminPanel/app-assets/css-rtl/pages/app-user.min.css' %}">
+    {# Toaster Component #}
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'AdminPanel/app-assets/css-rtl/plugins/extensions/toastr.min.css' %}">
+{% endblock %}
+<!-- END: Page CSS-->
+
+
+<!-- BEGIN: Content-->
+{% block edit_user %}
+
+    {# ----Start Alert Section----- #}
+    <div class="toast-bs-container">
+        <div class="toast-position">
+            <div class="toast fade alert-section" role="alert" data-delay="5000" aria-live="assertive"
+                 aria-atomic="true"
+                 data-animation="true">
+                <div class="toast-header">
+                    <img src="{{ edit_user.profile.user_profile.url }}" class="rounded mr-2" alt="">
+                    <strong class="mr-auto alert-title"></strong>
+                    <small class="text-muted alert-time">11 mins ago</small>
+                    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="toast-body">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    {# ----End Alert Section----- #}
+
+    <div class="app-content content">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper">
+            <div class="content-header row">
+            </div>
+            <div class="content-body"><!-- users edit start -->
+                <section class="users-edit">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <ul class="nav nav-tabs mb-3" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link d-flex align-items-center active" id="account-tab"
+                                           data-toggle="tab" href="#account"
+                                           aria-controls="account" role="tab" aria-selected="true">
+                                            <i class="feather icon-user mr-25"></i><span
+                                                class="d-none d-sm-block">حساب</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link d-flex align-items-center" id="information-tab"
+                                           data-toggle="tab" href="#information"
+                                           aria-controls="information" role="tab" aria-selected="false">
+                                            <i class="feather icon-info mr-25"></i><span class="d-none d-sm-block">اطلاعات</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="account" aria-labelledby="account-tab"
+                                         role="tabpanel">
+                                        <!-- users edit media object start -->
+                                        <div class="media mb-2 d-block">
+                                            {# img Here #}
+                                            <img src="{{ edit_user.profile.user_profile.url }}"
+                                                 alt="users avatar"
+                                                 class="users-avatar-shadow btn- d-block mx-auto" height="120"
+                                                 width="120"
+                                                 id="preview-user-profile"
+                                            >
+                                            <div class="media-body mt-50">
+                                                <div class="col-12 mt-1 px-0 justify-content-center">
+                                                    <button type="button"
+                                                            class="btn btn-outline-info btn-icon text-dark btn-outline-primary mx-auto mb-1 d-block waves-effect waves-light"
+                                                            id="user-photo-change-btn">
+                                                        افزودن تصویر کاربر
+                                                        <i class="feather icon-camera pr-1"></i></button>
+                                                    <button type="button"
+                                                            class="btn btn-icon btn-outline-danger text-dark px-5 mx-auto mb-1 d-block waves-effect waves-light"
+                                                            id="user-photo-delete-btn">
+                                                        حذف فایل انتخابی
+                                                        <i class="feather icon-trash pr-1"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- users edit media object ends -->
+                                        <!-- users edit account form start -->
+                                        <div class="row">
+                                            <div class="col-12 col-sm-6">
+                                                <form novalidate method="post" id="form_default_user">
+                                                    {% csrf_token %}
+                                                    <div class="form-group">
+                                                        <div class="controls">
+                                                            <label>پست الکترونیک</label>
+                                                            {{ default__user_edit_form.username }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="controls">
+                                                            <label>نام</label>
+                                                            {{ default__user_edit_form.first_name }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="controls">
+                                                            <label>نام خانوادگی</label>
+                                                            {{ default__user_edit_form.last_name }}
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+
+                                            <div class="col-12 col-sm-6" id="div-form-user-info">
+                                                {# Form Information #}
+                                            </div>
+                                            {# User Permission #}
+                                            <div class="col-12 mt-2">
+                                                <div class="table-responsive border rounded px-1 ">
+                                                    <h6 class="border-bottom py-1 mx-1 mb-0 font-medium-2"><i
+                                                            class="feather icon-lock mr-50 "></i>وضعیت حساب کاربری
+                                                    </h6>
+                                                    <table class="table table-borderless">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>دسترسی های کاربر</th>
+                                                            <th>فعال / غیرفعال</th>
+                                                            <th>کاربر ویژه</th>
+                                                            <th>کارمند</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr>
+                                                            <td>کاربران</td>
+                                                            <td>
+                                                                <div class="custom-control custom-checkbox">
+                                                                    {{ default__user_edit_form.is_active }}
+                                                                    <label class="custom-control-label"
+                                                                           for="id_is_active"></label>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="custom-control custom-checkbox">
+                                                                    {{ default__user_edit_form.is_superuser }}
+                                                                    <label class="custom-control-label"
+                                                                           for="id_is_superuser"></label>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="custom-control custom-checkbox">
+                                                                    {{ default__user_edit_form.is_staff }}
+                                                                    <label class="custom-control-label"
+                                                                           for="id_is_staff"></label>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
+                                                <button type="button"
+                                                        class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1"
+                                                        id="btn-apply-changes">
+                                                    ذخیره تغییرات
+                                                </button>
+                                                <button type="reset" class="btn btn-outline-warning">تنظیم مجدد
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <!-- users edit account form ends -->
+                                    </div>
+                                    <div class="tab-pane" id="information" aria-labelledby="information-tab"
+                                         role="tabpanel">
+                                        <!-- users edit Info form start -->
+                                        <form method="post" novalidate id="account_change_information_form">
+                                            {% csrf_token %}
+                                            <div class="row mt-1">
+                                                <div class="col-12 col-sm-6">
+                                                    <h5 class="mb-1"><i class="feather icon-user mr-25"></i>اطلاعات شخصی
+                                                    </h5>
+
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <!-- users edit Info form ends -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- users edit ends -->
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+<!-- END: Content-->
+
+
+{#<!-- BEGIN: Page Vendor JS-->#}
+{% block page_vendor_js_edit_user %}
+    <script src="{% static 'AdminPanel/app-assets/vendors/js/forms/select/select2.full.min.js' %}"></script>
+    <script src="{% static 'AdminPanel/app-assets/vendors/js/forms/validation/jqBootstrapValidation.js' %}"></script>
+    <script src="{% static 'AdminPanel/app-assets/vendors/js/pickers/pickadate/picker.js' %}"></script>
+    <script src="{% static 'AdminPanel/app-assets/vendors/js/pickers/pickadate/picker.date.js' %}"></script>
+    {# Toaster Component #}
+    <script src="{% static 'AdminPanel/app-assets/vendors/js/extensions/toastr.min.js' %}"></script>
+{% endblock %}
+{#<!-- END: Page Vendor JS-->#}
+
+
+{#<!-- BEGIN: Page JS-->#}
+{% block page_js_edit_user %}
+    <script src="{% static 'AdminPanel/app-assets/js/scripts/pages/app-user.min.js' %}"></script>
+    <script src="{% static 'AdminPanel/app-assets/js/scripts/navs/navs.min.js' %}"></script>
+{% endblock %}
+{#--Toast Component--#}
+{% block page_js_toast_user_edit %}
+    <script src="{% static 'AdminPanel/app-assets/js/scripts/pages/bootstrap-toast.min.js' %}"></script>
+{% endblock %}
+{#<!-- END: Page JS-->#}
+
+{#--User Edit Ajax--#}
+{% block ajax_user_edit %}
+    <script src="{% static 'AdminPanel/app-assets/js/ajax/users/user-edit.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% autoescape off %}
+سلام  {{ user.get_full_name }} عزیز,
+خوشحالیم از اینکه توی سایت ما ثبت نام کردی
+جهت فعالسازی حساب کاربری خود رو لینک زیر کلیک کنید
+    <a href="http://{{ domain }}{% url 'Ak_User_Account:activate' uidb64=uid token=token %}">active</a>
+{% endautoescape %}
+<a href="ra.com">tete</a>
+</body>
+</html>

@@ -1,0 +1,19 @@
+.table-add-atr tr>th{
+    background-color: #F8F8F8 !important;
+}
+.table-add-atr{
+    border-spacing: 0 1.3rem;
+    padding: 0 .7rem;
+}
+table.table{
+    border: 2px solid #F8F8F8;
+}
+
+.table-wrapper {
+    max-height: 14rem;
+    overflow: auto;
+}
+.table-cover{
+    border: 1px solid #00cfe84f !important;
+    border-radius: 1rem !important;
+}

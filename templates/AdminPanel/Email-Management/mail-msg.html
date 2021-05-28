@@ -1,0 +1,67 @@
+<div class="email-scroll-area">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="email-label ml-2 my-2 pl-1">
+                                                <span class="mr-1 bullet bullet-primary bullet-sm"></span><small class="mail-label">شرکت</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="card px-1">
+                                                <div class="card-header email-detail-head ml-75">
+                                                    <div class="user-details d-flex justify-content-between align-items-center flex-wrap">
+                                                        <div class="avatar mr-75">
+                                                            <img src="{% if Email_Msg.user.all.count == 1 %}{{ Email_Msg.user.first.profile.user_profile.url }}{% endif %}" alt="avtar img holder" width="61" height="61">
+                                                        </div>
+                                                        <div class="mail-items">
+                                                            <h4 class="list-group-item-heading mb-0">{% if Email_Msg.user.all.count == 1 %}{{ Email_Msg.user.first.get_full_name }}{% endif %}</h4>
+                                                            <div class="email-info-dropup dropdown">
+                                        <span class="dropdown-toggle font-small-3" id="dropdownMenuButton{{ Email_Msg.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                          abaldersong@utexas.edu
+                                        </span>
+                                                                <div class="dropdown-menu dropdown-menu-right p-50" aria-labelledby="dropdownMenuButton{{ Email_Msg.id }}">
+                                                                    <div class="px-25 dropdown-item">از جانب:<strong> abaldersong@utexas.edu </strong></div>
+                                                                    <div class="px-25 dropdown-item">به:<strong> johndoe@ow.ly </strong></div>
+                                                                    <div class="px-25 dropdown-item">تاریخ:<strong>{{ Email_Msg.send_date }}</strong></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mail-meta-item">
+                                                        <div class="mail-time mb-1">4:14 قبل از ظهر</div>
+                                                        <div class="mail-date">17 مرداد 1398</div>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body mail-message-wrapper pt-2 mb-0">
+                                                    <div class="mail-message">
+                                                        {{ Email_Msg.html_content|safe }}
+                                                    </div>
+                                                    <div class="mail-attachements d-flex">
+                                                        <i class="feather icon-paperclip font-medium-5 mr-50"></i>
+                                                        <span>پیوست ها</span>
+                                                    </div>
+                                                </div>
+                                                <div class="mail-files py-2">
+                                                    <div class="chip chip-primary">
+                                                        <div class="chip-body py-50">
+                                                            <span class="chip-text">interdum.docx</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div class="d-flex justify-content-between">
+                                                        <span class="font-medium-1">اینجا را کلیک کنید<span class="primary cursor-pointer"><strong>پاسخ</strong></span>  یا<span class="primary  cursor-pointer"><strong> رو به جلو</strong></span></span>
+                                                        <i class="feather icon-paperclip font-medium-5 mr-50"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>

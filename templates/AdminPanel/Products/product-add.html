@@ -1,0 +1,806 @@
+{% extends 'AdminPanel/__Main__/base.html' %}
+{% load static %}
+{% load tz %}
+
+<!--Title-->
+{% block title_edit_user %}
+    ایجاد محصول
+{% endblock %}
+
+
+<!-- BEGIN: Vendor CSS-->
+{% block vendor_css_product_add %}
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'AdminPanel/app-assets/css-rtl/plugins/forms/validation/form-validation.css' %}">
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'AdminPanel/app-assets/vendors/css/forms/select/select2.min.css' %}">
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'AdminPanel/app-assets/vendors/css/pickers/pickadate/pickadate.css' %}">
+    {#Vendor Css Number Input#}
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'AdminPanel/app-assets/vendors/css/forms/spinner/jquery.bootstrap-touchspin.css' %}">
+    {#Vendor Css Form Select#}
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'AdminPanel/app-assets/css-rtl/core/colors/palette-gradient.min.css' %}">
+    {# Vendor Css Add Attr #}
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'AdminPanel/app-assets/vendors/css/tables/datatable/datatables.min.css' %}">
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'AdminPanel/app-assets/vendors/css/file-uploaders/dropzone.min.css' %}">
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'AdminPanel/app-assets/vendors/css/tables/datatable/extensions/dataTables.checkboxes.css' %}">
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'AdminPanel/app-assets/vendors/css/extensions/toastr.css' %}">
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'AdminPanel/app-assets/css-rtl/custom-style-pg/product-add-attr-table.css' %}">
+{% endblock %}
+<!-- END: Vendor CSS-->
+
+
+<!-- BEGIN: Page CSS-->
+{% block page_css_product_add %}
+    <link rel="stylesheet" type="text/css" href="{% static 'AdminPanel/app-assets/css-rtl/pages/app-user.min.css' %}">
+    {# Add Attr Table #}
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'AdminPanel/app-assets/css-rtl/plugins/file-uploaders/dropzone.min.css' %}">
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'AdminPanel/app-assets/css-rtl/pages/data-list-view.min.css' %}">
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'AdminPanel/app-assets/css-rtl/plugins/extensions/toastr.min.css' %}">
+    {# LIVE SEARCH TAG  #}
+    <link rel="stylesheet" href="{% static 'AdminPanel/app-assets/css-rtl/custom-style-pg/product-add.css' %}">
+    {# Persian Date Time Picker #}
+    <link href="{% static 'AdminPanel/app-assets/component/jquery.md.bootstrap.datetimepicker.style.css' %}"
+          rel="stylesheet"/>
+    {# Color Picker #}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/spectrum-colorpicker2/dist/spectrum.min.css">
+{% endblock %}
+<!-- END: Page CSS-->
+
+
+<!-- BEGIN: Content-->
+{% block product_add %}
+    {# ----Start Alert Section----- #}
+    <div class="toast-bs-container">
+        <div class="toast-position">
+            <div class="toast fade alert-section" role="alert" data-delay="5000" aria-live="assertive"
+                 aria-atomic="true"
+                 data-animation="true">
+                <div class="toast-header">
+                    <img src="" class="rounded mr-2" alt="...">
+                    <strong class="mr-auto alert-title"></strong>
+                    <small class="text-muted alert-time">11 mins ago</small>
+                    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="toast-body">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    {# ----End Alert Section----- #}
+    <div class="app-content content">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper">
+            <div class="content-header row">
+            </div>
+            <div class="content-body">
+                <!-- users edit start -->
+                <section class="users-edit">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <ul class="nav nav-tabs mb-3" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link d-flex align-items-center active" id="account-tab"
+                                           data-toggle="tab" href="#account"
+                                           aria-controls="account" role="tab" aria-selected="true">
+                                            <i class="feather icon-user mr-25"></i><span
+                                                class="d-none d-sm-block">محصول</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="account" aria-labelledby="account-tab"
+                                         role="tabpanel">
+
+                                        <!--Start New Tag Making Modal-->
+                                        <div class="modal fade" id="new-tag-making-medal"
+                                             tabindex="-1" role="dialog"
+                                             aria-labelledby="exampleModalScrollableTitle"
+                                             aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-scrollable"
+                                                 role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">
+                                                            ایجاد برچسب جدید
+                                                        </h5>
+                                                        <button type="button" class="close"
+                                                                data-dismiss="modal"
+                                                                aria-label="Close">
+                                                                                                            <span aria-hidden="true"
+                                                                                                                  id="close_modal_tag_making">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body"
+                                                         id="modal-body_add_tag">
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button"
+                                                                class="btn btn-primary"
+                                                                data-dismiss="modal">
+                                                            بستن پنجره
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--End New Tag Making Modal-->
+
+                                        <!--Start New Category Making Modal-->
+                                        <div class="modal fade" id="new-category-making-medal"
+                                             tabindex="-1" role="dialog"
+                                             aria-labelledby="exampleModalScrollableTitle"
+                                             aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-scrollable"
+                                                 role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">
+                                                            ایجاد دسته بندی
+                                                        </h5>
+                                                        <button type="button" class="close"
+                                                                data-dismiss="modal"
+                                                                aria-label="Close">
+                                                                                                            <span aria-hidden="true"
+                                                                                                                  id="close_modal_category_making">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body"
+                                                         id="modal-body_add_category">
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button"
+                                                                class="btn btn-primary"
+                                                                data-dismiss="modal">
+                                                            تایید کنید
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--End New Category Making Modal-->
+
+                                        <!--Start New Brand Making Modal-->
+                                        <div class="modal fade" id="new-brand-making-medal"
+                                             tabindex="-1" role="dialog"
+                                             aria-labelledby="exampleModalScrollableTitle"
+                                             aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-scrollable"
+                                                 role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">
+                                                            ایجاد برند محصول
+                                                        </h5>
+                                                        <button type="button" class="close"
+                                                                data-dismiss="modal"
+                                                                aria-label="Close">
+                                                                                                            <span aria-hidden="true"
+                                                                                                                  id="close_modal_brand_making">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body"
+                                                         id="modal-body_add_brand">
+
+
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button"
+                                                                class="btn btn-primary"
+                                                                data-dismiss="modal">
+                                                            تایید کنید
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--End New Category Making Modal-->
+
+                                        <!--Start New Slider Making Modal-->
+                                        <div class="modal fade" id="new-slider-making-medal"
+                                             tabindex="-1" role="dialog"
+                                             aria-labelledby="exampleModalScrollableTitle"
+                                             aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-scrollable"
+                                                 role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">
+                                                            ایجاد اسلایدر محصول
+                                                        </h5>
+                                                        <button type="button" class="close"
+                                                                data-dismiss="modal"
+                                                                aria-label="Close">
+                                                                                                            <span aria-hidden="true"
+                                                                                                                  id="close_modal_brand_making">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body"
+                                                         id="modal-body_add_slider">
+
+
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button"
+                                                                class="btn btn-primary"
+                                                                data-dismiss="modal">
+                                                            تایید کنید
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--End New Slider Making Modal-->
+
+                                        <!-- users edit media object start -->
+                                        <form novalidate method="post" id="form_default_user">
+                                            {% csrf_token %}
+                                            <div class="media mb-2 d-block text-center">
+                                                <div class="avatar-content prev-icon-select-photo">
+                                                    <i class="avatar-icon feather icon-camera"></i>
+                                                </div>
+
+                                                <img src=""
+                                                     alt="users avatar"
+                                                     class="users-avatar-shadow d-none mx-auto" height="120"
+                                                     width="120"
+                                                     id="preview-product-img"
+                                                >
+                                                <div class="media-body">
+                                                    <div class="col-12 mt-1 px-0 justify-content-center">
+                                                        {{ product_creation__form.photo }}
+                                                        <button type="button"
+                                                                class="btn btn-outline-info btn-icon text-dark btn-outline-primary mx-auto mb-1 d-block waves-effect waves-light"
+                                                                id="btn-add-original-product-image">
+                                                            افزودن تصویر اصلی محصول
+                                                            <i class="feather icon-camera pr-1"></i></button>
+
+                                                        <button type="button"
+                                                                class="btn btn-icon btn-outline-danger text-dark px-5 mx-auto mb-1 d-block waves-effect waves-light"
+                                                                id="btn-del-original-product-image">
+                                                            حذف فایل انتخابی
+                                                            <i class="feather icon-trash pr-1"></i></button>
+                                                        <p class="text-danger d-none" id="err_pr_photo"></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- users edit media object ends -->
+                                            <!-- users edit account form start -->
+                                            <div class="row">
+                                                <div class="col-12 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>{{ product_creation__form.name.label }}</label>
+                                                        {{ product_creation__form.name }}
+                                                        <p class="text-danger d-none" id="err_pr_name"></p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-sm-6">
+                                                    <fieldset class="form-group">
+                                                        <label>{{ product_creation__form.status.label }}</label>
+                                                        {{ product_creation__form.status }}
+                                                        <p class="text-dark d-none" id="err_pr_status"></p>
+                                                    </fieldset>
+                                                </div>
+
+                                                <div class="col-12 col-sm-6">
+                                                    <fieldset class="form-group">
+                                                        <label>{{ product_creation__form.slug.label }}</label>
+                                                        {{ product_creation__form.slug }}
+                                                        <p class="text-dark d-none" id="err_pr_slug"></p>
+                                                    </fieldset>
+                                                </div>
+                                                <div class="col-12 col-sm-6">
+                                                    <fieldset class="form-group">
+                                                        <label>تاریخ انتشار</label>
+                                                        <input type="text" class="form-control"
+                                                               onchange="calendarViewOnChange()"
+                                                               id="inputTextDate1">
+                                                    </fieldset>
+                                                    <p class="text-dark d-none" id="err_pr_date"></p>
+                                                </div>
+
+                                                {# Tag Carete Or Search #}
+                                                <div class="col-12 col-sm-6">
+                                                    <div class="form-group"
+                                                         id="select_multiple_tag__form_gp">
+                                                        {{ product_creation__form.tag }}
+                                                        <label>{{ product_creation__form.tag.label }}</label>
+                                                        <div class="d-flex">
+                                                            <div style="width: 100%;">
+                                                                <fieldset class="form-label-group d-flex">
+                                                                     <select class="form-control"
+                                                                                name="text" id="id_select_tag" multiple="multiple">
+
+                                                                        </select>
+                                                                    <button type="button"
+                                                                            class="btn bg-gradient-primary ml-1 waves-effect waves-light"
+                                                                            id="new-tag-creation-btn"
+                                                                            data-toggle="modal"
+                                                                            data-target="#new-tag-making-medal">
+                                                                        <i class="feather icon-plus-circle mx-auto my-auto"></i>
+                                                                    </button>
+                                                                </fieldset>
+                                                                <p class="text-danger d-none" id="err_pr_tag"></p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {# Cat  or Search #}
+                                                <div class="col-12 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>{{ product_creation__form.category.label }}</label>
+                                                        <div>
+                                                            <div class="d-flex">
+                                                                <div style="width: 100%">
+                                                                    <fieldset class="form-label-group d-flex">
+                                                                        <select class="form-control"
+                                                                                name="text" id="id_select_category" multiple="multiple">
+
+                                                                        </select>
+                                                                        <button type="button"
+                                                                                class="btn bg-gradient-primary waves-effect waves-light ml-1"
+                                                                                id="new-category-creation-btn"
+                                                                                data-toggle="modal"
+                                                                                data-target="#new-category-making-medal">
+                                                                            <i class="feather icon-plus-circle mx-auto my-auto"></i>
+                                                                        </button>
+                                                                    </fieldset>
+                                                                    <p class="text-danger d-none"
+                                                                       id="err_pr_category"></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {# Brand Search #}
+                                                <div class="col-12 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>انتخاب برند</label>
+                                                        <div>
+                                                            <div class="d-flex">
+                                                                <div style="width: 100%">
+                                                                    <fieldset class="form-label-group d-flex">
+                                                                        <select class="form-control"
+                                                                                name="text" id="id_select_brand" multiple="multiple">
+
+                                                                        </select>
+                                                                        <button type="button"
+                                                                                class="btn bg-gradient-primary waves-effect waves-light ml-1"
+                                                                                id="new-brand-creation-btn"
+                                                                                data-toggle="modal"
+                                                                                data-target="#new-brand-making-medal">
+                                                                            <i class="feather icon-plus-circle mx-auto my-auto"></i>
+                                                                        </button>
+                                                                    </fieldset>
+                                                                    <p class="text-danger d-none"
+                                                                       id="err_pr_brand"></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {# Slider Search #}
+                                                <div class="col-12 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>انتخاب اسلایدر</label>
+                                                        <div>
+                                                            <div class="d-flex">
+                                                                <div style="width: 100%">
+                                                                    <fieldset class="form-label-group d-flex">
+                                                                        <select class="form-control"
+                                                                                name="text" id="id_select_slider" multiple="multiple">
+
+                                                                        </select>
+                                                                        <button type="button"
+                                                                                class="btn bg-gradient-primary waves-effect waves-light ml-1"
+                                                                                id="new-slider-creation-btn"
+                                                                                data-toggle="modal"
+                                                                                data-target="#new-slider-making-medal">
+                                                                            <i class="feather icon-plus-circle mx-auto my-auto"></i>
+                                                                        </button>
+                                                                    </fieldset>
+                                                                    <p class="text-danger d-none"
+                                                                       id="err_pr_slider"></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                            {# Price #}
+                                            <div class="row d-flex justify-content-between">
+                                                <div class="col-6 col-lg-3">
+                                                    <div class="form-group">
+                                                        <div class="text-center">
+                                                            <label>{{ product_creation__form.final_price.label }}</label>
+                                                            <div class="input-group input-group-lg mx-auto">
+                                                                {{ product_creation__form.final_price }}
+                                                            </div>
+                                                            <p class="text-danger d-none" id="err_pr_final_price"></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6 col-lg-3">
+                                                    <div class="form-group">
+                                                        <div class="text-center">
+                                                            <label>{{ product_creation__form.discounted_price.label }}</label>
+                                                            <div class="input-group input-group-lg mx-auto">
+                                                                {{ product_creation__form.discounted_price }}
+                                                            </div>
+                                                            <p class="text-danger d-none"
+                                                               id="err_pr_discounted_price"></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6 col-lg-3">
+                                                    <div class="form-group">
+                                                        <div class="text-center">
+                                                            <label>{{ product_creation__form.inventory.label }}</label>
+                                                            <div class="input-group input-group-lg mx-auto">
+                                                                {{ product_creation__form.inventory }}
+                                                            </div>
+                                                            <p class="text-danger d-none" id="err_pr_inventory"></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6 col-lg-3">
+                                                    <div class="form-group">
+                                                        <div class="text-center">
+                                                            <label>{{ product_creation__form.sold.label }}</label>
+                                                            <div class="input-group input-group-lg mx-auto">
+                                                                {{ product_creation__form.sold }}
+                                                            </div>
+                                                            <p class="text-danger d-none" id="err_pr_sold"></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {# Add Attr #}
+                                            <div class="col-12" id="add-attr-col">
+                                                <div class="card">
+                                                    <div class="card-content collapse show">
+                                                        <div class="card-body table-cover">
+                                                            <section id="data-list-view"
+                                                                     class="data-list-view-header content-wrapper mt-1">
+                                                                <!-- DataTable starts -->
+                                                                <div class="table-responsive table-add-atr"
+                                                                     id="attr-table">
+                                                                    <div class="top">
+                                                                        <div class="">
+                                                                            <button type="button" id="add-attr-btn"
+                                                                                    class="btn btn-outline-primary mr-1">
+                                                                                افزودن
+                                                                                <i class="fa fa-plus"></i>
+                                                                            </button>
+                                                                            <button type="button" id="remove-attr-btn"
+                                                                                    class="btn btn-outline-danger">
+                                                                                حذف
+                                                                                <i class="fa fa-minus"></i>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div>
+                                                                            <div class="dataTables_filter">
+                                                                                <label>
+                                                                                    <input type="search"
+                                                                                           name="search-attr"
+                                                                                           class="form-control form-control-sm"
+                                                                                           placeholder="">
+                                                                                </label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="table-wrapper">
+                                                                        <table class="table">
+                                                                            <thead>
+                                                                            <tr id="table-th">
+                                                                                <th>
+                                                                                    <fieldset>
+                                                                                        <div class="vs-radio-con">
+                                                                                            <input type="checkbox"
+                                                                                                   name="check-all"
+                                                                                                   value="false">
+                                                                                            <span class="vs-radio">
+                                                            <span class="vs-radio--border"></span>
+                                                            <span class="vs-radio--circle"></span>
+                                                            </span>
+                                                                                        </div>
+                                                                                    </fieldset>
+                                                                                </th>
+                                                                                <th>نام</th>
+                                                                                <th>ویژگی</th>
+
+                                                                            </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                            <!--  Table Body  -->
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- DataTable ends -->
+                                                                <!-- add new sidebar starts -->
+                                                                <div class="add-new-data-sidebar" id="add-attr-sidebar">
+                                                                    <div class="overlay-bg"></div>
+                                                                    <div class="add-new-data">
+                                                                        <div class="div mt-2 px-2 d-flex new-data-title justify-content-between">
+                                                                            <div>
+                                                                                <h4 class="text-uppercase">افزودن ویژگی
+                                                                                    محصول</h4>
+                                                                            </div>
+                                                                            <div class="hide-data-sidebar">
+                                                                                <i class="feather icon-x"></i>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="data-items pb-3">
+                                                                            <div class="data-fields px-2 mt-3">
+                                                                                <div class="row">
+                                                                                    <div class="col-sm-12 data-field-col">
+                                                                                        <label for="data-name"
+                                                                                               id="attr-name">نام
+                                                                                            ویژگی</label>
+                                                                                        <input type="text"
+                                                                                               class="form-control"
+                                                                                               id="data-name">
+                                                                                    </div>
+                                                                                    <div class="col-sm-12 data-field-col">
+                                                                                        <label>مشخصات</label>
+                                                                                        <fieldset class="form-group">
+                                                                                            <textarea
+                                                                                                    class="form-control"
+                                                                                                    id="att-value"
+                                                                                                    rows="3"
+                                                                                                    placeholder="ناحیه متن(textarea)"></textarea>
+                                                                                        </fieldset>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="add-data-footer d-flex justify-content-around px-3 mt-2">
+                                                                            <div class="add-data-btn">
+                                                                                <button type="button"
+                                                                                        class="btn btn-primary"
+                                                                                        id="add-atr-btn-form">افزودن
+                                                                                    ویژگی
+                                                                                </button>
+                                                                            </div>
+                                                                            <div class="cancel-data-btn">
+                                                                                <button type="button"
+                                                                                        class="btn btn-outline-danger">
+                                                                                    لغو
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- add new sidebar ends -->
+                                                            </section>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {#   Add Color   #}
+                                            <div class="col-12" id="add-color-col">
+                                                <div class="card table-cover">
+                                                    <div class="card-header">
+                                                        <h4 class="card-title">افزودن رنگ های محصول</h4>
+                                                    </div>
+                                                    <div class="card-content collapse show">
+                                                        <div class="card-body">
+                                                            <section id="data-list-view"
+                                                                     class="data-list-view-header content-wrapper mt-0 pt-0">
+                                                                <!-- DataTable starts -->
+                                                                <div class="table-responsive" id="color-table">
+                                                                    <div class="top">
+                                                                        <div class="">
+                                                                            <button type="button" id="add-color-btn"
+                                                                                    class="btn btn-outline-primary mr-1">
+                                                                                افزودن
+                                                                                <i class="fa fa-plus"></i>
+                                                                            </button>
+                                                                            <button type="button" id="remove-color-btn"
+                                                                                    class="btn btn-outline-danger">
+                                                                                حذف
+                                                                                <i class="fa fa-minus"></i>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div>
+                                                                            <div class="dataTables_filter">
+                                                                                <label>
+                                                                                    <input type="search"
+                                                                                           name="search-attr"
+                                                                                           class="form-control form-control-sm"
+                                                                                           placeholder="">
+                                                                                </label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <table class="table table-hover-animation mb-0">
+                                                                        <thead>
+                                                                        <tr>
+                                                                            <th scope="col">
+                                                                                <fieldset>
+                                                                                    <div class="vs-radio-con">
+                                                                                        <input type="checkbox"
+                                                                                               name="check-all"
+                                                                                               value="false">
+                                                                                        <span class="vs-radio">
+                                                            <span class="vs-radio--border"></span>
+                                                            <span class="vs-radio--circle"></span>
+                                                            </span>
+                                                                                    </div>
+                                                                                </fieldset>
+                                                                            </th>
+                                                                            <th>کد رنگ</th>
+                                                                            <th scope="col">رنگ</th>
+                                                                        </tr>
+                                                                        </thead>
+                                                                        <tbody id="table-body-content">
+
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                                <!-- DataTable ends -->
+                                                                <!-- add new sidebar starts -->
+                                                                <div class="add-new-data-sidebar"
+                                                                     id="add-color-sidebar">
+                                                                    <div class="overlay-bg"></div>
+                                                                    <div class="add-new-data">
+                                                                        <div class="div mt-2 px-2 d-flex new-data-title justify-content-between">
+                                                                            <div>
+                                                                                <h4 class="text-uppercase">افزودن رنگ
+                                                                                    محصول</h4>
+                                                                            </div>
+                                                                            <div class="hide-data-sidebar">
+                                                                                <i class="feather icon-x"></i>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="data-items">
+                                                                            <div class="data-fields px-2 mt-3">
+                                                                                <div class="row">
+                                                                                    <div class="col-sm-12 data-field-col"
+                                                                                         style="direction: ltr !important;">
+                                                                                        <label>انتخاب رنگ</label>
+                                                                                        <input class="form-control"
+                                                                                               readonly="readonly"
+                                                                                               type="text" name="color"
+                                                                                               id="ColorInput"
+                                                                                               value="#ff0000"
+                                                                                               data-wheelcolorpicker/>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="add-data-footer d-flex justify-content-around px-3">
+                                                                            <div class="add-data-btn">
+                                                                                <button type="button"
+                                                                                        class="btn btn-primary"
+                                                                                        id="add-color-btn-form">افزودن
+                                                                                    ویژگی
+                                                                                </button>
+                                                                            </div>
+                                                                            <div class="cancel-data-btn">
+                                                                                <button type="button"
+                                                                                        class="btn btn-outline-danger">
+                                                                                    لغو
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- add new sidebar ends -->
+                                                            </section>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-12">
+                                                <label for="">توضیحات کوناه محصول</label>
+                                                <p class="text-danger d-none" id="err-pr-short_description"></p>
+                                                {{ product_creation__form.short_description }}
+                                            </div>
+                                            <div class="col-12" dir="ltr">
+                                                <div class="controls">
+                                                    <label for="">توضیحات محصول</label>
+                                                    <p class="text-danger d-none" id="err-pr-further_details"></p>
+                                                    {{ product_creation__form.further_details }}
+                                                </div>
+                                            </div>
+                                            <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
+                                                <button type="button"
+                                                        class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1"
+                                                        id="create-pr-btn">
+                                                    ذخیره تغییرات
+                                                </button>
+                                                <button type="reset" class="btn btn-outline-warning">تنظیم مجدد
+                                                </button>
+                                            </div>
+                                        </form>
+                                        <!-- users edit account form ends -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- users edit ends -->
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+<!-- END: Content-->
+
+
+{#<!-- BEGIN: Page Vendor JS-->#}
+{% block page_vendor_js_product_add %}
+    <script src="{% static 'AdminPanel/app-assets/vendors/js/forms/select/select2.full.min.js' %}"></script>
+    <script src="{% static 'AdminPanel/app-assets/vendors/js/forms/validation/jqBootstrapValidation.js' %}"></script>
+    <script src="{% static 'AdminPanel/app-assets/vendors/js/pickers/pickadate/picker.js' %}"></script>
+    <script src="{% static 'AdminPanel/app-assets/vendors/js/pickers/pickadate/picker.date.js' %}"></script>
+    {# Page Vendor Js Number Input #}
+    <script src="{% static 'AdminPanel/app-assets/vendors/js/forms/spinner/jquery.bootstrap-touchspin.js' %}"></script>
+    {# Page Vendor Js Form Select #}
+    <script src="{% static 'AdminPanel/app-assets/vendors/js/forms/select/select2.full.min.js' %}"></script>
+    {# Page Vendor Js Add Attr Table #}
+    <script src="{% static 'AdminPanel/app-assets/vendors/js/extensions/dropzone.min.js' %}"></script>
+    <script src="{% static 'AdminPanel/app-assets/vendors/js/tables/datatable/datatables.min.js' %}"></script>
+    <script src="{% static 'AdminPanel/app-assets/vendors/js/tables/datatable/datatables.buttons.min.js' %}"></script>
+    <script src="{% static 'AdminPanel/app-assets/vendors/js/tables/datatable/datatables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'AdminPanel/app-assets/vendors/js/tables/datatable/buttons.bootstrap.min.js' %}"></script>
+    <script src="{% static 'AdminPanel/app-assets/vendors/js/tables/datatable/dataTables.select.min.js' %}"></script>
+    <script src="{% static 'AdminPanel/app-assets/vendors/js/tables/datatable/datatables.checkboxes.min.js' %}"></script>
+    <script src="{% static 'AdminPanel/app-assets/vendors/js/extensions/toastr.min.js' %}"></script>
+{% endblock %}
+{#<!-- END: Page Vendor JS-->#}
+
+
+{#<!-- BEGIN: Page JS-->#}
+{% block page_js_product_add %}
+    <script src="{% static 'AdminPanel/app-assets/js/scripts/pages/app-user.min.js' %}"></script>
+    <script src="{% static 'AdminPanel/app-assets/js/scripts/navs/navs.min.js' %}"></script>
+    {# Page Js Number Input #}
+    <script src="{% static 'AdminPanel/app-assets/js/scripts/forms/number-input.min.js' %}"></script>
+    {# Page Js Form Select #}
+    <script src="{% static 'AdminPanel/app-assets/js/scripts/forms/select/form-select2.min.js' %}"></script>
+    {# Page Js Color Picker #}
+    <script src="https://cdn.jsdelivr.net/npm/spectrum-colorpicker2/dist/spectrum.min.js"></script>
+    {# Page Js Modal Component #}
+    <script src="{% static 'AdminPanel/app-assets/js/scripts/modal/components-modal.min.js' %}"></script>
+    {# Page Js Ck Editor #}
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+    {# Page Js Add Attr Table #}
+    <script src="{% static 'AdminPanel/app-assets/js/scripts/ui/data-list-view.min.js' %}"></script>
+    <script src="{% static 'AdminPanel/app-assets/js/customize-me/product-add-attr-table.js' %}"></script>
+    <script src="{% static 'AdminPanel/app-assets/js/customize-me/product-add-color-table.js' %}"></script>
+{% endblock %}
+{#<!-- END: Page JS-->#}
+
+{#--User Edit Ajax--#}
+{% block ajax_product_add %}
+    <script src="{% static 'AdminPanel/app-assets/component/jquery.md.bootstrap.datetimepicker.js' %}"></script>
+    <script src="{% static 'AdminPanel/app-assets/js/ajax/product/product-add.js' %}"></script>
+{% endblock %}
+
+

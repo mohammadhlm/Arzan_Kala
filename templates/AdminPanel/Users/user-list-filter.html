@@ -1,0 +1,124 @@
+<div class="card-body card-dashboard">
+                                        <div class="d-flex">
+                                            <p class="card-text">
+                                                مشاهده لیست کاربران
+                                            </p>
+                                            <p class="card-text ml-auto mr-1">
+                                                تعداد کاربران:
+                                                {{ list_users.paginator.count }}
+                                            </p>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                <tr>
+                                                    <th>تعداد</th>
+                                                    <th style="width: 6rem">عکس کاربر</th>
+                                                    <th>نام و نام خانوادگی</th>
+                                                    <th>ایمیل</th>
+                                                    <th>ویرایش کاربر</th>
+                                                    <th>فعال / غیرفعال</th>
+                                                    <th>کاربر ویژه</th>
+                                                    <th>کارمند</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for profile in list_users %}
+                                                    <tr class="">
+                                                        {# Counter #}
+                                                        <td class="mx-1 text-center">{{ forloop.counter }}</td>
+                                                        {# Profile #}
+                                                        <td>
+                                                            <img src="{{ profile.user_profile.url }}" alt=""
+                                                                 width="50%">
+                                                        </td>
+                                                        {# Name #}
+                                                        <td class="align-middle align-items-center">
+                                                            <span title="{{ profile.user.get_full_name }}"
+                                                                  data-toggle="tooltip">
+                                                                {{ profile.user.get_full_name|truncatechars:12 }}
+                                                            </span>
+                                                        </td>
+
+                                                        {# Username #}
+                                                        <td class="align-middle align-items-center">
+                                                            <span title="{{ profile.user.username }}" data-toggle="tooltip">
+                                                                {{ profile.user.username|truncatechars:12 }}
+                                                            </span>
+                                                        </td>
+
+                                                        <td class="align-middle d-flex align-items-center justify-content-start">
+                                                            {# Edit User #}
+                                                            <a class="UserId align-middle"
+                                                               href="{{ profile.get_absolute_url_user_edit }}">
+                                                                <i class="feather icon-edit float-left mr-1 font-weight-edit-icon-user-list"></i>
+                                                            </a>
+
+                                                            <a class="align-middle font-weight-view-icon-user-list"
+                                                               href="{{ profile.get_absolute_url_user_display }}">
+                                                                <i class="feather icon-eye mr-1 my-auto d-flex"></i>
+                                                            </a>
+
+                                                            <div class="custom-control custom-switch custom-switch-danger switch-md mr-2 my-auto py-1 selector_for__jq">
+                                                                <input type="checkbox" class="custom-control-input"
+                                                                       id="customSwitch-{{ profile.user.pk }}">
+                                                                <label class="custom-control-label"
+                                                                       for="customSwitch-{{ profile.user.pk }}">
+                                                                    <span class="switch-text-left">حذف</span>
+                                                                </label>
+                                                            </div>
+                                                        </td>
+
+                                                        <td>
+                                                            <i class="fa {% if profile.user.is_active %}fa-check-circle text-success {% else %} fa-times text-danger {% endif %}"></i>
+                                                        </td>
+                                                        <td>
+                                                            <i class="fa {% if profile.user.is_superuser %} fa-check-circle text-success {% else %} fa-times text-danger {% endif %}"></i>
+                                                        </td>
+                                                        <td>
+                                                            <i class="fa {% if profile.user.is_staff %} fa-check-circle text-success {% else %} fa-times text-danger {% endif %}"></i>
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        {# ----------Pagination----------- #}
+                                        {% if list_users.has_other_pages %}
+                                            {# Pre Buttons #}
+                                            <ul class="pagination justify-content-center mt-2">
+                                                {% if list_users.has_previous %}
+                                                    <li class="page-item prev-item">
+                                                        <a class="page-link"
+                                                           href="?page{{ list_users.previous_page_number }}"></a>
+                                                    </li>
+                                                {% else %}
+                                                    <li class="page-item prev-item disabled">
+                                                        <a class="page-link" href="#"></a>
+                                                    </li>
+                                                {% endif %}
+
+                                                {% for page in list_users.paginator.page_range %}
+                                                    <li class="page-item {% if list_users.number == page %}active{% endif %}">
+                                                        <a class="page-link"
+                                                           href="{% if list_users.number != page %}?page=
+                                                               {{ page }}{% else %}#{% endif %}">{{ page }}</a>
+                                                    </li>
+                                                {% endfor %}
+
+
+                                                {# ---Next Buttons----- #}
+                                                {% if list_users.has_next %}
+                                                    <li class="page-item next-item">
+                                                        <a class="page-link"
+                                                           href="?page{{ list_users.next_page_number }}"></a>
+                                                    </li>
+                                                {% else %}
+                                                    <li class="page-item next-item disabled">
+                                                        <a class="page-link" href="#"></a>
+                                                    </li>
+                                                {% endif %}
+                                            </ul>
+                                        {% endif %}
+                                        {# ---------End Pagination--------- #}
+                                    </div>

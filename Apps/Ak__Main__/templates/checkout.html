@@ -1,0 +1,224 @@
+{% extends '__main__.html' %}
+{% load static %}
+{% load render_partial %}
+
+<!-- SITE TITLE -->
+{% block title_checkout %}
+    بررسی سبد خرید
+{% endblock %}
+
+{# Select To Module #}
+{% block Select2_Module %}
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+{% endblock %}
+
+
+{#<!-- START SECTION BREADCRUMB -->#}
+{% block breadcrumb_checkout %}
+    <div class="breadcrumb_section bg_gray page-title-mini">
+        <div class="container"><!-- STRART CONTAINER -->
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="page-title">
+                        <h1>بررسی</h1>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <ol class="breadcrumb justify-content-md-end">
+                        <li class="breadcrumb-item"><a href="#">خانه</a></li>
+                        <li class="breadcrumb-item"><a href="#">صفحات</a></li>
+                        <li class="breadcrumb-item active">بررسی</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- END CONTAINER-->
+    </div>
+{% endblock %}
+{#<!-- END SECTION BREADCRUMB -->#}
+
+<!-- START MAIN CONTENT -->
+{% block content_checkout %}
+
+    {#    <!-- START SECTION SHOP -->#}
+    <div class="section">
+        <div class="container">
+            {% if user.is_authenticated %}
+                <div class="row">
+                    <div class="col-12">
+                        <div class="medium_divider"></div>
+                        <div class="divider center_icon"><i class="linearicons-credit-card"></i></div>
+                        <div class="medium_divider"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="heading_s1">
+                            <h4>جزئیات صورتحساب</h4>
+                        </div>
+                        <form method="post">
+                            <div class="form-group">
+                                {{ Completion_User__Information.first_name }}
+                            </div>
+                            <div class="form-group">
+                                {{ Completion_User__Information.last_name }}
+                            </div>
+                            <div class="form-group">
+                                {{ Completion_User__Information.select_city }}
+                            </div>
+                            <div class="form-group">
+                                {{ Completion_User__Information.location_first }}
+                            </div>
+                            <div class="form-group">
+                                {{ Completion_User__Information.postal_code }}
+                            </div>
+                            <div class="form-group">
+                                {{ Completion_User__Information.phone_number }}
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="order_review">
+                            <div class="heading_s1">
+                                <h4>سفارشات شما</h4>
+                            </div>
+                            <div class="table-responsive order_table">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>محصول</th>
+                                        <th>جمع</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% if user.profile.get_cart_item_count %}
+                                        {% for item in user.profile.get_cart_item %}
+                                            <tr>
+                                                <td>{{ item.product.name }}<span
+                                                        class="product-qty">{{ item.count }}</span>
+                                                </td>
+                                                <td>{% if item.product.discounted_price %}
+                                                    {{ item.product.discounted_price }}{% else %}
+                                                    {{ item.product.final_price }}{% endif %} تومان
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% endif %}
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <th>جمع</th>
+                                        <td class="product-subtotal">{% if user.profile.get_cart_item_count %}
+                                            {{ user.profile.get_cart_item.first.cart.total_product_price }}
+                                            تومان{% else %}
+                                            0{% endif %}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>هزینه ارسال</th>
+                                        <td>ارسال رایگان</td>
+                                    </tr>
+                                    <tr>
+                                        <th>جمع</th>
+                                        <td class="product-subtotal">349000 تومان</td>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <div class="payment_method">
+                                <div class="heading_s1">
+                                    <h4>انتخاب روش پست مرسوله</h4>
+                                </div>
+                                <div class="payment_option">
+                                    <div class="custome-radio">
+                                    <input class="form-check-input" required="" type="radio" name="payment_option"
+                                           id="send_method1" value="0" checked="">
+                                    <label class="form-check-label" for="send_method1">پست پیشتاز</label>
+                                    <p data-method="0" class="payment-text">زمان ارساله مرسوله درون شهری 2 الی 24 ساعت و در شهرستان ها 24 الی 48 ساعت میباشد.</p>
+                                </div>
+                                <div class="custome-radio">
+                                    <input class="form-check-input" type="radio" name="payment_option"
+                                           id="send_method2" value="1">
+                                    <label class="form-check-label" for="send_method2">پست سفارشی</label>
+                                    <p data-method="1" class="payment-text">زمان ارسال مرسوله درون شهری 24 الی 48 ساعت و شهرستان ها 48 الی 72 ساعت میباشد.</p>
+                                </div>
+                                </div>
+                            </div>
+                            <a href="#" class="btn btn-fill-out btn-block">پرداخت</a>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="row">
+                    <div class="col-12">
+                        <div class="alert alert-warning">
+                             شما برای بررسی سبد خرید و پرداخت آن باید وارد حساب کاربری خود شوید از بخش منو بالا یا گزینه زیر میتوانید وارد حساب خود شوید
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="toggle_info">
+                        <span><i class="fas fa-user"></i>مشتری برگشتی؟ <a href="{% url 'Ak_User_Account:Login' %}">برای ورود اینجا کلیک کنید</a></span>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    {#    <!-- END SECTION SHOP -->#}
+
+    {#    <!-- START SECTION SUBSCRIBE NEWSLETTER -->#}
+    {% include 'All_Template_Main/Content/Subscribe_News_Letters.html' %}
+    {#    <!-- START SECTION SUBSCRIBE NEWSLETTER -->#}
+
+{% endblock %}
+<!-- END MAIN CONTENT -->
+
+{% block script_checkout_page %}
+    <!--Google Recaptcha Js-->
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+    <!-- Latest jQuery -->
+    <script src="{% static 'site_assets/js/jquery-1.12.4.min.js' %}"></script>
+    <!-- jquery-ui -->
+    <script src="{% static 'site_assets/js/jquery-ui.js' %}"></script>
+    <!-- popper min js -->
+    <script src="{% static 'site_assets/js/popper.min.js' %}"></script>
+    <!-- Latest compiled and minified Bootstrap -->
+    <script src="{% static 'site_assets/bootstrap/js/bootstrap.min.js' %}"></script>
+    <!-- owl-carousel min js  -->
+    <script src="{% static 'site_assets/owlcarousel/js/owl.carousel.min.js' %}"></script>
+    <!-- magnific-popup min js  -->
+    <script src="{% static 'site_assets/js/magnific-popup.min.js' %}"></script>
+    <!-- waypoints min js  -->
+    <script src="{% static 'site_assets/js/waypoints.min.js' %}"></script>
+    <!-- parallax js  -->
+    <script src="{% static 'site_assets/js/parallax.js' %}"></script>
+    <!-- countdown js  -->
+    <script src="{% static 'site_assets/js/jquery.countdown.min.js' %}"></script>
+    <!-- imagesloaded js -->
+    <script src="{% static 'site_assets/js/imagesloaded.pkgd.min.js' %}"></script>
+    <!-- isotope min js -->
+    <script src="{% static 'site_assets/js/isotope.min.js' %}"></script>
+    <!-- jquery.dd.min js -->
+    <script src="{% static 'site_assets/js/jquery.dd.min.js' %}"></script>
+    <!-- slick js -->
+    <script src="{% static 'site_assets/js/slick.min.js' %}"></script>
+    <!-- elevatezoom js -->
+    <script src="{% static 'site_assets/js/jquery.elevatezoom.js' %}"></script>
+    <!-- scripts js -->
+    <script src="{% static 'site_assets/js/scripts.js' %}"></script>
+    {# Select 2 Module #}
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $('.js-data-city-to-ajax').select2({
+            language: "fa",
+            placeholder: 'شهر مورد نظر خود را جستجو کنید...',
+            dir: "rtl",
+            ajax: {
+                url: function (params) {
+                    return 'https://payeganltd.com/backend/web/index.php?r=site%2Fcity_list&just_state=3&id=1&q=' + params.term
+                },
+                dataType: 'json',
+                type: "GET",
+            }
+        });
+    </script>
+{% endblock %}

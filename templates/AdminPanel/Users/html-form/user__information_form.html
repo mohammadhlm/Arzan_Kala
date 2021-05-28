@@ -1,0 +1,79 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">ورود فیلد های ضروری*</h4>
+            </div>
+            <div class="card-content">
+                <div class="card-body">
+                    <form class="form form-vertical" enctype="multipart/form-data" method="post" id="user__information_form">
+                        {% csrf_token %}
+                        {{ user__information_form.user_profile }}
+                        <div class="border_box d-flex mx-auto mb-1" id="user-photo-upload-box">
+                            <i class="feather icon-camera text-info font-size-large mx-auto my-auto"></i>
+                        </div>
+                        <img src="" alt="users avatar" class="users-avatar-shadow  d-none mx-auto" height="120" width="120" id="preview-user-profile">
+                        <!-- Step 1 -->
+                        <fieldset>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="divider divider-left">
+                                        <div class="divider-text">
+                                            <h6>
+                                                اطلاعات تکمیلی
+                                            </h6>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="contact-info-icon">تلفن همراه</label>
+                                        <div class="position-relative has-icon-left">
+                                            {{ user__information_form.phone_number }}
+                                            <div class="form-control-position">
+                                                <i class="feather icon-smartphone"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label>آدرس</label>
+                                            {{ user__information_form.location_first }}
+                                            <div class="help-block"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <label>انتخاب جنسیت</label>
+                                            {{ user__information_form.gender_selection }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label>کد پستی</label>
+                                            {{ user__information_form.postal_code }}
+                                            <div class="help-block"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        {# Submit Btn #}
+                        <button type="button" class="btn btn-outline-success" id="Send__user__info__form">ارسال</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,13 @@
+<form action="" method="post" id="form-making-new-brand" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ brand_creation__form.photo }}
+    <div class="border_box d-flex mx-auto mb-1" id="brand-photo-upload-box">
+            <i class="feather icon-camera text-info font-size-large mx-auto my-auto"></i>
+    </div>
+     <div class="mb-1">
+         {{ brand_creation__form.name }}
+     </div>
+    <div class="d-flex">
+        <button type="button" id="btn-making-new-brand" class="btn bg-gradient-success my-1 ml-auto waves-effect waves-light">افزودن برند</button>
+    </div>
+</form>

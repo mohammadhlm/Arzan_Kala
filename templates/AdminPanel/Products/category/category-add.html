@@ -1,0 +1,15 @@
+<form action="" method="post" id="form-making-new-category" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ category_creation_form.category_photo }}
+    <div class="border_box d-flex mx-auto mb-1" id="category-photo-upload-box">
+            <i class="feather icon-camera text-info font-size-large mx-auto my-auto"></i>
+    </div>
+     <div class="mb-1">
+         {{ category_creation_form.slug }}
+     </div>
+
+    {{ category_creation_form.category_name }}
+    <div class="d-flex">
+        <button type="button" id="btn-making-new-category" class="btn bg-gradient-success my-1 ml-auto waves-effect waves-light">افزودن تگ</button>
+    </div>
+</form>

@@ -1,0 +1,114 @@
+{% extends 'AdminPanel/Auth/base_auth.html' %}
+{% load static %}
+
+<!-- BEGIN: Content-->
+{% block LoginPage %}
+    <div class="app-content content">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper">
+            <div class="content-header row">
+            </div>
+            <div class="content-body">
+                <section class="row flexbox-container">
+                    <div class="col-xl-8 col-11 d-flex justify-content-center">
+                        <div class="card bg-authentication rounded-0 mb-0">
+                            <div class="row m-0">
+                                <div class="col-lg-6 d-lg-block d-none text-center align-self-center px-1 py-0">
+                                    <img src="{% static 'AdminPanel/app-assets/images/pages/login.png' %}"
+                                         alt="branding logo">
+                                </div>
+                                <div class="col-lg-6 col-12 p-0">
+                                    <div class="card rounded-0 mb-0 px-2">
+                                        <div class="card-header pb-1">
+                                            <div class="card-title">
+                                                <h4 class="mb-0">ورود به پیشخوان مدیر </h4>
+                                            </div>
+                                        </div>
+                                        <p class="px-2">
+                                            خوش آمدید ، لطفا به حساب کاربری خود وارد شوید
+                                        </p>
+                                        <div class="card-content">
+                                            <div class="card-body pt-1">
+                                                <form method="POST">
+                                                    {% csrf_token %}
+                                                    <!--Show Error-->
+                                                    {% if messages %}
+                                                        {% for message in messages %}
+                                                            <p class="text-danger pb-1"
+                                                               style="font-size: 0.9rem !important;">
+                                                                <i class="fa fa-exclamation-triangle"></i>
+                                                                {{ message }}
+                                                            </p>
+                                                        {% endfor %}
+                                                    {% endif %}
+                                                    <!--End Show Error-->
+                                                    <fieldset
+                                                            class="form-label-group form-group position-relative has-icon-left">
+                                                        {{ form.email }}
+                                                        <div class="form-control-position">
+                                                            <i class="feather icon-user"></i>
+                                                        </div>
+                                                        <label for="user-name">نام کاربری</label>
+                                                    </fieldset>
+
+                                                    <fieldset class="form-label-group position-relative has-icon-left">
+                                                        {{ form.password }}
+                                                        <div class="form-control-position">
+                                                            <i class="feather icon-lock"></i>
+                                                        </div>
+                                                        <label for="user-password">کلمه عبور</label>
+                                                    </fieldset>
+                                                    <!--Google Recaptcha-->
+                                                    <div class="g-recaptcha"
+                                                         data-sitekey="6LdAF-QaAAAAAE4wjb-hA0eJBo5CkwJwBoKIhdAt"></div>
+                                                    <!--End Google Recaptcha-->
+                                                    <div class="form-group d-flex justify-content-between align-items-center">
+                                                        <div class="text-left">
+                                                            <fieldset class="checkbox">
+                                                                <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                    <input type="checkbox">
+                                                                    <span class="vs-checkbox">
+                                                  <span class="vs-checkbox--check">
+                                                    <i class="vs-icon feather icon-check"></i>
+                                                  </span>
+                                                </span>
+                                                                    <span class="">مرا به خاطر بسپار</span>
+                                                                </div>
+                                                            </fieldset>
+                                                        </div>
+                                                        <div class="text-right"><a
+                                                                href="{% url 'AdminSite__Ak:password_reset' %}"
+                                                                class="card-link">رمز ورود را فراموش کرده اید؟</a></div>
+                                                    </div>
+                                                    <button type="submit"
+                                                            class="btn btn-block btn-primary float-right btn-inline">
+                                                        ورود
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="login-footer">
+                                            <div class="divider">
+                                                <div class="divider-text">یا</div>
+                                            </div>
+                                            <div class="footer-btn d-inline">
+                                                <a href="{% url "social:begin" "google-oauth2" %}"
+                                                   class="btn btn-block btn-google">
+                                                    ورود با گوگل
+                                                    <span class="fa fa-google align-middle"></span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+<!-- END: Content-->

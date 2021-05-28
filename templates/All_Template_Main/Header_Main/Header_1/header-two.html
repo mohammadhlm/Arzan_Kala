@@ -1,0 +1,222 @@
+{% load static %}
+<header class="header_wrap">
+    <div class="middle-header dark_skin">
+        <div class="custom-container">
+            <div class="nav_block">
+                <a class="navbar-brand" href="{% url 'Ak_Main:Home_Page' %}">
+                    <img class="logo_light" src="{{ contact_info.WhiteLogoSiteFooter.url }}" alt="logo"/>
+                    <img class="logo_dark" src="{{ contact_info.BlackLogoSiteHeader.url }}" alt="logo"/>
+                </a>
+                <div class="product_search_form rounded_input">
+                    <form>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="custom_select">
+                                    <select class="first_null">
+                                        <option value="">همه دسته ها</option>
+                                        <option value="Dresses">لباس</option>
+                                        <option value="Shirt-Tops">پیراهن</option>
+                                        <option value="T-Shirt">تی شرت</option>
+                                        <option value="Pents">چادر</option>
+                                        <option value="Jeans">شلوار جین</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <input class="form-control" placeholder="جستجوی محصول ..." required="" type="text">
+                            <button type="submit" class="search_btn2"><i class="fa fa-search"></i></button>
+                        </div>
+                    </form>
+                </div>
+                <ul class="navbar-nav attr-nav align-items-center">
+                    {% if not user.is_authenticated %}
+                        <li><a href="{% url 'Ak_User_Account:Login' %}" class="nav-link"><i
+                                class="linearicons-user"></i></a></li>
+                    {% endif %}
+                    {% if user.is_authenticated %}
+                        <li class="dropdown cart_dropdown">
+                            <div class="d-none" id="remove-product-section">
+                                {# Form #}
+                            </div>
+                            <a class="nav-link cart_trigger" href="#"
+                               data-toggle="dropdown"><i
+                                    class="linearicons-bag2"></i>
+                                <span class="cart_count"
+                                      id="cart-item-count">{{ user.profile.get_cart_item_count }}</span>
+                                <span
+                                        class="amount">{{ total_product_price }}<span
+                                        class="currency_symbol"> تومان</span></span></a>
+                            <div id="dropdown-product-cart"
+                                 class="cart_box cart_right dropdown-menu dropdown-menu-right">
+                                <ul class="cart_list" id="cart-item-list_drop__down">
+                                    {% if user.profile.get_cart_item_count %}
+                                        {% for item in user.profile.get_cart_item %}
+                                            <li id="item_{{ item.product.id }}">
+                                                <a href="#" class="item_remove"><i class="ion-close"
+                                                                                   id="product_{{ item.product.id }}"></i></a>
+                                                <a href="{{ item.product.get_absolute_url }}"><img
+                                                        src="{{ item.product.photo.url }}" alt="cart_thumb1">
+                                                    {{ item.product.name }}
+                                                </a>
+                                                <span class="cart_quantity"> {{ item.count }} عدد {{ item.total }}<span
+                                                        class="cart_amount"> <span
+                                                        class="price_symbole">تومان</span></span></span>
+                                            </li>
+                                        {% endfor %}
+                                    {% endif %}
+                                </ul>
+                                <div class="cart_footer">
+                                    <p class="cart_total">
+                                        <strong>جمع:</strong>
+                                        <span id="product_total_price">{{ total_product_price }}</span>
+                                        <span class="cart_price">
+                                            <span class="price_symbole">تومان</span>
+                                        </span>
+                                    </p>
+                                    <p class="cart_buttons"><a href="#" class="btn btn-fill-line view-cart">سبد
+                                        خرید</a><a
+                                            href="{% url 'Ak_Main:checkout' %}" class="btn btn-fill-out checkout">بررسی</a></p>
+                                </div>
+                            </div>
+
+                        </li>
+                    {% elif not COOKIES and not user.is_authenticated %}
+                        <li class="dropdown cart_dropdown">
+                            <div class="d-none" id="remove-product-section">
+                                {# Form #}
+                            </div>
+                            <a class="nav-link cart_trigger" href="#"
+                               data-toggle="dropdown"><i
+                                    class="linearicons-bag2"></i>
+                                <span class="cart_count"
+                                      id="cart-item-count">{{ cart_item_count }}</span>
+                                <span
+                                        class="amount">{{ total_product_price }}<span
+                                        class="currency_symbol"> تومان</span></span></a>
+
+                            <div id="dropdown-product-cart"
+                                 class="cart_box cart_right dropdown-menu dropdown-menu-right">
+                                <ul class="cart_list" id="cart-item-list_drop__down">
+                                    {% for product in Product_Qs_Unk_User %}
+                                        <li id="item_{{ product.id }}">
+                                            <a href="#" class="item_remove"><i class="ion-close"
+                                                                               id="product_{{ product.id }}"></i></a>
+                                            <a href="{{ product.get_absolute_url }}"><img
+                                                    src="{{ product.photo.url }}" alt="cart_thumb1">
+                                                {{ product.name }}
+                                            </a>
+                                            <span class="cart_quantity"> 1 عدد {{ total_product_price }}<span
+                                                    class="cart_amount"> <span
+                                                    class="price_symbole">تومان</span></span></span>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                                <div class="cart_footer">
+                                    <p class="cart_total">
+                                        <strong>جمع:</strong>
+                                        <span id="product_total_price">{{ total_product_price }}</span>
+                                        <span class="cart_price">
+                                            <span class="price_symbole">تومان</span>
+                                        </span>
+                                    </p>
+                                    <p class="cart_buttons"><a href="#" class="btn btn-fill-line view-cart">سبد
+                                        خرید</a><a
+                                            href="#" class="btn btn-fill-out checkout">بررسی</a></p>
+                                </div>
+                            </div>
+                        </li>
+                    {% elif COOKIES and not user.is_authenticated %}
+                        <li class="dropdown cart_dropdown">
+                            <div class="d-none" id="remove-product-section">
+                                {# Form #}
+                            </div>
+                            <a class="nav-link cart_trigger" href="#"
+                               data-toggle="dropdown"><i
+                                    class="linearicons-bag2"></i>
+                                <span class="cart_count"
+                                      id="cart-item-count">0</span>
+                                <span
+                                        class="amount">0<span
+                                        class="currency_symbol"> تومان</span></span></a>
+
+                            <div id="dropdown-product-cart"
+                                 class="cart_box cart_right dropdown-menu dropdown-menu-right">
+                                <ul class="cart_list" id="cart-item-list_drop__down">
+
+                                </ul>
+                                <div class="cart_footer">
+                                    <p class="cart_total">
+                                        <strong>جمع:</strong>
+                                        <span id="product_total_price">0</span>
+                                        <span class="cart_price">
+                                            <span class="price_symbole">تومان</span>
+                                        </span>
+                                    </p>
+                                    <p class="cart_buttons"><a href="#" class="btn btn-fill-line view-cart">سبد
+                                        خرید</a><a
+                                            href="#" class="btn btn-fill-out checkout">بررسی</a></p>
+                                </div>
+                            </div>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="bottom_header dark_skin main_menu_uppercase border-top border-bottom">
+        <div class="custom-container">
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-6 col-3">
+                    <div class="categories_wrap">
+                        <button type="button" data-toggle="collapse" data-target="#navCatContent"
+                                aria-expanded="false"
+                                class="categories_btn">
+                            <i class="linearicons-menu"></i><span>همه مدل ها </span>
+                        </button>
+                        <div id="navCatContent" class="nav_cat navbar collapse">
+                            <ul>
+                                {% for category in list_category %}
+                                    <li><a class="dropdown-item nav-link nav_item" href="coming-soon.html"><i
+                                            class="flaticon-headphones"></i>
+                                        <span>{{ category.category_name }}</span></a></li>
+                                {% endfor %}
+                            </ul>
+                            <div class="more_categories">دسته بندی های بیشتر</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-8 col-sm-6 col-9">
+                    <nav class="navbar navbar-expand-lg">
+                        <button class="navbar-toggler side_navbar_toggler" type="button" data-toggle="collapse"
+                                data-target="#navbarSidetoggle" aria-expanded="false">
+                            <span class="ion-android-menu"></span>
+                        </button>
+                        <div class="pr_search_icon">
+                            <a href="javascript:void(0);" class="nav-link pr_search_trigger"><i
+                                    class="linearicons-magnifier"></i></a>
+                        </div>
+                        <div class="collapse navbar-collapse mobile_side_menu" id="navbarSidetoggle">
+                            <ul class="navbar-nav">
+                                <li class="dropdown">
+                                    <a data-toggle="dropdown" class="nav-link active"
+                                       href="{% url 'Ak_Main:Home_Page' %}">خانه</a>
+                                </li>
+
+                                <li class="dropdown dropdown-mega-menu">
+                                    <a class="nav-link" href="{% url 'Ak_Main:shop_page' %}">محصولات</a>
+                                </li>
+
+
+                                <li><a class="nav-link nav_item" href="{% url 'Ak_Main:contact-us' %}">تماس با ما</a></li>
+                                <li><a class="nav-link nav_item" href="{% url 'Ak_Main:about_us' %}">تماس با ما</a></li>
+                            </ul>
+                        </div>
+                        <div class="contact_phone contact_support">
+                            <i class="linearicons-phone-wave"></i>
+                            <span>{{ contact_info.SiteSupportContactNumber }}</span>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

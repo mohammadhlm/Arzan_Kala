@@ -1,0 +1,12 @@
+<form action="" id="send-comment" class="col-12">
+    {% csrf_token %}
+    <div class="form-group col-12">
+        {{ Comment__Form.body }}
+        {{ Comment__Form.user }}
+        {{ Comment__Form.product }}
+    </div>
+
+    <div class="form-group col-12">
+        <button type="button" class="btn btn-fill-out" id="send-comment-btn" value="Submit">ارسال نظر</button>
+    </div>
+</form>

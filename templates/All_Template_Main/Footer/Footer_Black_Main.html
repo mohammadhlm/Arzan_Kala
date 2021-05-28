@@ -1,0 +1,85 @@
+{% load static %}
+<footer class="footer_dark">
+    <div class="footer_top">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-12">
+                    <div class="widget">
+                        <div class="footer_logo">
+                            <a href="#"><img src="{{ ObjSiteSettings.WhiteLogoSiteFooter.url }}" alt="logo"/></a>
+                        </div>
+                        <!--Start Short Description Footer-->
+                        <p>
+                            {{ ObjSiteSettings.ShortDescriptionFooter }}
+                        </p>
+                        <!--End Short Description Footer-->
+                    </div>
+                    <div class="widget">
+                        <ul class="social_icons social_white">
+                            <li><a target="_blank" href="{{ ObjSiteSettings.FacebookSite }}"><i class="ion-social-facebook"></i></a></li>
+                            <li><a target="_blank" href="{{ ObjSiteSettings.TwitterSite }}"><i class="ion-social-twitter"></i></a></li>
+                            <li><a target="_blank" href="{{ ObjSiteSettings.TelegramSite }}"><i class="ion-social-googleplus"></i></a></li>
+                            <li><a target="_blank" href="{{ ObjSiteSettings.YoutubeSite }}"><i class="ion-social-youtube-outline"></i></a></li>
+                            <li><a target="_blank" href="{{ ObjSiteSettings.InstagramSite }}"><i class="ion-social-instagram-outline"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-6">
+                    <div class="widget">
+                        <h6 class="widget_title">لینک های مفید</h6>
+                        <ul class="widget_links">
+                            <li><a href="#">درباره ما</a></li>
+                            <li><a href="{% url 'Ak_Main:contact-us' %}">تماس با ما</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-6 col-sm-6">
+                    <div class="widget">
+                        <h6 class="widget_title">حساب کاربری</h6>
+                        <ul class="widget_links">
+                            <li><a href="{% url 'AdminSite__Ak:dashboard' %}">حساب من</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="widget">
+                        <h6 class="widget_title">اطلاعات تماس</h6>
+                        <ul class="contact_info contact_info_light">
+                            <li>
+                                <i class="ti-location-pin"></i>
+                                <p>{{ ObjSiteSettings.CompanyAddress }}</p>
+                            </li>
+                            <li>
+                                <i class="ti-email"></i>
+                                <a href="mailto:info@sitename.com">{{ ObjSiteSettings.EmailSupportSite }}</a>
+                            </li>
+                            <li>
+                                <i class="ti-mobile"></i>
+                                <p>{{ ObjSiteSettings.SiteSupportContactNumber }}</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bottom_footer border-top-tran">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="mb-md-0 text-center text-md-left">{{ ObjSiteSettings.CopyrightText }}</p>
+                </div>
+                <div class="col-md-6">
+                    <ul class="footer_payment text-center text-lg-right">
+                        <li><a href="#"><img src="{% static 'site_assets/images/visa.png' %}" alt="visa"></a></li>
+                        <li><a href="#"><img src="{% static 'site_assets/images/discover.png' %}" alt="discover"></a></li>
+                        <li><a href="#"><img src="{% static 'site_assets/images/master_card.png' %}" alt="master_card"></a></li>
+                        <li><a href="#"><img src="{% static 'site_assets/images/paypal.png' %}" alt="paypal"></a></li>
+                        <li><a href="#"><img src="{% static 'site_assets/images/amarican_express.png' %}" alt="amarican_express"></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>

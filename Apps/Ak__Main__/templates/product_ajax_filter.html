@@ -1,0 +1,82 @@
+<div class="row shop_container">
+    {% for product in page_obj %}
+        <div class="col-md-4 col-6">
+            <div class="product">
+                <div class="product_img">
+                    <a href="{{ product.get_absolute_url }}">
+                        <img src="{{ product.photo.url }}" alt="product_img1">
+                    </a>
+                    <div class="product_action_box">
+                        <ul class="list_none pr_action_btn">
+                            <li class="add-to-cart"><a href="#"><i class="icon-basket-loaded"></i> افزودن به سبد خرید</a></li>
+                            <li><a href="shop-compare.html" class="popup-ajax"><i class="icon-shuffle"></i></a></li>
+                            <li><a href="shop-quick-view.html" class="popup-ajax"><i class="icon-magnifier-add"></i></a></li>
+                            <li><a href="#"><i class="icon-heart"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="product_info">
+                    <h6 class="product_title"><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h6>
+                    <div class="product_price">
+                        <span class="price">45000 تومان</span>
+                        <del>55000 تومان</del>
+                        <div class="on_sale">
+                            <span>٪35 تخفیف</span>
+                        </div>
+                    </div>
+                    <div class="rating_wrap">
+                        <div class="rating">
+                            <div class="product_rate" style="width:80%"></div>
+                        </div>
+                        <span class="rating_num">(21)</span>
+                    </div>
+                    <div class="pr_desc">
+                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله.</p>
+                    </div>
+                    {#                                    {% if product.product_color_set %}#}
+                    <div class="pr_switch_wrap">
+                        <div class="product_color_switch">
+                            {% for color in product.product_color_set.all %}
+                                <span style="background-color: {{ color.color_code }}"></span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {#                                    {% endif %}#}
+
+                    <div class="list_product_action_box">
+                        <ul class="list_none pr_action_btn">
+                            <li class="add-to-cart"><a href="#"><i class="icon-basket-loaded"></i> افزودن به سبد خرید</a></li>
+                            <li><a href="shop-compare.html" class="popup-ajax"><i class="icon-shuffle"></i></a></li>
+                            <li><a href="shop-quick-view.html" class="popup-ajax"><i class="icon-magnifier-add"></i></a></li>
+                            <li><a href="#"><i class="icon-heart"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+</div>
+{% if page_obj.has_other_pages %}
+    <div class="row">
+        <div class="col-12">
+            <ul class="pagination mt-3 justify-content-center pagination_style1">
+                {% if page_obj.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page{{ page_obj.previous_page_number }}"><i class="linearicons-arrow-left"></i></a></li>
+                {% endif %}
+
+                {% for page in page_obj.paginator.page_range %}
+                    <li class="page-item {% if page_obj.number == page %}active{% endif %}">
+                        <a class="page-link" href="{% if page_obj.number != page %}?page=
+                                                               {{ page }}{% else %}#{% endif %}">{{ page }}</a>
+                    </li>
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page{{ page_obj.next_page_number }}"><i class="linearicons-arrow-right"></i></a></li>
+                {% endif %}
+
+            </ul>
+        </div>
+    </div>
+{% endif %}

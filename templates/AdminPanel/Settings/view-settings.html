@@ -1,0 +1,452 @@
+{% extends 'AdminPanel/__Main__/base.html' %}
+{% load static %}
+
+{% block custom_css_style_pg_view_settings %}
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'AdminPanel/app-assets/css-rtl/custom-style-pg/view-settings.css' %}">
+{% endblock %}
+
+{% block view_settings %}
+    <div class="app-content content">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper">
+            <div class="content-header row">
+                <div class="content-header-left col-md-9 col-12 mb-2">
+                    <div class="row breadcrumbs-top">
+                        <div class="col-12">
+                            <h2 class="content-header-title float-left mb-0">زبانه ها</h2>
+                            <div class="breadcrumb-wrapper col-12">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="index.html">خانه</a>
+                                    </li>
+                                    <li class="breadcrumb-item"><a href="#">اجزا</a>
+                                    </li>
+                                    <li class="breadcrumb-item active"> زبانه ها</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-header-right text-md-right col-md-3 col-12 d-md-block d-none">
+                    <div class="form-group breadcrum-right">
+                        <div class="dropdown">
+                            <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle" type="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
+                                    class="feather icon-settings"></i></button>
+                            <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="#">گفتگو</a><a
+                                    class="dropdown-item" href="#">ایمیل</a><a class="dropdown-item" href="#">تقویم</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content-body"><!-- Basic tabs start -->
+                <section id="basic-tabs-components">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card overflow-hidden h-100">
+                                <div class="card-header">
+                                    <h4 class="card-title">تنظیمات </h4>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <div class="nav-vertical">
+                                            <ul class="nav nav-tabs nav-left flex-column" role="tablist">
+                                                <li class="nav-item border-bottom border-top">
+                                                    <a class="nav-link active" id="site-settings" data-toggle="tab"
+                                                       aria-controls="tabVerticalLeft1" href="#site-settings-tab"
+                                                       role="tab" aria-selected="true">تنظیمات سایت</a>
+                                                </li>
+                                                <li class="nav-item border-bottom">
+                                                    <a class="nav-link" id="user-settings" data-toggle="tab"
+                                                       aria-controls="user-settings-tab"
+                                                       href="#user-settings-tab" role="tab" aria-selected="false">تنظیمات
+                                                        کاربران</a>
+                                                </li>
+                                                <li class="nav-item border-bottom">
+                                                    <a class="nav-link" id="blog-settings" data-toggle="tab"
+                                                       aria-controls="blog-settings-tab"
+                                                       href="#blog-settings-tab" role="tab" aria-selected="false">تنظیمات
+                                                        وبلاگ</a>
+                                                </li>
+                                            </ul>
+                                            <div class="tab-content">
+                                                <div class="tab-pane active border-left h-100" id="site-settings-tab"
+                                                     role="tabpanel"
+                                                     aria-labelledby="site-settings">
+                                                    <!-- Nav Justified Starts -->
+                                                    <section id="nav-justified" style="width: 96% !important;">
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <div class="card overflow-hidden">
+                                                                    <div class="card-content">
+                                                                        <div class="card-body">
+                                                                            <ul class="nav nav-tabs nav-justified"
+                                                                                id="myTab2" role="tablist">
+                                                                                <li class="nav-item"
+                                                                                    id="nav-item-logo-settings">
+                                                                                    <a class="nav-link"
+                                                                                       id="logo-settings"
+                                                                                       data-toggle="tab"
+                                                                                       href="#logo-settings-section"
+                                                                                       role="tab"
+                                                                                       aria-controls="logo-settings-section"
+                                                                                       aria-selected="false">لوگو ها</a>
+                                                                                </li>
+                                                                                <li class="nav-item"
+                                                                                    id="nav-item-site-header">
+                                                                                    <a class="nav-link" id="site-header"
+                                                                                       data-toggle="tab"
+                                                                                       href="#site-header-section"
+                                                                                       role="tab"
+                                                                                       aria-controls="site-header-section"
+                                                                                       aria-selected="false">برند های
+                                                                                        سایت</a>
+                                                                                </li>
+                                                                                <li class="nav-item"
+                                                                                    id="nav-item-site-footer">
+                                                                                    <a class="nav-link" id="site-footer"
+                                                                                       data-toggle="tab"
+                                                                                       href="#site-footer-section"
+                                                                                       role="tab"
+                                                                                       aria-controls="site-footer-section"
+                                                                                       aria-selected="false">فوتر
+                                                                                        سایت</a>
+                                                                                </li>
+                                                                            </ul>
+
+                                                                            <!-- Tab panes -->
+                                                                            <div class="tab-content pt-1">
+                                                                                <div class="tab-pane"
+                                                                                     id="logo-settings-section"
+                                                                                     role="tabpanel"
+                                                                                     aria-labelledby="logo-settings">
+                                                                                    <div class="divider divider-left">
+                                                                                        <div class="divider-text">نماد
+                                                                                            سایت
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="d-flex">
+                                                                                        <input type="file"
+                                                                                               id="inp-ch-fv-icon">
+                                                                                        <div class="avatar avatar-xl ml-auto">
+                                                                                        <span class="img-hover-section d-flex justify-content-center align-items-center"
+                                                                                              id="inp-ch-fv-icon-btn">
+                                                                                            <img class="img-ch-photo-logo"
+                                                                                                 src="../../../app-assets/images/portrait/small/avatar-s-20.jpg">
+                                                                                        <i class="fa fa-camera hidden-ch-photo-icon"></i>
+                                                                                        </span>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="divider divider-left">
+                                                                                        <div class="divider-text">لوگو
+                                                                                            هدر سایت
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="d-flex">
+                                                                                        <input type="file"
+                                                                                               id="inp-ch-logo-head-site">
+                                                                                        <div class="avatar avatar-xl ml-auto">
+                                                                                        <span class="img-hover-section d-flex justify-content-center align-items-center"
+                                                                                              id="inp-ch-logo-head-site-btn">
+                                                                                            <img class="img-ch-photo-logo"
+                                                                                                 src="../../../app-assets/images/portrait/small/avatar-s-20.jpg">
+                                                                                        <i class="fa fa-camera hidden-ch-photo-icon"></i>
+                                                                                        </span>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="divider divider-left">
+                                                                                        <div class="divider-text">لوگو
+                                                                                            فوتر سایت
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="d-flex">
+                                                                                        <input type="file"
+                                                                                               id="inp-ch-logo-foot-site">
+                                                                                        <div class="avatar avatar-xl ml-auto">
+                                                                                        <span class="img-hover-section d-flex justify-content-center align-items-center"
+                                                                                              id="inp-ch-logo-foot-site-btn">
+                                                                                            <img class="img-ch-photo-logo"
+                                                                                                 src="../../../app-assets/images/portrait/small/avatar-s-20.jpg">
+                                                                                        <i class="fa fa-camera hidden-ch-photo-icon"></i>
+                                                                                        </span>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="tab-pane"
+                                                                                     id="site-header-section"
+                                                                                     role="tabpanel"
+                                                                                     aria-labelledby="site-header">
+                                                                                    <div class="divider divider-left">
+                                                                                        <div class="divider-text">برند
+                                                                                            های ما
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="d-flex justify-content-between">
+                                                                                        <div class="avatar mr-1 avatar-xl">
+                                                                                            <input type="file"
+                                                                                                   class="d-none"
+                                                                                                   id="logo-1">
+                                                                                            <span class="img-hover-section d-flex justify-content-center align-items-center"
+                                                                                                  id="span-1-logo">
+                                                                                            <img class="img-ch-photo-logo"
+                                                                                                 src="../../../app-assets/images/portrait/small/avatar-s-20.jpg"
+                                                                                                 alt="avtar img holder">
+                                                                                        <i class="fa fa-camera hidden-ch-photo-icon"></i>
+                                                                                        </span>
+                                                                                        </div>
+                                                                                        <div class="avatar mr-1 avatar-xl">
+                                                                                            <input type="file"
+                                                                                                   class="d-none"
+                                                                                                   id="logo-2">
+                                                                                            <span class="img-hover-section d-flex justify-content-center align-items-center"
+                                                                                                  id="span-2-logo">
+                                                                                            <img class="img-ch-photo-logo"
+                                                                                                 src="../../../app-assets/images/portrait/small/avatar-s-20.jpg"
+                                                                                                 alt="avtar img holder">
+                                                                                        <i class="fa fa-camera hidden-ch-photo-icon"></i>
+                                                                                        </span>
+                                                                                        </div>
+                                                                                        <div class="avatar mr-1 avatar-xl">
+                                                                                            <input type="file"
+                                                                                                   class="d-none"
+                                                                                                   id="logo-3">
+                                                                                            <span class="img-hover-section d-flex justify-content-center align-items-center"
+                                                                                                  id="span-3-logo">
+                                                                                            <img class="img-ch-photo-logo"
+                                                                                                 src="../../../app-assets/images/portrait/small/avatar-s-20.jpg"
+                                                                                                 alt="avtar img holder">
+                                                                                        <i class="fa fa-camera hidden-ch-photo-icon"></i>
+                                                                                        </span>
+                                                                                        </div>
+                                                                                        <div class="avatar mr-1 avatar-xl">
+                                                                                            <input type="file"
+                                                                                                   class="d-none"
+                                                                                                   id="logo-4">
+                                                                                            <span class="img-hover-section d-flex justify-content-center align-items-center"
+                                                                                                  id="span-4-logo">
+                                                                                            <img class="img-ch-photo-logo"
+                                                                                                 src="../../../app-assets/images/portrait/small/avatar-s-20.jpg"
+                                                                                                 alt="avtar img holder">
+                                                                                        <i class="fa fa-camera hidden-ch-photo-icon"></i>
+                                                                                        </span>
+                                                                                        </div>
+                                                                                        <div class="avatar mr-1 avatar-xl">
+                                                                                            <input type="file"
+                                                                                                   class="d-none"
+                                                                                                   id="logo-5">
+                                                                                            <span class="img-hover-section d-flex justify-content-center align-items-center"
+                                                                                                  id="span-5-logo">
+                                                                                            <img class="img-ch-photo-logo"
+                                                                                                 src="../../../app-assets/images/portrait/small/avatar-s-20.jpg"
+                                                                                                 alt="avtar img holder">
+                                                                                        <i class="fa fa-camera hidden-ch-photo-icon"></i>
+                                                                                        </span>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <hr>
+                                                                                </div>
+                                                                                <div class="tab-pane"
+                                                                                     id="site-footer-section"
+                                                                                     role="tabpanel"
+                                                                                     aria-labelledby="site-footer">
+                                                                                    <div class="divider divider-left mb-1">
+                                                                                        <div class="divider-text">آدرس
+                                                                                            ایمیل پشتیبانی سایت
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <fieldset
+                                                                                            class="form-label-group form-group position-relative has-icon-left">
+                                                                                        <input type="text"
+                                                                                               class="form-control"
+                                                                                               placeholder="لطفا آدرس ایمیل پشتیبانی سایت را وارد نمایید...">
+                                                                                        <div class="form-control-position">
+                                                                                            <i class="feather icon-at-sign"></i>
+                                                                                        </div>
+                                                                                    </fieldset>
+
+                                                                                    <div class="divider divider-left mb-1">
+                                                                                        <div class="divider-text">شماره
+                                                                                            تلفن پشتیبانی سایت
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <fieldset
+                                                                                            class="form-label-group form-group position-relative has-icon-left">
+                                                                                        <input type="number"
+                                                                                               class="form-control"
+                                                                                               placeholder="لطفا شماره تلفن پشتیبانی سایت را وارد نمایید...">
+                                                                                        <div class="form-control-position">
+                                                                                            <i class="feather icon-phone"></i>
+                                                                                        </div>
+                                                                                    </fieldset>
+
+                                                                                    <div class="divider divider-left mb-1">
+                                                                                        <div class="divider-text">
+                                                                                            توضیحات کوتاه سایت در پاورقی
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <fieldset
+                                                                                            class="form-label-group form-group position-relative has-icon-left">
+                                                                                        <input type="number"
+                                                                                               class="form-control"
+                                                                                               placeholder="لطفا متن خود را وارد نمایید...">
+                                                                                        <div class="form-control-position">
+                                                                                            <i class="feather icon-edit"></i>
+                                                                                        </div>
+                                                                                    </fieldset>
+
+                                                                                    <div class="divider divider-left mb-1">
+                                                                                        <div class="divider-text">آدرس
+                                                                                            اینستاگرام سایت
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <fieldset
+                                                                                            class="form-label-group form-group position-relative has-icon-left">
+                                                                                        <input type="number"
+                                                                                               class="form-control"
+                                                                                               placeholder="لطفا آدرس خود را وارد نمایید...">
+                                                                                        <div class="form-control-position">
+                                                                                            <i class="feather icon-link"></i>
+                                                                                        </div>
+                                                                                    </fieldset>
+
+                                                                                    <div class="divider divider-left mb-1">
+                                                                                        <div class="divider-text">آدرس
+                                                                                            کانال یوتیوب سایت
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <fieldset
+                                                                                            class="form-label-group form-group position-relative has-icon-left">
+                                                                                        <input type="number"
+                                                                                               class="form-control"
+                                                                                               placeholder="لطفا آدرس خود را وارد نمایید...">
+                                                                                        <div class="form-control-position">
+                                                                                            <i class="feather icon-link"></i>
+                                                                                        </div>
+                                                                                    </fieldset>
+
+                                                                                    <div class="divider divider-left mb-1">
+                                                                                        <div class="divider-text">آدرس
+                                                                                            کانال تلگرام سایت
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <fieldset
+                                                                                            class="form-label-group form-group position-relative has-icon-left">
+                                                                                        <input type="number"
+                                                                                               class="form-control"
+                                                                                               placeholder="لطفا آدرس خود را وارد نمایید...">
+                                                                                        <div class="form-control-position">
+                                                                                            <i class="feather icon-link"></i>
+                                                                                        </div>
+                                                                                    </fieldset>
+
+                                                                                    <div class="divider divider-left mb-1">
+                                                                                        <div class="divider-text">آدرس
+                                                                                            فیسبوک سایت
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <fieldset
+                                                                                            class="form-label-group form-group position-relative has-icon-left">
+                                                                                        <input type="number"
+                                                                                               class="form-control"
+                                                                                               placeholder="لطفا آدرس خود را وارد نمایید...">
+                                                                                        <div class="form-control-position">
+                                                                                            <i class="feather icon-link"></i>
+                                                                                        </div>
+                                                                                    </fieldset>
+
+                                                                                    <div class="divider divider-left mb-1">
+                                                                                        <div class="divider-text">آدرس
+                                                                                            توییتر سایت
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <fieldset
+                                                                                            class="form-label-group form-group position-relative has-icon-left">
+                                                                                        <input type="number"
+                                                                                               class="form-control"
+                                                                                               placeholder="لطفا آدرس خود را وارد نمایید...">
+                                                                                        <div class="form-control-position">
+                                                                                            <i class="feather icon-link"></i>
+                                                                                        </div>
+                                                                                    </fieldset>
+
+                                                                                    <div class="divider divider-left mb-1">
+                                                                                        <div class="divider-text">متن
+                                                                                            کپی رایت
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <fieldset
+                                                                                            class="form-label-group mb-0 mt-2">
+                                                                                        <textarea data-length="20"
+                                                                                                  class="form-control char-textarea"
+                                                                                                  id="cpy-right-txt-area"
+                                                                                                  rows="2"
+                                                                                                  placeholder="لطفا متن خود را وارد نمایید"></textarea>
+                                                                                    </fieldset>
+                                                                                    <small class="counter-value float-right"><span
+                                                                                            class="char-count">0</span>
+                                                                                        / 20</small>
+
+                                                                                    <div class="divider divider-left mb-1">
+                                                                                        <div class="divider-text">آدرس
+                                                                                            شرکت
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <fieldset
+                                                                                            class="form-label-group mb-0 mt-2">
+                                                                                        <textarea data-length="20"
+                                                                                                  class="form-control char-textarea"
+                                                                                                  id="address-txt-area"
+                                                                                                  rows="2"
+                                                                                                  placeholder="لطفا متن خود را وارد نمایید"></textarea>
+                                                                                        <small class="counter-value float-right"><span
+                                                                                                class="char-count">0</span>
+                                                                                            / 20</small>
+                                                                                    </fieldset>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </section>
+                                                    <!-- Nav Justified Ends -->
+                                                </div>
+                                                <div class="tab-pane border-left" id="user-settings-tab"
+                                                     style="height: 100% !important;" role="tabpanel"
+                                                     aria-labelledby="user-settings">
+
+                                                </div>
+                                                <div class="tab-pane border-left" id="blog-settings-tab"
+                                                     style="height: 100% !important;" role="tabpanel"
+                                                     aria-labelledby="blog-settings">
+                                                    <p> لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
+                                                        استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله
+                                                        در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد
+                                                        نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می
+                                                        باشد. </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- Basic Tag Input end -->
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+
+{% block page_js_view_settings %}
+    <script src="{% static 'AdminPanel/app-assets/js/scripts/navs/navs.min.js' %}"></script>
+    <script src="{% static 'AdminPanel/app-assets/js/customize-me/view-settings.js' %}"></script>
+{% endblock %}

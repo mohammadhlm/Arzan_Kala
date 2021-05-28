@@ -1,0 +1,40 @@
+{% load static %}
+<div class="top-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="d-flex align-items-center justify-content-center justify-content-md-start">
+                        <div class="lng_dropdown mr-2">
+                            <select name="countries" class="custome_select">
+                                <option value='en' data-image="assets/images/ir.png" data-title="Farsi">فارسی</option>
+                                <option value='en' data-image="assets/images/eng.png" data-title="English">انگلیسی</option>
+                                <option value='fn' data-image="assets/images/fn.png" data-title="France">فرانسوی</option>
+                            </select>
+                        </div>
+                        <div class="mr-3">
+                            <select name="countries" class="custome_select">
+                                <option value='GBR' data-title="GBR">تومان</option>
+                                <option value='USD' data-title="USD">دلار </option>
+                                <option value='EUR' data-title="EUR">یورو</option>
+                            </select>
+                        </div>
+                        <ul class="contact_detail text-center text-lg-left">
+                            <li><i class="ti-mobile"></i><span>021-1234567</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="text-center text-md-right">
+                        <ul class="header_list">
+                            <li><a href="compare.html"><i class="ti-control-shuffle"></i><span>مقایسه</span></a></li>
+                            <li><a href="wishlist.html"><i class="ti-heart"></i><span>مورد علاقه</span></a></li>
+                            <!--Login Icon-->
+                            {% if not request.user.is_authenticated %}
+                            <li><a href="login.html"><i class="ti-user"></i><span>ورود</span></a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

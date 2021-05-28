@@ -1,0 +1,233 @@
+{% extends 'AdminPanel/__Main__/base.html' %}
+{% load static %}
+
+{% block page_css_view_user %}
+    <link rel="stylesheet" type="text/css" href="{% static 'AdminPanel/app-assets/css-rtl/pages/app-user.min.css' %}">
+{% endblock %}
+
+
+{% block view_user %}
+    <div class="app-content content">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper">
+            <div class="content-header row">
+            </div>
+            <div class="content-body"><!-- page users view start -->
+                <section class="page-users-view">
+                    <div class="row">
+                        <!-- account start -->
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">حساب</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="users-view-image">
+                                            <img src="{{ user_view.profile.user_profile.url }}"
+                                                 class="users-avatar-shadow w-100 rounded mb-2 pr-2 ml-1" alt="avatar">
+                                        </div>
+                                        <div class="col-12 col-sm-9 col-md-6 col-lg-5">
+                                            <table>
+                                                <tr>
+                                                    <td class="font-weight-bold">نام کاربری</td>
+                                                    <td>
+                                                        {{ user_view.email }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="font-weight-bold">نام</td>
+                                                    <td>
+                                                        {{ user_view.get_full_name|default:'تنظیم نشده است' }}
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div class="col-12 col-md-12 col-lg-5">
+                                            <table class="ml-0 ml-sm-0 ml-lg-0">
+                                                <tr>
+                                                    <td class="font-weight-bold">وضعیت</td>
+                                                    <td>{% if user_view.is_active %}فعال{% else %}
+                                                        غیرفعال{% endif %}</td>
+                                                </tr>
+
+                                            <tr>
+                                                    <td class="font-weight-bold">کاربر ویژه</td>
+                                                    <td>{% if user_view.is_superuser %}فعال{% else %}
+                                                        غیرفعال{% endif %}</td>
+                                                </tr>
+
+                                            <tr>
+                                                    <td class="font-weight-bold"> ورود به پیشخوان</td>
+                                                    <td>{% if user_view.is_staff %}فعال{% else %}
+                                                        غیرفعال{% endif %}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div class="col-12">
+                                            <form action="" method="post" class="form-inline">
+                                                {% csrf_token %}
+                                                {{ user__profile_account_deletion_form.user_id }}
+                                                <button class="btn btn-outline-danger" type="submit"
+                                                        id="user__profile_account_deletion_form__btn"><i
+                                                        class="feather icon-trash-2"></i> حذف حساب
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- account end -->
+                        <!-- information start -->
+                        <div class="col-md-6 col-12 ">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title mb-2">اطلاعات</div>
+                                </div>
+                                <div class="card-body">
+                                    <table>
+                                        <tr>
+                                            <td class="font-weight-bold">جنسیت</td>
+                                            <td>{% if user_view.profile.gender_selection == 'MR' %}مرد
+                                                {% elif user_view.profile.gender_selection == 'MS' %}زن
+                                                {% elif user_view.profile.gender_selection == 'TG' %}فراجنسیت
+                                                {% elif user_view.profile.gender_selection == '' %}ثبت نشده است
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-weight-bold">تلفن همراه</td>
+                                            <td>{{ user_view.profile.phone_number|default:'تنظیم نشده است' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-weight-bold">آدرس</td>
+                                            <td>{{ user_view.profile.location_first|default:'تنظیم نشده است' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-weight-bold">کد پستی</td>
+                                            <td>{{ user_view.profile.postal_code|default:'تنظیم نشده است' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-weight-bold">تعداد ایمیل ارسالی فعالسازی حساب کاربری</td>
+                                            <td class="pl-3">{{ user_view.profile.NumberOfEmailsSentActivationLink }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-weight-bold">تعداد ایمیل های ارسال شده برای کاربر</td>
+                                            <td class="pl-3">{{ user_view.profile.NumberOfEmailsSentToTheUser }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- information start -->
+                        <!-- social links end -->
+                        <div class="col-md-6 col-12 ">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title mb-2">پیوندهای اجتماعی</div>
+                                </div>
+                                <div class="card-body">
+                                    <table>
+                                        <tr>
+                                            <td class="font-weight-bold">تعداد سبد های خرید پرداخت شده کاربر</td>
+                                            <td> {{ user_view.profile.number_of_cards_paid_by_the_user }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-weight-bold">جمع خرید های کاربر</td>
+                                            <td>{{ user_view.profile.total_user_purchases }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-weight-bold">سبد خرید فعال</td>
+                                            <td>
+                                                {% if user_view.profile.get_cart_item_count != 0 %}
+                                                    دارد
+                                                {% else %}
+                                                    ندارد
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- social links end -->
+                        <!-- permissions start -->
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header border-bottom mx-2 px-0">
+                                    <h6 class="border-bottom py-1 mb-0 font-medium-2"><i
+                                            class="feather icon-lock mr-50 "></i> وضعیت حساب کاربری</h6>
+                                </div>
+                                <div class="card-body px-75">
+                                    <div class="table-responsive users-view-permission">
+                                        <table class="table table-borderless">
+                                            <thead>
+                                            <tr>
+                                                <th>ماژول</th>
+                                                <th>فعال / غیرفعال</th>
+                                                <th>کاربر ویژه</th>
+                                                <th>کارمند</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>دسترسی ها</td>
+                                                <td>
+                                                    <div class="custom-control custom-checkbox ml-50"><input
+                                                            type="checkbox"
+                                                            id="users-checkbox1"
+                                                            class="custom-control-input"
+                                                            disabled
+                                                            {% if user_view.is_active %}checked{% endif %}>
+                                                        <label class="custom-control-label"
+                                                               for="users-checkbox1"></label>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="custom-control custom-checkbox ml-50"><input
+                                                            type="checkbox"
+                                                            id="users-checkbox2"
+                                                            class="custom-control-input"
+                                                            disabled
+                                                            {% if user_view.is_superuser %}checked{% endif %}><label
+                                                            class="custom-control-label"
+                                                            for="users-checkbox2"></label>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="custom-control custom-checkbox ml-50"><input
+                                                            type="checkbox"
+                                                            id="users-checkbox3"
+                                                            class="custom-control-input"
+                                                            disabled
+                                                            {% if user_view.is_staff %}checked{% endif %}><label
+                                                            class="custom-control-label"
+                                                            for="users-checkbox3"></label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- permissions end -->
+                    </div>
+                </section>
+                <!-- page users view end -->
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block page_js_view_user %}
+    <script src="{% static 'AdminPanel/app-assets/js/scripts/pages/app-user.min.js' %}"></script>
+{% endblock %}
+
+
+

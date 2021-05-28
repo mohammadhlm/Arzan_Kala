@@ -1,0 +1,61 @@
+{% load static %}
+<!--Render Partial Tag-->
+{% load render_partial %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Meta -->
+   {% include 'All_Template_Main/Header_Main/Meta_Tags_Header_Main__.html' %}
+    <!-- SITE TITLE -->
+    <title>ARZAN KALA |
+    {% block title_home_page %}{% endblock %}
+
+    </title>
+   {% include 'All_Template_Main/Header_Main/CSS_Refrence_Header_Main__.html' %}
+</head>
+
+<body dir="rtl">
+
+<!-- LOADER -->
+<div class="preloader">
+    <div class="lds-ellipsis">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+</div>
+<!-- END LOADER -->
+
+<!-- Modal -->
+
+<!--End Modal-->
+
+<!-- START HEADER -->
+{% block login_header %}{% endblock %}
+{% block register_header %}{% endblock %}
+<!-- END HEADER -->
+
+{#--BreadCrupb--#}
+{% block breadcrumb_login %}{% endblock %}
+{% block breadcrumb_register %}{% endblock %}
+
+
+<!-- END MAIN CONTENT -->
+<div class="main_content">
+{% block login_content %}{% endblock %}
+{% block register_content %}{% endblock %}
+</div>
+<!-- END MAIN CONTENT -->
+
+<!-- START FOOTER -->
+{% render_partial 'Apps.SiteSettings_Apps__Ak.RenderPartial.views.Footer' %}
+<!-- END FOOTER -->
+
+<a href="#" class="scrollup" style="display: none;"><i class="ion-ios-arrow-up"></i></a>
+
+{% block login_script %}{% endblock %}
+{% block register_script %}{% endblock %}
+</body>
+
+</html>

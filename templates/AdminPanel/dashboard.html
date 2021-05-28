@@ -1,0 +1,248 @@
+{% extends 'AdminPanel/__Main__/base.html' %}
+{% load static %}
+
+{% block title_dashboard_main %}آمار{% endblock %}
+
+<!--Block Css Admin Dashboard-->
+{% block vendor_css_dashboard_home %}
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'AdminPanel/app-assets/vendors/css/charts/apexcharts.css' %}">
+{% endblock %}
+
+{% block page_css_dashboard_home %}
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'AdminPanel/app-assets/css-rtl/pages/dashboard-ecommerce.min.css' %}">
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'AdminPanel/app-assets/css-rtl/pages/card-analytics.min.css' %}">
+{% endblock %}
+
+{% block admin_dashboard_main %}
+    <div class="app-content content">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper">
+            <div class="content-header row">
+            </div>
+            <div class="content-body">
+                <!-- Dashboard Ecommerce Starts -->
+                <section id="dashboard-ecommerce">
+                    {# Monitor Product #}
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-6 col-12">
+                            <div class="card">
+                                <div class="card-header d-flex align-items-start pb-0">
+                                    <div>
+                                        <h2 class="text-bold-700 mb-0">{{ Member_Count }}</h2>
+                                        <p>اعضای فعال</p>
+                                    </div>
+                                    <div class="avatar bg-rgba-primary p-50 m-0">
+                                        <div class="avatar-content">
+                                            <i class="feather icon-users text-primary font-medium-5"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-sm-6 col-12">
+                            <div class="card">
+                                <div class="card-header d-flex align-items-start pb-0">
+                                    <div>
+                                        <h2 class="text-bold-700 mb-0">{{ total_sale|default_if_none:0 }}</h2>
+                                        <p>درآمد حاصل شده</p>
+                                    </div>
+                                    <div class="avatar bg-rgba-primary p-50 m-0">
+                                        <div class="avatar-content">
+                                            <i class="feather icon-credit-card text-success font-medium-5"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-sm-6 col-12">
+                            <div class="card">
+                                <div class="card-header d-flex align-items-start pb-0">
+                                    <div>
+                                        <h2 class="text-bold-700 mb-0">{{ active_cart_count }}</h2>
+                                        <p>سبد خرید پرداخت نشده</p>
+                                    </div>
+                                    <div class="avatar bg-rgba-primary p-50 m-0">
+                                        <div class="avatar-content">
+                                            <i class="feather icon-shopping-cart text-danger font-medium-5"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-sm-6 col-12">
+                            <div class="card">
+                                <div class="card-header d-flex align-items-start pb-0">
+                                    <div>
+                                        <h2 class="text-bold-700 mb-0">{{ total_product_count|default_if_none:"0" }}</h2>
+                                        <p>محصول فروخته شده</p>
+                                    </div>
+                                    <div class="avatar bg-rgba-primary p-50 m-0">
+                                        <div class="avatar-content">
+                                            <i class="feather icon-package text-warning font-medium-5"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {# Monitor Systerm Performance #}
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-6 col-12">
+                            <div class="card">
+          <div class="card-header d-flex justify-content-between pb-0">
+              <h4 class="card-title">پشتیبانی ردیاب</h4>
+              <div class="dropdown chart-dropdown">
+                  <button class="btn btn-sm border-0 dropdown-toggle p-50" type="button" id="dropdownItem4"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 7 روز اخیر</button>
+                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownItem4">
+                    <a class="dropdown-item" href="#">28 روز اخیر</a>
+                    <a class="dropdown-item" href="#">ماه اخیر</a>
+                    <a class="dropdown-item" href="#">سال اخیر</a>
+                  </div>
+              </div>
+          </div>
+          <div class="card-content">
+              <div class="card-body pt-0">
+                 <div class="row">
+                      <div class="col-sm-2 col-12 d-flex flex-column flex-wrap text-center">
+                          <h1 class="font-large-2 text-bold-700 mt-2 mb-0">163</h1>
+                          <small>تیکت ها</small>
+                      </div>
+                      <div class="col-sm-10 col-12 d-flex justify-content-center">
+                          <div id="support-tracker-chart"></div>
+                      </div>
+                  </div>
+                  <div class="chart-info d-flex justify-content-between">
+                      <div class="text-center">
+                          <p class="mb-50">تیکت های جدید</p>
+                          <span class="font-large-1">29</span>
+                      </div>
+                      <div class="text-center">
+                          <p class="mb-50">تیکت های  باز</p>
+                          <span class="font-large-1">63</span>
+                      </div>
+                      <div class="text-center">
+                          <p class="mb-50">زمان پاسخ</p>
+                          <span class="font-large-1">1 روز</span>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+                        </div>
+
+                        <div class="col-lg-3 col-sm-6 col-12">
+                            <div class="card">
+                                <div class="card-header d-flex align-items-start pb-0">
+                                    <div>
+                                        <h2 class="text-bold-700 mb-0">{{ total_sale|default_if_none:0 }}</h2>
+                                        <p>درآمد حاصل شده</p>
+                                    </div>
+                                    <div class="avatar bg-rgba-primary p-50 m-0">
+                                        <div class="avatar-content">
+                                            <i class="feather icon-credit-card text-success font-medium-5"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-sm-6 col-12">
+                            <div class="card">
+                                <div class="card-header d-flex align-items-start pb-0">
+                                    <div>
+                                        <h2 class="text-bold-700 mb-0">{{ active_cart_count }}</h2>
+                                        <p>سبد خرید پرداخت نشده</p>
+                                    </div>
+                                    <div class="avatar bg-rgba-primary p-50 m-0">
+                                        <div class="avatar-content">
+                                            <i class="feather icon-shopping-cart text-danger font-medium-5"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-sm-6 col-12">
+                            <div class="card">
+                                <div class="card-header d-flex align-items-start pb-0">
+                                    <div>
+                                        <h2 class="text-bold-700 mb-0">{{ total_product_count|default_if_none:"0" }}</h2>
+                                        <p>محصول فروخته شده</p>
+                                    </div>
+                                    <div class="avatar bg-rgba-primary p-50 m-0">
+                                        <div class="avatar-content">
+                                            <i class="feather icon-package text-warning font-medium-5"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header d-flex justify-content-between align-items-end">
+                                    <h4 class="card-title">آخرید خرید ها</h4>
+                                    <p class="font-medium-5 mb-0"><i
+                                            class="feather icon-settings text-muted cursor-pointer"></i></p>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body pb-0">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover-animation mb-0">
+                                                <thead>
+                                                <tr>
+                                                    <th scope="col">آیتم</th>
+                                                    <th scope="col">نام</th>
+                                                    <th scope="col">ایمیل</th>
+                                                    <th scope="col">جمع خرید</th>
+                                                    <th scope="col">تاریخ پرداخت</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for sale in last_sales %}
+                                                    <tr>
+                                                        <th scope="row">{{ forloop.counter }}</th>
+                                                        <td>{{ sale.user.get_full_name }}</td>
+                                                        <td>{{ sale.user.username }}</td>
+                                                        <td>
+                                                            <a href="{{ sale.get_absolute_url }}">{{ sale.total_product_price }}</a>
+                                                        </td>
+                                                        <td>
+                                                            <a href="{{ sale.get_absolute_url|default:'#' }}">{{ sale.jalali_pay_time|default_if_none:"تاریخی ثبت نشده است" }}</a>
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- Dashboard Ecommerce ends -->
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block page_vonder_js_dashboard_home %}
+    <script src="{% static 'AdminPanel/app-assets/vendors/js/charts/apexcharts.min.js' %}"></script>
+{% endblock %}
+
+{% block page_js_dashboard_home %}
+    <script src="{% static 'AdminPanel/app-assets/js/scripts/pages/dashboard-ecommerce.min.js' %}"></script>
+{% endblock %}

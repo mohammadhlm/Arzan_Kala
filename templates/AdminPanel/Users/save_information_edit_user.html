@@ -1,0 +1,27 @@
+<form action="" method="post" id="form_information_user">
+    {% csrf_token %}
+    {{ user__information_editing_form.user_profile }}
+    {{ user__information_editing_form.delete_profile_checkbox }}
+    <div class="form-group">
+        <div class="controls">
+            <label for="">تلفن همراه</label>
+            {{ user__information_editing_form.phone_number }}
+        </div>
+    </div>
+    <div class="form-group">
+        <label>انتخاب جنسیت</label>
+        {{ user__information_editing_form.gender_selection }}
+    </div>
+    <div class="form-group">
+        <div class="controls">
+            <label>آدرس</label>
+            {{ user__information_editing_form.location_first }}
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="controls">
+            <label>کد پستی</label>
+            {{ user__information_editing_form.postal_code }}
+        </div>
+    </div>
+</form>

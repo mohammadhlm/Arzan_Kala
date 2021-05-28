@@ -1,0 +1,238 @@
+<div class="customizer d-none d-md-block"><a class="customizer-close" href="#"><i class="feather icon-x"></i></a><a class="customizer-toggle" href="#"><i class="feather icon-settings fa fa-spin fa-fw white"></i></a><div class="customizer-content p-2">
+    <h4 class="text-uppercase mb-0">تنظیم کننده تم</h4>
+    <hr>
+    <form action="" method="post" class="" id="customizer__form">
+        {% csrf_token %}
+        {{ customizer__theme__form.menu_color }}
+        {{ customizer__theme__form.theme_color }}
+        {{ customizer__theme__form.menu_mode }}
+        {{ customizer__theme__form.header_color }}
+        {{ customizer__theme__form.header_mode }}
+        {{ customizer__theme__form.footer_mode }}
+        {{ customizer__theme__form.flash_navigation_mode }}
+        <!-- Menu Colors Starts -->
+        <div id="customizer-theme-colors">
+            <h5>رنگ های منو</h5>
+            <ul class="list-inline unstyled-list" id="list__customize__menu__color">
+                <li class="color-box bg-primary PR {% if customize_obj.menu_color == 'PR' %}selected{% endif %}" data-color="theme-primary"></li>
+                <li class="color-box bg-success GR {% if customize_obj.menu_color == 'GR' %}selected{% endif %}" data-color="theme-success"></li>
+                <li class="color-box bg-danger RD {% if customize_obj.menu_color == 'RD' %}selected{% endif %}" data-color="theme-danger"></li>
+                <li class="color-box bg-info BL {% if customize_obj.menu_color == 'BL' %}selected{% endif %}" data-color="theme-info"></li>
+                <li class="color-box bg-warning OG {% if customize_obj.menu_color == 'OG' %}selected{% endif %}" data-color="theme-warning"></li>
+                <li class="color-box bg-dark BC {% if customize_obj.menu_color == 'BC' %}selected{% endif %}" data-color="theme-dark"></li>
+            </ul>
+        </div>
+        <!-- Menu Colors Ends -->
+        <hr>
+        <!-- Theme options starts -->
+        <h5 class="mt-1">تم صفحه</h5>
+        <div class="theme-layouts">
+            <div class="d-flex justify-content-start" id="customize__theme__color">
+                <div class="mx-50 lidht">
+                    <fieldset>
+                        <div class="vs-radio-con vs-radio-primary">
+                            <input type="radio" name="layoutOptions" value="LT" class="layout-name" data-layout="" {% if customize_obj.theme_color == 'LT' %}checked{% endif %}>
+                            <span class="vs-radio">
+              <span class="vs-radio--border"></span>
+              <span class="vs-radio--circle"></span>
+            </span>
+                            <span class="">روشن</span>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="mx-50 dark">
+                    <fieldset>
+                        <div class="vs-radio-con vs-radio-primary">
+                            <input type="radio" name="layoutOptions" value="DK" class="layout-name" data-layout="dark-layout" {% if customize_obj.theme_color == 'DK' %}checked{% endif %}>
+                            <span class="vs-radio">
+              <span class="vs-radio--border"></span>
+              <span class="vs-radio--circle"></span>
+            </span>
+                            <span class="">تاریک</span>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="mx-50 semi-dark">
+                    <fieldset>
+                        <div class="vs-radio-con vs-radio-primary">
+                            <input type="radio" name="layoutOptions" value="ST" class="layout-name" data-layout="semi-dark-layout" {% if customize_obj.theme_color == 'ST' %}checked{% endif %}>
+                            <span class="vs-radio">
+              <span class="vs-radio--border"></span>
+              <span class="vs-radio--circle"></span>
+            </span>
+                            <span class="">نیمه روشن</span>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+        <!-- Theme options starts -->
+        <hr>
+
+        <!-- Collapse sidebar switch starts -->
+        <div class="collapse-sidebar d-flex justify-content-between">
+            <div class="collapse-option-title">
+                <h5 class="pt-25 collapse_sidebar">نوار کناری</h5>
+                <h5 class="pt-25 collapse_menu d-none">منو Collapse</h5>
+            </div>
+            <div class="collapse-option-switch">
+                <div class="custom-control custom-switch" id="customize__menu__mode">
+                <fieldset>
+                    <div class="vs-radio-con vs-radio-primary">
+                        <input type="checkbox" name="footerType" class="{% if customize_obj.menu_mode %}selected{% endif %}" value="SG" id="collapse-sidebar-switch" >
+                        <span class="vs-radio">
+            <span class="vs-radio--border"></span>
+            <span class="vs-radio--circle"></span>
+          </span>
+                    </div>
+                </fieldset>
+
+                </div>
+            </div>
+        </div>
+        <!-- Collapse sidebar switch Ends -->
+        <hr>
+
+        <!-- Navbar colors starts -->
+        <div id="customizer-navbar-colors">
+            <h5>رنگ های نوار</h5>
+            <ul class="list-inline unstyled-list" id="customize__header__color">
+                <li class="color-box bg-white border WT {% if customize_obj.header_color == 'WT' %}selected{% endif %}" data-navbar-default=""></li>
+                <li class="color-box bg-primary PR {% if customize_obj.header_color == 'PR' %}selected{% endif %}" data-navbar-color="bg-primary"></li>
+                <li class="color-box bg-success GR {% if customize_obj.header_color == 'GR' %}selected{% endif %}" data-navbar-color="bg-success"></li>
+                <li class="color-box bg-danger RD {% if customize_obj.header_color == 'RD' %}selected{% endif %}" data-navbar-color="bg-danger"></li>
+                <li class="color-box bg-info BL {% if customize_obj.header_color == 'BL' %}selected{% endif %}" data-navbar-color="bg-info"></li>
+                <li class="color-box bg-warning OG {% if customize_obj.header_color == 'OG' %}selected{% endif %}" data-navbar-color="bg-warning"></li>
+                <li class="color-box bg-dark BC {% if customize_obj.header_color == 'BC' %}selected{% endif %}" data-navbar-color="bg-dark"></li>
+            </ul>
+            <hr>
+        </div>
+        <!-- Navbar colors starts -->
+
+        <!-- Navbar Type Starts -->
+        <div id="navbar-type">
+            <h5 class="navbar_type">وضعیت نوار</h5>
+            <h5 class="menu_type d-none">وضعیت منو</h5>
+            <div class="navbar-type d-flex justify-content-start" id="customize__header__mode">
+                <div class="mx-50">
+                    <fieldset>
+                        <div class="vs-radio-con vs-radio-primary">
+                            <input type="radio" name="navbarType" value="HN" id="navbar-hidden" {% if customize_obj.header_mode == 'HN' %}checked{% endif %}>
+                            <span class="vs-radio">
+              <span class="vs-radio--border"></span>
+              <span class="vs-radio--circle"></span>
+            </span>
+                            <span class="">مخفی</span>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="mx-50">
+                    <fieldset>
+                        <div class="vs-radio-con vs-radio-primary">
+                            <input type="radio" name="navbarType" value="FD" id="navbar-static" {% if customize_obj.header_mode == 'FD' %}checked{% endif %}>
+                            <span class="vs-radio">
+              <span class="vs-radio--border"></span>
+              <span class="vs-radio--circle"></span>
+            </span>
+                            <span class="">ایستا</span>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="mx-50">
+                    <fieldset>
+                        <div class="vs-radio-con vs-radio-primary">
+                            <input type="radio" name="navbarType" value="SG" id="navbar-sticky" {% if customize_obj.header_mode == 'SG' %}checked{% endif %}>
+                            <span class="vs-radio">
+              <span class="vs-radio--border"></span>
+              <span class="vs-radio--circle"></span>
+            </span>
+                            <span class="">چسبیده</span>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="mx-50">
+                    <fieldset>
+                        <div class="vs-radio-con vs-radio-primary">
+                            <input type="radio" name="navbarType" value="FG" id="navbar-floating" {% if customize_obj.header_mode == 'FG' %}checked{% endif %}>
+                            <span class="vs-radio">
+              <span class="vs-radio--border"></span>
+              <span class="vs-radio--circle"></span>
+            </span>
+                            <span class="">شناور</span>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <hr>
+        </div>
+        <!-- Navbar Type Starts -->
+
+        <!-- Footer Type Starts -->
+        <h5>وضعیت پاورقی</h5>
+        <div class="footer-type d-flex justify-content-start" id="customize__footer__mode">
+            <div class="mx-50">
+                <fieldset>
+                    <div class="vs-radio-con vs-radio-primary">
+                        <input type="radio" name="footerType" value="HN" id="footer-hidden" {% if customize_obj.footer_mode == 'HN' %}checked{% endif %}>
+                        <span class="vs-radio">
+            <span class="vs-radio--border"></span>
+            <span class="vs-radio--circle"></span>
+          </span>
+                        <span class="">مخفی</span>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="mx-50">
+                <fieldset>
+                    <div class="vs-radio-con vs-radio-primary">
+                        <input type="radio" name="footerType" value="FD" id="footer-static" {% if customize_obj.footer_mode == 'FD' %}checked{% endif %}>
+                        <span class="vs-radio">
+            <span class="vs-radio--border"></span>
+            <span class="vs-radio--circle"></span>
+          </span>
+                        <span class="">ایستا</span>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="mx-50">
+                <fieldset>
+                    <div class="vs-radio-con vs-radio-primary">
+                        <input type="radio" name="footerType" value="SG" id="footer-sticky" {% if customize_obj.footer_mode == 'SG' %}checked{% endif %}>
+                        <span class="vs-radio">
+            <span class="vs-radio--border"></span>
+            <span class="vs-radio--circle"></span>
+          </span>
+                        <span class="">چسبیده</span>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+        <!-- Footer Type Ends -->
+        <hr>
+
+        <!-- Hide Scroll To Top Starts-->
+        <div class="hide-scroll-to-top d-flex justify-content-between py-25">
+            <div class="hide-scroll-title">
+                <h5 class="pt-25">پیمایش به بالا</h5>
+            </div>
+            <div class="hide-scroll-top-switch" id="customize__navigation__mode">
+             <fieldset>
+                    <div class="vs-radio-con vs-radio-primary">
+                        <input type="checkbox" name="footerType" class="{% if customize_obj.flash_navigation_mode %}selected{% endif %}" value="SG" id="hide-scroll-top-switch" >
+                        <span class="vs-radio">
+            <span class="vs-radio--border"></span>
+            <span class="vs-radio--circle"></span>
+          </span>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+        <hr>
+    <div class="d-flex justify-content-center py-25">
+    <button class="btn btn-outline-success" type="button" id="save_changes_customizer_form">ذخیره تغییرات</button>
+    </div>
+        <!-- Hide Scroll To Top Ends-->
+    </form>
+</div>
+
+</div>

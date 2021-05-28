@@ -1,0 +1,158 @@
+{% extends '__main__.html' %}
+{% load render_partial %}
+{% load static %}
+<!-- START HEADER -->
+{% block header_shop %}
+    {% render_partial 'Apps.SiteSettings_Apps__Ak.RenderPartial.views.header_one' %}
+{% endblock %}
+<!-- END HEADER -->
+
+<!-- START SECTION BREADCRUMB -->
+{% block breadcrumb_shop %}
+    <div class="breadcrumb_section bg_gray page-title-mini">
+        <div class="container"><!-- STRART CONTAINER -->
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="page-title">
+                        <h1>فروشگاه</h1>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <ol class="breadcrumb justify-content-md-end">
+                        <li class="breadcrumb-item"><a href="{% url 'Ak_Main:Home_Page' %}">خانه</a></li>
+                        <li class="breadcrumb-item active">فروشگاه</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- END CONTAINER-->
+    </div>
+{% endblock %}
+<!-- END SECTION BREADCRUMB -->
+
+{#<!-- START MAIN CONTENT -->#}
+{% block content_shop %}
+
+    {#    <!-- START SECTION SHOP -->#}
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-9" id="product-section">
+                    <div class="row align-items-center mb-4 pb-1">
+                        <div class="col-12">
+                            <div class="product_header">
+                                <div class="product_header_left">
+                                    <div class="custom_select">
+                                        {{ form__advanced_filter_shop.order }}
+                                        {{ form__advanced_filter_shop.category_id }}
+                                        {{ form__advanced_filter_shop.brand_id }}
+                                        {{ form__advanced_filter_shop.price_filter }}
+                                    </div>
+                                </div>
+                                <div class="product_header_right">
+                                    <div class="products_view">
+                                        <a href="javascript:Void(0);" class="shorting_icon grid active"><i class="ti-view-grid"></i></a>
+                                        <a href="javascript:Void(0);" class="shorting_icon list"><i class="ti-layout-list-thumb"></i></a>
+                                    </div>
+                                    <div class="custom_select">
+                                        <select class="form-control form-control-sm">
+                                            <option value="">نمایش</option>
+                                            <option value="9">9</option>
+                                            <option value="12">12</option>
+                                            <option value="18">18</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                 {# Product Here #}
+                </div>
+                <div class="col-lg-3 order-lg-first mt-4 pt-2 mt-lg-0 pt-lg-0">
+                    <div class="sidebar">
+                        <div class="widget">
+                            <h5 class="widget_title">دسته بندی ها</h5>
+                            <ul class="widget_categories">
+                                {% for category in list_category %}
+                                    <li>
+                                        <div class="custome-checkbox" id="category-list">
+                                            <input class="form-check-input" type="checkbox" name="checkbox" id="category_{{ category.id }}" value="{{ category.id }}">
+                                            <label class="form-check-label" for="category_{{ category.id }}"><span>{{ category.category_name }}</span></label>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="widget">
+                            <h5 class="widget_title">فیلتر</h5>
+                            <div class="filter_price">
+                                <div class="price_range">
+                                    <span>قیمت: <span id="flt_price"></span></span>
+                                    <p class="mb-0">از</p>
+                                    <input type="number" class="form-control" id="price_first">
+                                    <p class="mb-0">تا</p>
+                                    <input type="number" class="form-control" id="price_second">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="widget">
+                            <h5 class="widget_title">برند</h5>
+                            <ul class="list_brand">
+                                {% for brand in list_brand %}
+                                    <li>
+                                        <div class="custome-checkbox">
+                                            <input class="form-check-input" type="checkbox" name="checkbox" id="brand_{{ brand.id }}" value="{{ brand.id }}">
+                                            <label class="form-check-label" for="brand_{{ brand.id }}"><span>{{ brand.name }}</span></label>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="widget">
+                            <button type="button" class="btn btn-success w-100" id="get_new_product">فیلتر محصول</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {#    <!-- END SECTION SHOP -->#}
+
+    {#    <!-- START SECTION SUBSCRIBE NEWSLETTER -->#}
+    {% include 'All_Template_Main/Content/Subscribe_News_Letters.html' %}
+    {#    <!-- START SECTION SUBSCRIBE NEWSLETTER -->#}
+{% endblock %}
+
+{% block script_shop %}
+    <!-- Latest jQuery -->
+    <script src="{% static 'site_assets/js/jquery-1.12.4.min.js' %}"></script>
+    <!-- jquery-ui -->
+    <script src="{% static 'site_assets/js/jquery-ui.js' %}"></script>
+    <!-- popper min js -->
+    <script src="{% static 'site_assets/js/popper.min.js' %}"></script>
+    <!-- Latest compiled and minified Bootstrap -->
+    <script src="{% static 'site_assets/bootstrap/js/bootstrap.min.js' %}"></script>
+    <!-- owl-carousel min js  -->
+    <script src="{% static 'site_assets/owlcarousel/js/owl.carousel.min.js' %}"></script>
+    <!-- magnific-popup min js  -->
+    <script src="{% static 'site_assets/js/magnific-popup.min.js' %}"></script>
+    <!-- waypoints min js  -->
+    <script src="{% static 'site_assets/js/waypoints.min.js' %}"></script>
+    <!-- parallax js  -->
+    <script src="{% static 'site_assets/js/parallax.js' %}"></script>
+    <!-- countdown js  -->
+    <script src="{% static 'site_assets/js/jquery.countdown.min.js' %}"></script>
+    <!-- imagesloaded js -->
+    <script src="{% static 'site_assets/js/imagesloaded.pkgd.min.js' %}"></script>
+    <!-- isotope min js -->
+    <script src="{% static 'site_assets/js/isotope.min.js' %}"></script>
+    <!-- jquery.dd.min js -->
+    <script src="{% static 'site_assets/js/jquery.dd.min.js' %}"></script>
+    <!-- slick js -->
+    <script src="{% static 'site_assets/js/slick.min.js' %}"></script>
+    <!-- elevatezoom js -->
+    <script src="{% static 'site_assets/js/jquery.elevatezoom.js' %}"></script>
+    <!-- scripts js -->
+    <script src="{% static 'site_assets/js/scripts.js' %}"></script>
+    {# Ajax #}
+    <script src="{% static 'site_assets/js/ajax/shop.js' %}"></script>
+{% endblock %}

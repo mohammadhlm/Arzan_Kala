@@ -1,0 +1,132 @@
+{% extends 'User_Apps/Ak_User_Account/__main__.html' %}
+{% load static %}
+{% load render_partial %}
+
+<!-- START HEADER -->
+{% block login_header %}
+   {% render_partial 'Apps.SiteSettings_Apps__Ak.RenderPartial.views.header_one' %}
+{% endblock %}
+<!-- END HEADER -->
+
+<!-- START SECTION BREADCRUMB -->
+{% block breadcrumb_login %}
+<div class="breadcrumb_section bg_gray page-title-mini">
+    <div class="container"><!-- STRART CONTAINER -->
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <div class="page-title">
+                    <h1>ورود</h1>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <ol class="breadcrumb justify-content-md-end">
+                    <li class="breadcrumb-item"><a href="#">خانه</a></li>
+                    <li class="breadcrumb-item"><a href="#">صفحات</a></li>
+                    <li class="breadcrumb-item active">ورود</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- END CONTAINER-->
+</div>
+{% endblock %}
+<!-- END SECTION BREADCRUMB -->
+
+<!-- START MAIN CONTENT -->
+{% block login_content %}
+    <!-- START LOGIN SECTION -->
+    <div class="login_register_wrap section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-6 col-md-10">
+                    <div class="login_wrap">
+                        <div class="padding_eight_all bg-white">
+                            <div class="heading_s1">
+                                <h3>ورود</h3>
+                            </div>
+                            <form method="POST" novalidate>
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    {{ LoginForm.email }}
+                                    <!--Error Email-->
+                                    {% for EmailError in LoginForm.email.errors %}
+                                        <p class="RegisterFormErrors">*{{ EmailError }}</p>
+                                    {% endfor %}
+                                </div>
+                                <div class="form-group">
+                                    {{ LoginForm.password }}
+                                </div>
+                                <!--Google Recaptcha-->
+                                <div class="g-recaptcha" data-sitekey="6LdAF-QaAAAAAE4wjb-hA0eJBo5CkwJwBoKIhdAt"></div>
+                                <!--Error Captcha-->
+                                {% for CaptchaError in messages %}
+                                    <p class="RegisterFormErrors">*{{ CaptchaError }}</p>
+                                {% endfor %}
+                                <p class="RegisterFormErrors"></p>
+                                <div class="login_footer form-group">
+                                    <div class="chek-form">
+                                        <div class="custome-checkbox">
+                                            <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox1" value="">
+                                            <label class="form-check-label" for="exampleCheckbox1"><span>مرا به خاطر بسپار</span></label>
+                                        </div>
+                                    </div>
+                                    <a href="#">رمز عبور را فراموش کرده اید؟</a>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-fill-out btn-block" name="login">ورود</button>
+                                </div>
+                            </form>
+                            <div class="different_login">
+                                <span> یا</span>
+                            </div>
+                            <ul class="btn-login list_none text-center">
+                                <li><a href="#" class="btn btn-facebook"><i class="ion-social-facebook"></i>فیسبوک</a></li>
+                                <li><a href="{% url "social:begin" "google-oauth2" %}" class="btn btn-google"><i class="ion-social-googleplus"></i>گوگل</a></li>
+                            </ul>
+                            <div class="form-note text-center">حساب کاربری ندارید؟ <a href="signup.html">ثبت نام کنید</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END LOGIN SECTION -->
+
+    <!-- START SECTION SUBSCRIBE NEWSLETTER -->
+    {% include 'All_Template_Main/Content/Subscribe_News_Letters.html' %}
+    <!-- START SECTION SUBSCRIBE NEWSLETTER -->
+{% endblock %}
+<!-- END MAIN CONTENT -->
+
+
+{% block login_script %}
+<!--Google Recaptcha Js-->
+<script src='https://www.google.com/recaptcha/api.js'></script>
+<!-- Latest jQuery -->
+<script src="{% static 'site_assets/js/jquery-1.12.4.min.js' %}"></script>
+<!-- popper min js -->
+<script src="{% static 'site_assets/js/popper.min.js' %}"></script>
+<!-- Latest compiled and minified Bootstrap -->
+<script src="{% static 'site_assets/bootstrap/js/bootstrap.min.js' %}"></script>
+<!-- owl-carousel min js  -->
+<script src="{% static 'site_assets/owlcarousel/js/owl.carousel.min.js' %}"></script>
+<!-- magnific-popup min js  -->
+<script src="{% static 'site_assets/js/magnific-popup.min.js' %}"></script>
+<!-- waypoints min js  -->
+<script src="{% static 'site_assets/js/waypoints.min.js' %}"></script>
+<!-- parallax js  -->
+<script src="{% static 'site_assets/js/parallax.js' %}"></script>
+<!-- countdown js  -->
+<script src="{% static 'site_assets/js/jquery.countdown.min.js' %}"></script>
+<!-- imagesloaded js -->
+<script src="{% static 'site_assets/js/imagesloaded.pkgd.min.js' %}"></script>
+<!-- isotope min js -->
+<script src="{% static 'site_assets/js/isotope.min.js' %}"></script>
+<!-- jquery.dd.min js -->
+<script src="{% static 'site_assets/js/jquery.dd.min.js' %}"></script>
+<!-- slick js -->
+<script src="{% static 'site_assets/js/slick.min.js' %}"></script>
+<!-- elevatezoom js -->
+<script src="{% static 'site_assets/js/jquery.elevatezoom.js' %}"></script>
+<!-- scripts js -->
+<script src="{% static 'site_assets/js/scripts.js' %}"></script>
+{% endblock %}

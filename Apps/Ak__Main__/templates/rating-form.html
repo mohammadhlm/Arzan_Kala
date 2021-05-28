@@ -1,0 +1,16 @@
+<h5>ارسال نظرات</h5>
+<form class="col-12 mt-3" id="rating-form">
+    {% csrf_token %}
+    {{ Rating__Form.product }}
+    {{ Rating__Form.user }}
+    <div class="form-group col-12 d-flex">
+        <div class="star_rating my-auto mr-auto">
+            <span data-value="1"><i class="far fa-star"></i></span>
+            <span data-value="2"><i class="far fa-star"></i></span>
+            <span data-value="3"><i class="far fa-star"></i></span>
+            <span data-value="4"><i class="far fa-star"></i></span>
+            <span data-value="5"><i class="far fa-star"></i></span>
+        </div>
+        <button class="btn btn-outline-danger" type="button" id="send-rating-form">ثبت امتیاز</button>
+    </div>
+</form>

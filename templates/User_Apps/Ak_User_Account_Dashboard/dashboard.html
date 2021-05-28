@@ -1,0 +1,185 @@
+{% extends 'User_Apps/Ak_User_Account_Dashboard/__main__.html' %}
+{% load static %}
+<!--Render Partial Tag-->
+{% load render_partial %}
+
+
+<!-- START HEADER -->
+{% block dashboard_header %}
+    <header class="header_wrap fixed-top header_with_topbar">
+        {#    <!-- Start Top Menu-->#}
+        {% render_partial 'Apps.SiteSettings_Apps__Ak.RenderPartial.views.header_one' %}
+        {#    <!-- End Top Menu-->#}
+    </header>
+{% endblock %}
+<!-- END HEADER -->
+
+<!-- START SECTION BREADCRUMB -->
+{% block breadcrumb_dashboard %}
+    <div class="breadcrumb_section bg_gray page-title-mini">
+        <div class="container"><!-- STRART CONTAINER -->
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="page-title">
+                        <h1>حساب کاربری</h1>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <ol class="breadcrumb justify-content-md-end">
+                        <li class="breadcrumb-item"><a href="{% url 'Ak_Main:Home_Page' %}">خانه</a></li>
+                        <li class="breadcrumb-item active">حساب کاربری</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- END CONTAINER-->
+    </div>
+{% endblock %}
+<!-- END SECTION BREADCRUMB -->
+
+<!-- START MAIN CONTENT -->
+{% block dashboard_content %}
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-4">
+                    <div class="dashboard_menu">
+                        <ul class="nav nav-tabs flex-column" role="tablist">
+                            <li class="nav-item" style="background-color: #f7f8fb !important;">
+                                <img src="{{ user.profile.user_profile.url }}" alt="" class="rounded-circle mx-auto d-flex my-2" width="100">
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" id="dashboard-tab" data-toggle="tab" href="#dashboard" role="tab" aria-controls="dashboard" aria-selected="false"><i class="ti-layout-grid2"></i>داشبورد</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="orders-tab" data-toggle="tab" href="#orders" role="tab" aria-controls="orders" aria-selected="false"><i class="ti-shopping-cart-full"></i>سفارشات</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="address-tab" data-toggle="tab" href="#address" role="tab" aria-controls="address" aria-selected="true"><i class="ti-location-pin"></i>آدرس من</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="account-detail-tab" data-toggle="tab" href="#account-detail" role="tab" aria-controls="account-detail" aria-selected="true"><i class="ti-id-badge"></i>جزئیات حساب</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'Ak_User_Account_Dashboard:logout_user' %}"><i class="ti-lock"></i>خروج</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-8">
+                    <div class="tab-content dashboard_content">
+                        <div class="tab-pane fade active show" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3>داشبورد</h3>
+                                </div>
+                                <div class="card-body">
+                                    <p>از داشبورد حساب شما. می توانید سفارشات اخیر خود را به راحتی بررسی کرده و مشاهده کنید.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="orders" role="tabpanel" aria-labelledby="orders-tab">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3>سفارشات</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th>سفارش</th>
+                                                <th>تاریخ</th>
+                                                <th>وضعیت</th>
+                                                <th>جمع</th>
+                                                <th>اقدامات</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for cart in user.cart_set.all %}
+                                                <tr>
+                                                    <td>#1234</td>
+                                                    <td>{{ cart.pay_time }}</td>
+                                                    <td>در حال پردازش</td>
+                                                    <td>{{ cart.total_product_price }} تومان </td>
+                                                    <td><a href="#" class="btn btn-fill-out btn-sm">نمایش</a></td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="address" role="tabpanel" aria-labelledby="address-tab">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="card mb-3 mb-lg-0">
+                                        <div class="card-header">
+                                            <h3>آدرس شما</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <address>{{ user.profile.location_first }}</address>
+                                            <p>{{ user.profile.postal_code|default:"آدرسی ثبت نشده است" }}</p>
+                                            <a href="#" class="btn btn-fill-out">ویرایش</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="account-detail" role="tabpanel" aria-labelledby="account-detail-tab">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3>جزئیات حساب</h3>
+                                </div>
+                                <div class="card-body" id="change-user-information-section">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- START SECTION SUBSCRIBE NEWSLETTER -->
+    {% include 'All_Template_Main/Content/Subscribe_News_Letters.html' %}
+    <!-- START SECTION SUBSCRIBE NEWSLETTER -->
+
+{% endblock %}
+<!-- END MAIN CONTENT -->
+
+<!--Js Refrences-->
+{% block dashboard_script %}
+    <script src="{% static 'site_assets/js/jquery-1.12.4.min.js' %}"></script>
+{#    <!-- jquery-ui -->#}
+    <script src="{% static 'site_assets/js/jquery-ui.js' %}"></script>
+{#    <!-- popper min js -->#}
+    <script src="{% static 'site_assets/js/popper.min.js' %}"></script>
+{#    <!-- Latest compiled and minified Bootstrap -->#}
+    <script src="{% static 'site_assets/bootstrap/js/bootstrap.min.js' %}"></script>
+{#    <!-- owl-carousel min js  -->#}
+    <script src="{% static 'site_assets/owlcarousel/js/owl.carousel.min.js' %}"></script>
+{#    <!-- magnific-popup min js  -->#}
+    <script src="{% static 'site_assets/js/magnific-popup.min.js' %}"></script>
+{#    <!-- waypoints min js  -->#}
+    <script src="{% static 'site_assets/js/waypoints.min.js' %}"></script>
+{#    <!-- parallax js  -->#}
+    <script src="{% static 'site_assets/js/parallax.js' %}"></script>
+{#    <!-- countdown js  -->#}
+    <script src="{% static 'site_assets/js/jquery.countdown.min.js' %}"></script>
+{#    <!-- imagesloaded js -->#}
+    <script src="{% static 'site_assets/js/imagesloaded.pkgd.min.js' %}"></script>
+{#    <!-- isotope min js -->#}
+    <script src="{% static 'site_assets/js/isotope.min.js' %}"></script>
+{#    <!-- jquery.dd.min js -->#}
+    <script src="{% static 'site_assets/js/jquery.dd.min.js' %}"></script>
+{#    <!-- slick js -->#}
+    <script src="{% static 'site_assets/js/slick.min.js' %}"></script>
+{#    <!-- elevatezoom js -->#}
+    <script src="{% static 'site_assets/js/jquery.elevatezoom.js' %}"></script>
+{#    <!-- scripts js -->#}
+    <script src="{% static 'site_assets/js/scripts.js' %}"></script>
+    {# Ajax #}
+    <script src="{% static 'site_assets/js/ajax/user-dashboard.js' %}"></script>
+{% endblock %}

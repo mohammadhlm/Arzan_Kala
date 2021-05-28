@@ -1,0 +1,307 @@
+{% extends 'AdminPanel/__Main__/base.html' %}
+{% load static %}
+
+{% block title_product_list %}
+    لیست محصولات
+{% endblock %}
+
+{#-----Vendor Css----#}
+{% block vendor_css_product_list %}
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'AdminPanel/app-assets/vendors/css/tables/datatable/datatables.min.css' %}">
+    {# Toaster #}
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'AdminPanel/app-assets/vendors/css/extensions/toastr.css' %}">
+{% endblock %}
+{#-----Page Css----#}
+{% block page_css_product_list %}
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'AdminPanel/app-assets/css-rtl/plugins/extensions/toastr.min.css' %}">
+    {#  Custom Style  #}
+    <link rel="stylesheet" href="{% static 'AdminPanel/app-assets/css-rtl/custom-style-pg/product-list.css' %}">
+{% endblock %}
+
+
+<!-- BEGIN: Content-->
+{% block list_product %}
+    <!-- Modal Add User -->
+    <div class="modal fade" id="add-a-user-medal" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalScrollableTitle">
+                        ایجاد کاربر جدید
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                                                        <span aria-hidden="true"
+                                                              id="close_modal_register_user">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="modal-body_add_user">
+                    <div class="">
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">
+                        انصراف از ثبت کاربر جدید
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {# End Add User #}
+
+
+    <div class="app-content content">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper">
+            <div class="content-header row">
+                <div class="content-header-left col-md-9 col-12 mb-2">
+                    <div class="row breadcrumbs-top">
+                        <div class="col-12">
+                            <h2 class="content-header-title float-left mb-0">لیست محصولات</h2>
+                            <div class="breadcrumb-wrapper col-12">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="{% url 'AdminSite__Ak:dashboard' %}">پیشخوان</a>
+                                    </li>
+                                    <li class="breadcrumb-item active"> جدول محصولات</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-header-right text-md-right col-md-3 col-12 d-md-block d-none">
+                    <div class="form-group breadcrum-right">
+                        <div class="dropdown">
+                            <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle" type="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
+                                    class="feather icon-settings"></i></button>
+                            <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="#">گفتگو</a><a
+                                    class="dropdown-item" href="#">ایمیل</a><a class="dropdown-item" href="#">تقویم</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content-body">
+                <!-- users filter start -->
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">فیلترها</h4>
+                        <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+                        <div class="heading-elements">
+                            <ul class="list-inline mb-0">
+                                <li><a data-action="collapse"><i class="feather icon-chevron-down"></i></a></li>
+                                <li><a data-action="">
+                                    <button class="feather icon-rotate-cw users-data-filter"
+                                            id="update_the_user_list"></button>
+                                </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-content collapse show">
+                        <div class="card-body">
+                            <div class="users-list-filter">
+                                <form>
+                                    <div class="row" id="div_advanced__product__filter">
+                                        <div class="col-12 col-sm-6 col-lg-4">
+
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- users filter end -->
+
+                <!-- Zero configuration table -->
+                <section>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">محصولات</h4>
+                                    {# Buttons #}
+                                    <p class="d-flex align-items-center ml-auto mt-1 d-btn">
+                                        {# Delete Buttons #}
+                                    <div id="delete_product_section">
+                                    {# Form Here #}
+                                    </div>
+                                    <button class="btn btn-danger btn-round btn-icon mr-1" id="del-product-btn">
+                                        <i class="feather icon-trash-2"></i>
+                                    </button>
+                                    </p>
+                                </div>
+                                <div class="card-content" id="content_product_list">
+                                    <div class="card-body card-dashboard">
+                                        <div class="d-flex">
+                                            <p class="card-text">
+                                                مشاهده لیست محصولات
+                                            </p>
+                                            <p class="card-text ml-auto mr-1">
+                                                تعداد محصولات:
+                                                {{ products_list.paginator.count }}
+                                            </p>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                <tr>
+                                                    <td class="wt-8-th">انتخاب محصول</td>
+                                                    <th class="wt-8-th">تعداد</th>
+                                                    <th style="width: 6rem">تصویر</th>
+                                                    <th class="wt-8-th">نام محصول</th>
+                                                    <th class="wt-8-th">قیمت تخفیف</th>
+                                                    <th class="wt-8-th">قیمت محصول</th>
+                                                    <th class="wt-8-th">تاریخ انتشار</th>
+                                                    <th class="wt-8-th">تاریخ بروز رسانی</th>
+                                                    <th class="wt-8-th">تاریخ ایجاد</th>
+                                                    <th class="wt-8-th">تعداد موجود</th>
+                                                    <th class="wt-8-th">تعداد فروش</th>
+                                                    <th class="wt-8-th">وضعیت</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for product in products_list %}
+                                                    <tr class="">
+                                                        {# Selected Product #}
+                                                        <td id="selected__product">
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input"
+                                                                       checked="" name="customCheck"
+                                                                       id="customCheck_{{ product.id }}"
+                                                                       value="{{ product.id }}">
+                                                                <label class="custom-control-label"
+                                                                       for="customCheck_{{ product.id }}"></label>
+                                                            </div>
+                                                        </td>
+                                                        {# Counter #}
+                                                        <td class="mx-1 text-center">{{ forloop.counter }}
+                                                        </td>
+                                                        {# Img #}
+                                                        <td>
+                                                            <img src="{{ product.photo.url }}" alt=""
+                                                                 width="50%" style="height: 2rem!important;">
+                                                        </td>
+                                                        {# Name #}
+                                                        <td class="align-middle align-items-center">
+                                                            <span data-toggle="tooltip"
+                                                                  title="{{ product.name }}"></span>
+                                                            <a href="{{ product.get_absolute_url }}">
+                                                                {{ product.name|truncatechars:10 }}
+                                                            </a>
+                                                        </td>
+                                                        {# Price #}
+                                                        <td class="align-middle align-items-center text-center">
+                                                            {% if product.discounted_price is None %}
+                                                                <i class="feather icon-x text-danger"></i>
+                                                            {% elif product %}{{ product.discounted_price }}{% endif %}
+                                                        </td>
+                                                        {# Price #}
+                                                        <td class="align-middle align-items-center text-center">{{ product.final_price }}</td>
+                                                        {# Public Date #}
+                                                        <td class="align-middle align-items-center text-center">{{ product.jalali_time_publication_date }}</td>
+                                                        {# Update Date #}
+                                                        <td class="align-middle align-items-center text-center">{{ product.jalali_update_date }}</td>
+                                                        {# Created Time #}
+                                                        <td class="align-middle align-items-center text-center">{{ product.jalali_production_date }}</td>
+                                                        {# Count #}
+                                                        <td class="align-middle align-items-center text-center">{{ product.inventory }}</td>
+                                                        <td class="align-middle align-items-center text-center">{{ product.sold }}</td>
+                                                        {# STATUS #}
+                                                        <td class="align-middle align-items-center">
+                                                            {% if product.status == "NS" %}
+                                                                <i class="feather icon-x text-danger"></i>
+                                                            {% elif product.status == "PB" %}انتشار
+                                                            {% elif product.status == "AC" %}بایگانی
+                                                            {% endif %}
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        {# ----------Pagination----------- #}
+                                        {% if list_users.has_other_pages %}
+                                            {# Pre Buttons #}
+                                            <ul class="pagination justify-content-center mt-2">
+                                                {% if list_users.has_previous %}
+                                                    <li class="page-item prev-item">
+                                                        <a class="page-link"
+                                                           href="?page{{ list_users.previous_page_number }}"></a>
+                                                    </li>
+                                                {% else %}
+                                                    <li class="page-item prev-item disabled">
+                                                        <a class="page-link" href="#"></a>
+                                                    </li>
+                                                {% endif %}
+
+                                                {% for page in list_users.paginator.page_range %}
+                                                    <li class="page-item {% if list_users.number == page %}active{% endif %}">
+                                                        <a class="page-link"
+                                                           href="{% if list_users.number != page %}?page=
+                                                               {{ page }}{% else %}#{% endif %}">{{ page }}</a>
+                                                    </li>
+                                                {% endfor %}
+
+
+                                                {# ---Next Buttons----- #}
+                                                {% if list_users.has_next %}
+                                                    <li class="page-item next-item">
+                                                        <a class="page-link"
+                                                           href="?page{{ list_users.next_page_number }}"></a>
+                                                    </li>
+                                                {% else %}
+                                                    <li class="page-item next-item disabled">
+                                                        <a class="page-link" href="#"></a>
+                                                    </li>
+                                                {% endif %}
+                                            </ul>
+                                        {% endif %}
+                                        {# ---------End Pagination--------- #}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!--/ Zero configuration table -->
+            </div>
+        </div>
+    </div>
+{% endblock %}
+<!-- END: Content-->
+
+
+{#----Page Vendor Js----#}
+{% block page_vonder_js_product_list %}
+    <script src="{% static 'AdminPanel/app-assets/vendors/js/tables/datatable/vfs_fonts.js' %}"></script>
+    <script src="{% static 'AdminPanel/app-assets/vendors/js/tables/datatable/datatables.min.js' %}"></script>
+    <script src="{% static 'AdminPanel/app-assets/vendors/js/tables/datatable/datatables.buttons.min.js' %}"></script>
+    <script src="{% static 'AdminPanel/app-assets/vendors/js/tables/datatable/buttons.html5.min.js' %}"></script>
+    <script src="{% static 'AdminPanel/app-assets/vendors/js/tables/datatable/buttons.print.min.js' %}"></script>
+    <script src="{% static 'AdminPanel/app-assets/vendors/js/tables/datatable/buttons.bootstrap.min.js' %}"></script>
+    {# Toaster #}
+    <script src="{% static 'AdminPanel/app-assets/vendors/js/extensions/toastr.min.js' %}"></script>
+    {# Sweet Alert #}
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+{% endblock %}
+{#----Page Js----#}
+{% block page_js_product_list %}
+    <script src="{% static 'AdminPanel/app-assets/js/scripts/datatables/datatable.min.js' %}"></script>
+    {#--Modal Component--#}
+    <script src="{% static 'AdminPanel/app-assets/js/scripts/modal/components-modal.min.js' %}"></script>
+    {#--Toast Component--#}
+    <script src="{% static 'AdminPanel/app-assets/js/scripts/pages/bootstrap-toast.min.js' %}"></script>
+    {# --Toaster 2-- #}
+    <script src="{% static 'AdminPanel/app-assets/js/scripts/extensions/toastr.min.js' %}"></script>
+    {#--User List Ajax--#}
+    <script src="{% static 'AdminPanel/app-assets/js/ajax/product/product-list.js' %}"></script>
+{% endblock %}
+
+

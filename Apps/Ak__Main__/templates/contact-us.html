@@ -1,0 +1,183 @@
+{% extends '__main__.html' %}
+{% load static %}
+{% load render_partial %}
+
+{% block title_contact_us %}
+    تماس با ما
+{% endblock %}
+
+{% block header_contact_us %}
+    {% render_partial 'Apps.SiteSettings_Apps__Ak.RenderPartial.views.header_one' %}
+{% endblock %}
+
+{% block breadcrumb_contact_us %}
+    <div class="breadcrumb_section bg_gray page-title-mini">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="page-title">
+                        <h1>تماس با ما</h1>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <ol class="breadcrumb justify-content-md-end">
+                        <li class="breadcrumb-item"><a href="#">خانه</a></li>
+                        <li class="breadcrumb-item active">تماس با ما</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- END CONTAINER-->
+    </div>
+{% endblock %}
+
+{% block content_contact_us %}
+    <!-- START SECTION CONTACT -->
+    <div class="section pb_70">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-4 col-md-6">
+                    <div class="contact_wrap contact_style3">
+                        <div class="contact_icon">
+                            <i class="linearicons-map2"></i>
+                        </div>
+                        <div class="contact_text">
+                            <span>آدرس</span>
+                            <p>{{ contact_info.CompanyAddress }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-md-6">
+                    <div class="contact_wrap contact_style3">
+                        <div class="contact_icon">
+                            <i class="linearicons-envelope-open"></i>
+                        </div>
+                        <div class="contact_text">
+                            <span>آدرس ایمیل</span>
+                            <a href="mailto:{{ contact_info.EmailSupportSite }}">{{ contact_info.EmailSupportSite }} </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-md-6">
+                    <div class="contact_wrap contact_style3">
+                        <div class="contact_icon">
+                            <i class="linearicons-tablet2"></i>
+                        </div>
+                        <div class="contact_text">
+                            <span>تلفن</span>
+                            <p>{{ contact_info.SiteSupportContactNumber }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END SECTION CONTACT -->
+
+    <!-- START SECTION CONTACT -->
+    {% if user.is_authenticated %}
+        <div class="section pt-0">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="heading_s1">
+                            <h2>فرم تماس با ما</h2>
+                        </div>
+                        <p class="leads">لطفا پیام خود را بنویسید در اسرع وقت به پیغام شما پاسخ داده خواهد شد</p>
+                        <div class="field_form">
+                            <form method="post" novalidate>
+                                {% csrf_token %}
+                                {{ Contact__Form.user }}
+                                <div class="row">
+                                    <div class="form-group col-md-12">
+                                        {% for err in Contact__Form.subject.errors %}
+                                        <p class="text-danger">{{ err }}</p>
+                                        {% endfor %}
+                                        {{ Contact__Form.subject }}
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        {% for err in Contact__Form.msg.errors %}
+                                        <p class="text-danger">{{ err }}</p>
+                                        {% endfor %}
+                                        {{ Contact__Form.msg }}
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        {% for err in messages %}
+                                        <p class="text-danger">{{ err }}</p>
+                                        {% endfor %}
+                                        <div class="g-recaptcha"
+                                             data-sitekey="6LdAF-QaAAAAAE4wjb-hA0eJBo5CkwJwBoKIhdAt"></div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <button type="submit" title="پیام خود را ارسال کنید!" class="btn btn-fill-out">ارسال
+
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 pt-2 pt-lg-0 mt-4 mt-lg-0">
+                        <div id="map" class="contact_map2" data-zoom="14" data-latitude="37.2060727"
+                             data-longitude="50.0028774" data-icon="{% static 'site_assets/images/marker.png' %}"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="section pt-0">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="heading_s1">
+                            <h3>شما وارد سیستم نشده اید</h3>
+                        </div>
+                        <p class="leads">لطفا برای ارسال پیام وارد حساب کاربری خود شوید</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    {% endif %}
+    <!-- END SECTION CONTACT -->
+
+    <!-- START SECTION SUBSCRIBE NEWSLETTER -->
+    {% include 'All_Template_Main/Content/Subscribe_News_Letters.html' %}
+    <!-- START SECTION SUBSCRIBE NEWSLETTER -->
+{% endblock %}
+
+{% block script_contact_us %}
+    <!--Google Recaptcha Js-->
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+    <!-- Latest jQuery -->
+    <script src="{% static 'site_assets/js/jquery-1.12.4.min.js' %}"></script>
+    <!-- popper min js -->
+    <script src="{% static 'site_assets/js/popper.min.js' %}"></script>
+    <!-- Latest compiled and minified Bootstrap -->
+    <script src="{% static 'site_assets/bootstrap/js/bootstrap.min.js' %}"></script>
+    <!-- owl-carousel min js  -->
+    <script src="{% static 'site_assets/owlcarousel/js/owl.carousel.min.js' %}"></script>
+    <!-- magnific-popup min js  -->
+    <script src="{% static 'site_assets/js/magnific-popup.min.js' %}"></script>
+    <!-- waypoints min js  -->
+    <script src="{% static 'site_assets/js/waypoints.min.js' %}"></script>
+    <!-- parallax js  -->
+    <script src="{% static 'site_assets/js/parallax.js' %}"></script>
+    <!-- countdown js  -->
+    <script src="{% static 'site_assets/js/jquery.countdown.min.js' %}"></script>
+    <!-- imagesloaded js -->
+    <script src="{% static 'site_assets/js/imagesloaded.pkgd.min.js' %}"></script>
+    <!-- isotope min js -->
+    <script src="{% static 'site_assets/js/isotope.min.js' %}"></script>
+    <!-- jquery.dd.min js -->
+    <script src="{% static 'site_assets/js/jquery.dd.min.js' %}"></script>
+    <!-- slick js -->
+    <script src="{% static 'site_assets/js/slick.min.js' %}"></script>
+    <!-- elevatezoom js -->
+    <script src="{% static 'site_assets/js/jquery.elevatezoom.js' %}"></script>
+    <!-- Google Map Js -->
+    {% if user.is_authenticated %}
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7TypZFTl4Z3gVtikNOdGSfNTpnmq-ahQ&amp;callback=initMap"></script>
+    {% endif %}
+    <!-- scripts js -->
+    <script src="{% static 'site_assets/js/scripts.js' %}"></script>
+{% endblock %}

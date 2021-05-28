@@ -1,0 +1,170 @@
+{% load static %}
+{% load render_partial %}
+{% url 'AdminSite__Ak:email_management_view' as Email_Managemet_Url %}
+<!DOCTYPE html>
+
+<html class="loading" lang="en" data-textdirection="rtl">
+
+<meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
+
+<head>
+    {#<!--Meta Tag-->#}
+    {% include 'AdminPanel/__Main__/MetaTag_Main__.html' %}
+
+    {#<!--Start Title-->#}
+    <title>
+    پنل مدیریت |
+        {% block title_dashboard_main %}{% endblock %}
+        {% block title_product_list %}{% endblock %}
+        {% block title_edit_user %}{% endblock %}
+        {% block title_invoice %}{% endblock %}
+    </title>
+    {#<!--End Title-->#}
+
+    {#<!------------Start Css Reference------------>#}
+
+    {#<!------ BEGIN: Vendor CSS------>#}
+    {% include 'AdminPanel/__Main__/Css/begin_vendor_css.html' %}
+    <!--Users App-->
+    {% block vendor_css_users_list %}{% endblock %}
+    {% block vendor_css_edit_user %}{% endblock %}
+
+    {#<!--Product App-->#}
+    {% block vendor_css_product_add %}{% endblock %}
+    {% block vendor_css_product_list %}{% endblock %}
+    <!--Dashboard Home-->
+    {% block vendor_css_dashboard_home %}{% endblock %}
+    <!--Email Management-->
+    {% block vendor_css_email_management %}{% endblock %}
+    {% block vendor_css_creating_sending_mail%}{% endblock %}
+
+    <!------ BEGIN: Theme CSS------>
+    {% include 'AdminPanel/__Main__/Css/begin_theme_css.html' %}
+
+    <!------ BEGIN: Page CSS------>
+    {% include 'AdminPanel/__Main__/Css/begin_page_css.html' %}
+    <!--Dashboard Home-->
+    {% block page_css_dashboard_home %}{% endblock %}
+    <!--Users App-->
+    {% block page_css_users_list %}{% endblock %}
+    {% block page_css_edit_user %}{% endblock %}
+    {% block page_css_view_user %}{% endblock %}
+    <!--Products App-->
+    {% block page_css_product_add %}{% endblock %}
+    {% block page_css_product_list %}{% endblock %}
+    {% block page_css_invoice %}{% endblock %}
+    <!--Email Management-->
+    {% block page_css_email_management %}{% endblock %}
+    <!------ BEGIN: Custom CSS------>
+    {% include 'AdminPanel/__Main__/Css/begin_custom_css.html' %}
+    {#<!--Setting View-->#}
+    {% block custom_css_style_pg_view_settings %}{% endblock %}
+    <!-------------End Css Reference------------->
+
+</head>
+<!-- END: Head-->
+
+<!-- BEGIN: Body-->
+{% if request.path == Email_Managemet_Url %}
+      <!-- BEGIN: Body-->
+  <body class="vertical-layout vertical-menu-modern content-left-sidebar email-application navbar-floating footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="content-left-sidebar">
+{% else %}
+<body class="vertical-layout vertical-menu-modern 2-columns  navbar-floating footer-static  " data-open="click"
+      data-menu="vertical-menu-modern" data-col="2-columns">
+{% endif %}
+<!-- BEGIN: Header-->
+{% render_partial 'Apps.AdminSite__Ak.AdminPanel.views.admin_header_view' %}
+<!-- END: Header-->
+
+
+<!-- BEGIN: Main Menu-->
+{% include 'AdminPanel/Component/Menu/Menu.html' %}
+<!-- END: Main Menu-->
+
+<!---- BEGIN: Contents---->
+{#<!--Block Index-->#}
+{% block admin_dashboard_main %}{% endblock %}
+{#<!--Block Users-->#}
+{% block list_users %}{% endblock %}
+{% block edit_user %}{% endblock %}
+{% block view_user %}{% endblock %}
+{#<!--Block Products-->#}
+{% block product_add %}{% endblock %}
+{% block list_product %}{% endblock %}
+{% block invoice_content %}{% endblock %}
+{#<!--Block Settings-->#}
+{% block view_settings %}{% endblock %}
+{#<!--Block Email Management-->#}
+{% block content_email_management %}{% endblock %}
+{% block content_creating_sending_email %}{% endblock %}
+<!---- END: Contents---->
+
+
+<!-- BEGIN: Customizer-->
+{% render_partial 'Apps.AdminSite__Ak.AdminPanel.views.customizer_theme' %}
+<!-- End: Customizer-->
+
+<!-- Scroll Button-->
+<div class="sidenav-overlay"></div>
+<div class="drag-target"></div>
+
+<!-- BEGIN: Footer-->
+{% include 'AdminPanel/Component/Footer/Footer.html' %}
+<!-- END: Footer-->
+
+
+<!------------Start Js Reference------------>
+
+<!------------Start Jquery Reference--------->
+{% include 'AdminPanel/__Main__/Js/Jquery-min.html' %}
+<!------ BEGIN: Google Recaptcha------>
+{% include 'AdminPanel/__Main__/Js/begin_google_recaptcha.html' %}
+
+<!---------- BEGIN: Vendor Js--------->
+{% include 'AdminPanel/__Main__/Js/begin_vendor_js.html' %}
+
+<!------- BEGIN: Page Vendor Js------->
+<!--Users Apps-->
+{% block page_vonder_js_users_list %}{% endblock %}
+{% block page_vendor_js_edit_user %}{% endblock %}
+
+<!--Products Apps-->
+{% block page_vendor_js_product_add %}{% endblock %}
+{% block page_vonder_js_product_list %}{% endblock %}
+{% block page_js_invoice %}{% endblock %}
+<!--Dashboard Home-->
+{% block page_vonder_js_dashboard_home %}{% endblock %}
+
+<!--Email Management-->
+{% block page_vendor_js_email_management %}{% endblock %}
+{% block page_vendor_js_creating_sending_mail %}{% endblock %}
+
+<!---------- BEGIN: Theme Js---------->
+{% include 'AdminPanel/__Main__/Js/begin_theme_js.html' %}
+
+<!---------- BEGIN: Page Js---------->
+<!--Users Apps-->
+{% block page_js_users_list %}{% endblock %}
+{% block page_js_edit_user %}{% endblock %}
+{% block page_js_toast_user_edit %}{% endblock %}
+{% block ajax_user_edit %}{% endblock %}
+{% block page_js_view_user %}{% endblock %}
+<!--Products Apps-->
+{% block page_js_product_add %}{% endblock %}
+{% block ajax_product_add %}{% endblock %}
+
+{% block page_js_product_list %}{% endblock %}
+{#<!--Settings App-->#}
+{% block page_js_view_settings %}{% endblock %}
+<!--Dashboard Home-->
+{% block page_js_dashboard_home %}{% endblock %}
+<!--Email Management-->
+{% block page_js_email_management %}{% endblock %}
+{% block page_js_creating_sending_mail %}{% endblock %}
+
+<!---------- BEGIN: Customize Me Js---------->
+{% include 'AdminPanel/__Main__/Js/customize-me.html' %}
+<!------------End Js Reference------------>
+</body>
+<!-- END: Body-->
+</html>

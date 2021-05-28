@@ -1,0 +1,115 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">ورود فیلد های ضروری*</h4>
+            </div>
+            <div class="card-content">
+                <div class="card-body">
+                    <form class="form form-vertical" method="post" id="default__user_form">
+                        {% csrf_token %}
+                        <!-- Step 1 -->
+                        <fieldset>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="first-name-icon">نام</label>
+                                        <div class="position-relative has-icon-left">
+                                            {{ default__user_form.first_name }}
+                                            <div class="form-control-position">
+                                                <i class="feather icon-user"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="first-name-icon">نام
+                                            خانوادگی</label>
+                                        <div class="position-relative has-icon-left">
+                                            {{ default__user_form.last_name }}
+                                            <div class="form-control-position">
+                                                <i class="feather icon-user"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="first-name-icon">ایمیل</label>
+                                        <div class="position-relative has-icon-left">
+                                            {{ default__user_form.username }}
+                                            {{ default__user_form.email }}
+                                            <div class="form-control-position">
+                                                <i class="feather icon-user"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="password-icon">کلمه عبور</label>
+                                        <div class="position-relative has-icon-left">
+                                            {{ default__user_form.password }}
+                                            <div class="form-control-position">
+                                                <i class="feather icon-lock"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="divider divider-left">
+                                        <div class="divider-text">
+                                            <h6>
+                                                دسترسی ها
+                                            </h6>
+                                        </div>
+                                    </div>
+
+                                    <div class="custom-control custom-switch mr-2 mb-1 justify-content-between d-flex">
+                                        <p class="mb-0">
+                                            فعال / غیرفعال:
+                                        </p>
+                                        <span class="">
+                        {{ default__user_form.is_active }}
+                        <label class="custom-control-label" for="id_is_active"></label>
+                    </span>
+                                    </div>
+
+                                    <div class="custom-control custom-switch mr-2 mb-1 justify-content-between d-flex">
+                                        <p class="mb-0">
+                                            کاربر ویژه:
+                                        </p>
+                                        <span class="">
+                        {{ default__user_form.is_superuser }}
+                        <label class="custom-control-label" for="id_is_superuser"></label>
+                    </span>
+                                    </div>
+
+                                    <div class="custom-control custom-switch mr-2 mb-1 justify-content-between d-flex">
+                                        <p class="mb-0">
+                                            کارمند:
+                                        </p>
+                                        <span class="">
+                        {{ default__user_form.is_staff }}
+                        <label class="custom-control-label" for="id_is_staff"></label>
+                    </span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </fieldset>
+                        {# Submit Btn #}
+                        <button type="button" class="btn btn-outline-success" id="Send__default__user__form">ارسال</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

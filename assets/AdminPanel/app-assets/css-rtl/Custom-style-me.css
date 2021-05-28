@@ -1,0 +1,61 @@
+.custom-ask-admin-reset-pass {
+    transform: scaleX(-1) !important;
+    color: #5a6268 !important;
+}
+
+/*Admin User List Style*/
+.zero-configuration > thead > tr > th {
+    padding-right: 0.9375rem !important;
+    padding-left: 1rem !important;
+}
+.swal-text {
+  text-align: right;
+}
+.swal-button{
+    display: flex;
+}
+.swal-footer{
+    text-align: left !important;
+}
+
+.zero-configuration > tbody > tr > td > i {
+    padding-right: 0.8rem !important;
+}
+
+.font-weight-edit-icon-user-list {
+    font-size: 1.2rem !important;
+}
+
+.font-weight-view-icon-user-list {
+    font-size: 1.2rem !important;
+}
+
+button#update_the_user_list {
+    background-color: inherit !important;
+    border: none;
+    outline: none;
+}
+
+/*Product Add Style*/
+#btn-add-original-product-image {
+    padding-left: 2.063rem;
+    padding-right: 2.063rem;
+}
+
+#id_publication_date {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+.border_box {
+    border: 2px #4839eb dashed;
+    width: 8rem !important;
+    height: 8rem !important;
+    border-radius: 1rem !important;
+    background-color: #4839eb1f !important;
+}
+
+button#add-category-photo {
+    background-color: initial;
+    border: none;
+}

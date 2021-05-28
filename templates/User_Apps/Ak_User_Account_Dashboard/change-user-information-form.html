@@ -1,0 +1,38 @@
+<form action="" autocomplete="off" id="user-information-form">
+    {% csrf_token %}
+    <div class="row">
+         <div class="form-group col-md-12">
+            {{ Change__User__Information.user_profile }}
+             <span id="user-profile-box" class="d-flex m-auto rounded justify-content-center align-items-center" style="height: 8rem !important;width: 8rem !important;border: 1px dotted rgba(43,47,76,0.3) !important;">
+                 <i class="fa fa-camera" style="font-size: 4rem !important;color: rgba(43,47,76,0.3)"></i>
+             </span>
+        </div>
+        <div class="form-group col-md-6">
+            <label>نام <span class="required">*</span></label>
+            {{ Change__User__Information.first_name }}
+        </div>
+        <div class="form-group col-md-6">
+            <label>نام خانوادگی <span class="required">*</span></label>
+            {{ Change__User__Information.last_name }}
+        </div>
+        <div class="form-group col-md-12">
+            <label>انتخاب جنسیت <span class="required">*</span></label>
+            {{ Change__User__Information.gender_selection }}
+        </div>
+        <div class="form-group col-md-12">
+            <label>کد پستی <span class="required">*</span></label>
+            {{ Change__User__Information.postal_code }}
+        </div>
+        <div class="form-group col-md-12">
+            <label>تلفن همراه<span class="required">*</span></label>
+            {{ Change__User__Information.phone_number }}
+        </div>
+        <div class="form-group col-md-12">
+            <label>آدرس <span class="required">*</span></label>
+            {{ Change__User__Information.location_first }}
+        </div>
+        <div class="col-md-12">
+            <button type="button" class="btn btn-fill-out" name="submit" value="Submit">ذخیره</button>
+        </div>
+    </div>
+</form>

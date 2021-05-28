@@ -1,0 +1,832 @@
+{% extends '__main__.html' %}
+{% load static %}
+{% load render_partial %}
+{#Title#}
+{% block title_home_page %}
+    خانه
+{% endblock %}
+
+{#<!-- START HEADER -->#}
+{% block header_home_page %}
+    {% render_partial 'Apps.SiteSettings_Apps__Ak.RenderPartial.views.header_two' %}
+{% endblock %}
+{#<!-- END HEADER -->#}
+
+{#<!-- START SECTION BANNER -->#}
+{% block banner_top_home_page %}
+    <div class="mt-4 staggered-animation-wrap">
+        <div class="custom-container">
+            <div class="row">
+                <div class="col-lg-7 offset-lg-3">
+                    <div class="banner_section shop_el_slider">
+                            <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+                                <div class="carousel-inner">
+                                    {% for slider in Home__Slider.get_photo %}
+                                    <div class="carousel-item background_bg {% if forloop.first %}active{% endif %}">
+                                        <img class="d-block w-100" src="{{ slider.slider_information.photo.url }}" >
+                                      <div class="banner_slide_content banner_content_inner">
+                                    <div class="col-lg-7 col-10">
+                                        <div class="banner_content3 overflow-hidden">
+                                            {% if slider.discount_percent %}
+                                            <h5 class="mb-3 staggered-animation font-weight-light" data-animation="slideInRight" data-animation-delay="0.5s">تا {{ slider.discount_percent }}٪ تخفیف فقط امروز!</h5>
+                                            {% endif %}
+                                            <h2 class="staggered-animation" data-animation="slideInRight" data-animation-delay="1s">{{ slider.name|truncatewords:12 }}</h2>
+                                            <h4 class="staggered-animation mb-4 product-price" data-animation="slideInRight" data-animation-delay="1.2s">
+                                                {% if slider.discounted_price %}
+                                                <span class="price">{{ slider.discounted_price }} تومان</span>
+                                                <del>{{ slider.final_price }} تومان</del>
+                                                    {% else %}
+                                                    <span class="price">{{ slider.final_price }} تومان</span>
+                                                {% endif %}
+                                            </h4>
+                                            <a class="btn btn-fill-out btn-radius staggered-animation text-uppercase" href="{{ slider.get_absolute_url }}" data-animation="slideInRight" data-animation-delay="1.5s">اکنون مشاهده کنید</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                    </div>
+                                     {% endfor %}
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 d-none d-lg-block">
+                    <div class="shop_banner2 el_banner1">
+                        <a href="#" class="hover_effect1">
+                            <div class="el_title text_white">
+                                <h6>مجموعه آیفون</h6>
+                                <span>٪25 تخفیف</span>
+                            </div>
+                            <div class="el_img">
+                                <img src="{% static 'site_assets/images/shop_banner_img6.png' %}" alt="shop_banner_img6">
+                            </div>
+                        </a>
+                    </div>
+                    <div class="shop_banner2 el_banner2">
+                        <a href="#" class="hover_effect1">
+                            <div class="el_title text_white">
+                                <h6>کامپیوتر MAC</h6>
+                                <span><u>اکنون خرید کنید</u></span>
+                            </div>
+                            <div class="el_img">
+                                <img src="{% static 'site_assets/images/shop_banner_img7.png' %}" alt="shop_banner_img7">
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{#<!-- END SECTION BANNER -->#}
+
+
+{% block content_home_page %}
+    {#    <!-- START SECTION SHOP -->#}
+    <div class="section small_pt pb-0">
+        <div class="custom-container">
+            <div class="row">
+                <div class="col-xl-3 d-none d-xl-block">
+                    <div class="sale-banner">
+                        <a class="hover_effect1" href="#">
+                            <img src="{% static 'site_assets/images/shop_banner_img6.jpg' %}" alt="shop_banner_img6">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xl-9">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="heading_tab_header">
+                                <div class="heading_s2">
+                                    <h4>محصولات اختصاصی</h4>
+                                </div>
+                                <div class="tab-style2">
+                                    <button class="navbar-toggler" type="button" data-toggle="collapse"
+                                            data-target="#tabmenubar" aria-expanded="false">
+                                        <span class="ion-android-menu"></span>
+                                    </button>
+                                    <ul class="nav nav-tabs justify-content-center justify-content-md-end"
+                                        id="tabmenubar" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" id="arrival-tab" data-toggle="tab"
+                                               href="#arrival" role="tab" aria-controls="arrival" aria-selected="true">محصول
+                                                جدید</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="sellers-tab" data-toggle="tab" href="#sellers"
+                                               role="tab" aria-controls="sellers" aria-selected="false">پرفروش</a>
+                                        </li>
+                                        {% if list_special_offer_products %}
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="special-tab" data-toggle="tab" href="#special"
+                                                   role="tab" aria-controls="special" aria-selected="false">پیشنهاد ویژه
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="tab_slider">
+                                {# New Product #}
+                                <div class="tab-pane fade show active" id="arrival" role="tabpanel"
+                                     aria-labelledby="arrival-tab">
+                                    <div class="product_slider carousel_slider owl-carousel owl-theme dot_style1" data-margin="20"
+                                         data-responsive='{"0":{"items": "1"}, "481":{"items": "2"}, "768":{"items": "3"}, "991":{"items": "4"}}'>
+                                        {% for product in list_new_product %}
+                                            <div class="item">
+                                                <div class="product_wrap">
+                                                    <div class="product_img">
+                                                        <a href="{{ product.get_absolute_url }}">
+                                                            <img src="{{ product.photo.url }}" alt="{{ product.name }}">
+                                                            <img class="product_hover_img" src="{{ product.photo.url }}"
+                                                                 alt="{{ product.name }}">
+                                                        </a>
+                                                        <div class="product_action_box">
+                                                            <ul class="list_none pr_action_btn">
+                                                                <i class="fa fa-cart-plus add-to-cart-icon" id="product_{{ product.id }}"></i>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="product_info">
+                                                        <h6 class="product_title"><a
+                                                                href="{{ product.get_absolute_url }}">{{ product.name|truncatewords:20 }}</a>
+                                                        </h6>
+                                                        <div class="product_price">
+                                                            {% if product.discounted_price %}
+                                                                <span class="price">{{ product.discounted_price }} تومان</span>
+                                                                <del>{{ product.final_price }} تومان</del>
+                                                                <div class="on_sale">
+                                                                    <span>٪{{ product.discount_percent }} تخفیف</span>
+                                                                </div>
+                                                            {% else %}
+                                                                <span class="price">{{ product.final_price }} تومان</span>
+                                                            {% endif %}
+                                                        </div>
+                                                        <div class="rating_wrap">
+                                                            <div class="rating">
+                                                                <div class="product_rate" style="width:
+                                                                        {% if product.get_avg_rate == 0 %}
+                                                                            0
+                                                                        {% elif product.get_avg_rate > 0 and product.get_avg_rate <= 0.5 %}
+                                                                            10%
+                                                                        {% elif product.get_avg_rate > 0.5 and product.get_avg_rate <= 1.0 %}
+                                                                            20%
+                                                                        {% elif product.get_avg_rate > 1.0 and product.get_avg_rate <= 1.5 %}
+                                                                            30%
+                                                                        {% elif product.get_avg_rate > 1.5 and product.get_avg_rate <= 2.0 %}
+                                                                            40%
+                                                                        {% elif product.get_avg_rate > 2.0 and product.get_avg_rate <= 2.5 %}
+                                                                            50%
+                                                                        {% elif product.get_avg_rate > 2.5 and product.get_avg_rate <= 3.0 %}
+                                                                            60%
+                                                                        {% elif product.get_avg_rate > 3.0 and product.get_avg_rate <= 3.5 %}
+                                                                            70%
+                                                                        {% elif product.get_avg_rate > 3.5 and product.get_avg_rate <= 4.0 %}
+                                                                            80%
+                                                                        {% elif product.get_avg_rate > 4.0 and product.get_avg_rate <= 4.5 %}
+                                                                            90%
+                                                                        {% elif product.get_avg_rate > 4.5 and product.get_avg_rate <= 5.0 %}
+                                                                            100%
+                                                                        {% endif %}
+                                                                        "></div>
+                                                            </div>
+                                                            <span class="rating_num">{{ product.rate_count }}</span>
+                                                        </div>
+                                                        <div class="pr_desc">
+                                                            <p>{{ product.short_description }}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                {# Bestsellers #}
+                                <div class="tab-pane fade" id="sellers" role="tabpanel" aria-labelledby="sellers-tab">
+                                    <div class="product_slider carousel_slider owl-carousel owl-theme dot_style1" data-margin="20"
+                                         data-responsive='{"0":{"items": "1"}, "481":{"items": "2"}, "768":{"items": "3"}, "991":{"items": "4"}}'>
+                                        {% for product in list_best_sellers_product %}
+                                            <div class="item">
+                                                <div class="product_wrap">
+                                                    <div class="product_img">
+                                                        <a href="{{ product.get_absolute_url }}">
+                                                            <img src="{{ product.photo.url }}" alt="{{ product.name }}">
+                                                            <img class="product_hover_img"
+                                                                 src="{{ product.photo.url }}"
+                                                                 alt="{{ product.name }}">
+                                                        </a>
+                                                        <div class="product_action_box">
+                                                            <ul class="list_none pr_action_btn">
+                                                                <i class="fa fa-cart-plus add-to-cart-icon" id="product_{{ product.id }}"></i>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="product_info">
+                                                        <h6 class="product_title"><a
+                                                                href="{{ product.get_absolute_url }}">{{ product.name }}</a>
+                                                        </h6>
+                                                        <div class="product_price">
+                                                            {% if product.discounted_price %}
+                                                                <span class="price">{{ product.discounted_price }} تومان</span>
+                                                                <del>{{ product.final_price }} تومان</del>
+                                                                <div class="on_sale">
+                                                                    <span>٪{{ product.discount_percent }} تخفیف</span>
+                                                                </div>
+                                                            {% else %}
+                                                                <span class="price">{{ product.final_price }} تومان</span>
+                                                            {% endif %}
+                                                        </div>
+                                                        <div class="rating_wrap">
+                                                            <div class="rating">
+                                                                <div class="product_rate" style="width:
+                                                                        {% if product.get_avg_rate == 0 %}
+                                                                            0
+                                                                        {% elif product.get_avg_rate > 0 and product.get_avg_rate <= 0.5 %}
+                                                                            10%
+                                                                        {% elif product.get_avg_rate > 0.5 and product.get_avg_rate <= 1.0 %}
+                                                                            20%
+                                                                        {% elif product.get_avg_rate > 1.0 and product.get_avg_rate <= 1.5 %}
+                                                                            30%
+                                                                        {% elif product.get_avg_rate > 1.5 and product.get_avg_rate <= 2.0 %}
+                                                                            40%
+                                                                        {% elif product.get_avg_rate > 2.0 and product.get_avg_rate <= 2.5 %}
+                                                                            50%
+                                                                        {% elif product.get_avg_rate > 2.5 and product.get_avg_rate <= 3.0 %}
+                                                                            60%
+                                                                        {% elif product.get_avg_rate > 3.0 and product.get_avg_rate <= 3.5 %}
+                                                                            70%
+                                                                        {% elif product.get_avg_rate > 3.5 and product.get_avg_rate <= 4.0 %}
+                                                                            80%
+                                                                        {% elif product.get_avg_rate > 4.0 and product.get_avg_rate <= 4.5 %}
+                                                                            90%
+                                                                        {% elif product.get_avg_rate > 4.5 and product.get_avg_rate <= 5.0 %}
+                                                                            100%
+                                                                        {% endif %}
+                                                                        "></div>
+                                                            </div>
+                                                            <span class="rating_num">{{ product.rate_count }}</span>
+                                                        </div>
+                                                        <div class="pr_desc">
+                                                            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت
+                                                                چاپ، و
+                                                                با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه
+                                                                روزنامه.</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                {# Special offer #}
+                                <div class="tab-pane fade" id="special" role="tabpanel" aria-labelledby="special-tab">
+                                    <div class="product_slider carousel_slider owl-carousel owl-theme dot_style1" data-margin="20"
+                                         data-responsive='{"0":{"items": "1"}, "481":{"items": "2"}, "768":{"items": "3"}, "991":{"items": "4"}}'>
+                                        {% for product in list_special_offer_products %}
+                                            <div class="item">
+                                                <div class="product_wrap">
+                                                    <div class="product_img">
+                                                        <a href="{{ product.get_absolute_url }}">
+                                                            <img src="{{ product.photo.url }}" alt="{{ product.name }}">
+                                                            <img class="product_hover_img" src="{{ product.photo.url }}"
+                                                                 alt="{{ product.name }}">
+                                                        </a>
+                                                        <div class="product_action_box">
+                                                            <ul class="list_none pr_action_btn">
+                                                                <i class="fa fa-cart-plus add-to-cart-icon" id="product_{{ product.id }}"></i>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="product_info">
+                                                        <h6 class="product_title"><a
+                                                                href="{{ product.get_absolute_url }}">{{ product.name }}</a>
+                                                        </h6>
+                                                        <div class="product_price">
+                                                            {% if product.discounted_price %}
+                                                                <span class="price">{{ product.discounted_price }} تومان</span>
+                                                                <del>{{ product.final_price }} تومان</del>
+                                                                <div class="on_sale">
+                                                                    <span>٪{{ product.discount_percent }} تخفیف</span>
+                                                                </div>
+                                                            {% else %}
+                                                                <span class="price">{{ product.final_price }} تومان</span>
+                                                            {% endif %}
+                                                        </div>
+                                                        <div class="rating_wrap">
+                                                            <div class="rating">
+                                                                <div class="product_rate" style="width:
+                                                                        {% if product.get_avg_rate == 0 %}
+                                                                            0
+                                                                        {% elif product.get_avg_rate > 0 and product.get_avg_rate <= 0.5 %}
+                                                                            10%
+                                                                        {% elif product.get_avg_rate > 0.5 and product.get_avg_rate <= 1.0 %}
+                                                                            20%
+                                                                        {% elif product.get_avg_rate > 1.0 and product.get_avg_rate <= 1.5 %}
+                                                                            30%
+                                                                        {% elif product.get_avg_rate > 1.5 and product.get_avg_rate <= 2.0 %}
+                                                                            40%
+                                                                        {% elif product.get_avg_rate > 2.0 and product.get_avg_rate <= 2.5 %}
+                                                                            50%
+                                                                        {% elif product.get_avg_rate > 2.5 and product.get_avg_rate <= 3.0 %}
+                                                                            60%
+                                                                        {% elif product.get_avg_rate > 3.0 and product.get_avg_rate <= 3.5 %}
+                                                                            70%
+                                                                        {% elif product.get_avg_rate > 3.5 and product.get_avg_rate <= 4.0 %}
+                                                                            80%
+                                                                        {% elif product.get_avg_rate > 4.0 and product.get_avg_rate <= 4.5 %}
+                                                                            90%
+                                                                        {% elif product.get_avg_rate > 4.5 and product.get_avg_rate <= 5.0 %}
+                                                                            100%
+                                                                        {% endif %}
+                                                                        "></div>
+                                                            </div>
+                                                            <span class="rating_num">({{ product.rate_count }})</span>
+                                                        </div>
+                                                        <div class="pr_desc">
+                                                            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت
+                                                                چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون
+                                                                بلکه روزنامه.</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {#    <!-- END SECTION SHOP -->#}
+
+    {#    <!-- START SECTION BANNER -->#}
+    <div class="section pb_20 small_pt">
+        <div class="custom-container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="sale-banner mb-3 mb-md-4">
+                        <a class="hover_effect1" href="#">
+                            <img src="{% static 'site_assets/images/shop_banner_img7.jpg' %}" alt="shop_banner_img7">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="sale-banner mb-3 mb-md-4">
+                        <a class="hover_effect1" href="#">
+                            <img src="{% static 'site_assets/images/shop_banner_img8.jpg' %}" alt="shop_banner_img8">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="sale-banner mb-3 mb-md-4">
+                        <a class="hover_effect1" href="#">
+                            <img src="{% static 'site_assets/images/shop_banner_img9.jpg' %}" alt="shop_banner_img9">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {#    <!-- END SECTION BANNER -->#}
+
+    {#    <!-- START SECTION SHOP -->#}
+    <div class="section pt-0 pb-0">
+        <div class="custom-container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="heading_tab_header">
+                        <div class="heading_s2">
+                            <h4>تخفیف ویژه های امروز</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="product_slider carousel_slider owl-carousel owl-theme nav_style3" data-loop="true"
+                         data-dots="false" data-nav="true" data-margin="30"
+                         data-responsive='{"0":{"items": "1"}, "650":{"items": "2"}, "1199":{"items": "2"}}'>
+                        {% for product in list_discounted_products %}
+                            <div class="item">
+                                <div class="deal_wrap">
+                                    <div class="product_img">
+                                        <a href="shop-product-detail.html">
+                                            <img src="{{ product.photo.url }}" alt="{{ product.name }}">
+                                        </a>
+                                    </div>
+                                    <div class="deal_content">
+                                        <div class="product_info">
+                                            <h5 class="product_title"><a
+                                                    href="{{ product.get_absolute_url }}">{{ product.name|truncatewords:10 }}</a>
+                                            </h5>
+                                            <div class="product_price">
+                                                <span class="price">45000 تومان</span>
+                                                <del>55000 تومان</del>
+                                            </div>
+                                        </div>
+                                        <div class="deal_progress">
+                                            <span class="stock-sold">فروخته شده: <strong>{{ product.sold }}</strong></span>
+                                            <span class="stock-available">موجود: <strong>{{ product.inventory }}</strong></span>
+                                            <div class="progress">
+                                                <div class="progress-bar" role="progressbar" aria-valuenow="46"
+                                                     aria-valuemin="0" aria-valuemax="100" style="width:46%"> 46%
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="countdown_time countdown_style4 mb-4"
+                                             data-time="2020/09/02 12:30:15"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {#    <!-- END SECTION SHOP -->#}
+
+    {#    <!-- START SECTION CLIENT LOGO -->#}
+    <div class="section pt-0 small_pb mt-5">
+        <div class="custom-container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="heading_tab_header">
+                        <div class="heading_s2">
+                            <h4>برندهای ما</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="client_logo carousel_slider owl-carousel owl-theme nav_style3" data-dots="false"
+                         data-nav="true" data-margin="30" data-loop="true" data-autoplay="true"
+                         data-responsive='{"0":{"items": "2"}, "480":{"items": "3"}, "767":{"items": "4"}, "991":{"items": "5"}, "1199":{"items": "6"}}'>
+                        <div class="item">
+                            <div class="cl_logo">
+                                <img src="{% static 'site_assets/images/cl_logo1.png' %}" alt="cl_logo"/>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="cl_logo">
+                                <img src="{% static 'site_assets/images/cl_logo2.png' %}" alt="cl_logo"/>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="cl_logo">
+                                <img src="{% static 'site_assets/images/cl_logo3.png' %}" alt="cl_logo"/>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="cl_logo">
+                                <img src="{% static 'site_assets/images/cl_logo4.png' %}" alt="cl_logo"/>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="cl_logo">
+                                <img src="{% static 'site_assets/images/cl_logo5.png' %}" alt="cl_logo"/>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="cl_logo">
+                                <img src="{% static 'site_assets/images/cl_logo6.png' %}" alt="cl_logo"/>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="cl_logo">
+                                <img src="{% static 'site_assets/images/cl_logo7.png' %}" alt="cl_logo"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {#    <!-- END SECTION CLIENT LOGO -->#}
+
+    {#    <!-- START SECTION SHOP -->#}
+    <div class="section pt-0 pb_20">
+        <div class="custom-container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="heading_tab_header">
+                                <div class="heading_s2">
+                                    <h4>محصولات برجسته</h4>
+                                </div>
+                                <div class="view_all">
+                                    <a href="#" class="text_default"><span>مشاهده همه</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="product_slider carousel_slider product_list owl-carousel owl-theme nav_style5"
+                                 data-nav="true" data-dots="false" data-loop="true" data-margin="20"
+                                 data-responsive='{"0":{"items": "1"}, "380":{"items": "1"}, "640":{"items": "2"}, "991":{"items": "1"}}'>
+                                {% for group in list_best_sellers_product_2 %}
+                                    <div class="item">
+                                        {% for product in group %}
+                                            <div class="product_wrap">
+                                                <div class="product_img">
+                                                    <a href="{{ product.get_absolute_url }}">
+                                                        <img src="{{ product.photo.url }}" alt="{{ product.name }}">
+                                                        <img class="product_hover_img"
+                                                             src="{{ product.photo.url }}" alt="{{ product.name }}">
+                                                    </a>
+                                                </div>
+                                                <div class="product_info">
+                                                    <h6 class="product_title"><a
+                                                            href="{{ product.get_absolute_url }}">{{ product.name|truncatewords:20 }}</a>
+                                                    </h6>
+                                                    <div class="product_price">
+                                                        {% if product.discounted_price %}
+                                                            <span class="price">{{ product.discounted_price }} تومان</span>
+                                                            <del>{{ product.final_price }} تومان</del>
+                                                            <div class="on_sale">
+                                                                <span>٪{{ product.discount_percent }} تخفیف</span>
+                                                            </div>
+                                                        {% else %}
+                                                            <span class="price">{{ product.final_price }} تومان</span>
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="rating_wrap">
+                                                        <div class="rating">
+                                                            <div class="product_rate" style="width:
+                                                                    {% if product.get_avg_rate == 0 %}
+                                                                        0
+                                                                    {% elif product.get_avg_rate > 0 and product.get_avg_rate <= 0.5 %}
+                                                                        10%
+                                                                    {% elif product.get_avg_rate > 0.5 and product.get_avg_rate <= 1.0 %}
+                                                                        20%
+                                                                    {% elif product.get_avg_rate > 1.0 and product.get_avg_rate <= 1.5 %}
+                                                                        30%
+                                                                    {% elif product.get_avg_rate > 1.5 and product.get_avg_rate <= 2.0 %}
+                                                                        40%
+                                                                    {% elif product.get_avg_rate > 2.0 and product.get_avg_rate <= 2.5 %}
+                                                                        50%
+                                                                    {% elif product.get_avg_rate > 2.5 and product.get_avg_rate <= 3.0 %}
+                                                                        60%
+                                                                    {% elif product.get_avg_rate > 3.0 and product.get_avg_rate <= 3.5 %}
+                                                                        70%
+                                                                    {% elif product.get_avg_rate > 3.5 and product.get_avg_rate <= 4.0 %}
+                                                                        80%
+                                                                    {% elif product.get_avg_rate > 4.0 and product.get_avg_rate <= 4.5 %}
+                                                                        90%
+                                                                    {% elif product.get_avg_rate > 4.5 and product.get_avg_rate <= 5.0 %}
+                                                                        100%
+                                                                    {% endif %}
+                                                                    "></div>
+                                                        </div>
+                                                        <span class="rating_num">({{ product.rate_count }})</span>
+                                                    </div>
+                                                    <div class="pr_desc">
+                                                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و
+                                                            با
+                                                            استفاده از طراحان گرافیک است، چاپگرها و متون بلکه
+                                                            روزنامه.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="heading_tab_header">
+                                <div class="heading_s2">
+                                    <h4>محصولات دارای رتبه برتر</h4>
+                                </div>
+                                <div class="view_all">
+                                    <a href="#" class="text_default"><span>مشاهده همه</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="product_slider carousel_slider product_list owl-carousel owl-theme nav_style5"
+                                 data-nav="true" data-dots="false" data-loop="true" data-margin="20"
+                                 data-responsive='{"0":{"items": "1"}, "380":{"items": "1"}, "640":{"items": "2"}, "991":{"items": "1"}}'>
+                                {% for group in list_best_rated_product %}
+                                    <div class="item">
+                                        {% for product in group %}
+                                            <div class="product_wrap">
+                                                <div class="product_img">
+                                                    <a href="{{ product.get_absolute_url }}">
+                                                        <img src="{{ product.photo.url }}" alt="el_img5">
+                                                        <img class="product_hover_img"
+                                                             src="{{ product.photo.url }}"
+                                                             alt="el_hover_img5">
+                                                    </a>
+                                                </div>
+                                                <div class="product_info">
+                                                    <h6 class="product_title"><a
+                                                            href="{{ product.get_absolute_url }}">{{ product.name }}</a></h6>
+                                                    <div class="product_price">
+                                                        {% if product.discounted_price %}
+                                                            <span class="price">{{ product.discounted_price }} تومان</span>
+                                                            <del>{{ product.final_price }} تومان</del>
+                                                            <div class="on_sale">
+                                                                <span>٪{{ product.discount_percent }} تخفیف</span>
+                                                            </div>
+                                                        {% else %}
+                                                            <span class="price">{{ product.final_price }} تومان</span>
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="rating_wrap">
+                                                        <div class="rating">
+                                                            <div class="product_rate" style="width:
+                                                                    {% if product.get_avg_rate == 0 %}
+                                                                        0
+                                                                    {% elif product.get_avg_rate > 0 and product.get_avg_rate <= 0.5 %}
+                                                                        10%
+                                                                    {% elif product.get_avg_rate > 0.5 and product.get_avg_rate <= 1.0 %}
+                                                                        20%
+                                                                    {% elif product.get_avg_rate > 1.0 and product.get_avg_rate <= 1.5 %}
+                                                                        30%
+                                                                    {% elif product.get_avg_rate > 1.5 and product.get_avg_rate <= 2.0 %}
+                                                                        40%
+                                                                    {% elif product.get_avg_rate > 2.0 and product.get_avg_rate <= 2.5 %}
+                                                                        50%
+                                                                    {% elif product.get_avg_rate > 2.5 and product.get_avg_rate <= 3.0 %}
+                                                                        60%
+                                                                    {% elif product.get_avg_rate > 3.0 and product.get_avg_rate <= 3.5 %}
+                                                                        70%
+                                                                    {% elif product.get_avg_rate > 3.5 and product.get_avg_rate <= 4.0 %}
+                                                                        80%
+                                                                    {% elif product.get_avg_rate > 4.0 and product.get_avg_rate <= 4.5 %}
+                                                                        90%
+                                                                    {% elif product.get_avg_rate > 4.5 and product.get_avg_rate <= 5.0 %}
+                                                                        100%
+                                                                    {% endif %}
+                                                                    "></div>
+                                                        </div>
+                                                        <span class="rating_num">({{ product.rate_count }})</span>
+                                                    </div>
+                                                    <div class="pr_desc">
+                                                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و
+                                                            با
+                                                            استفاده از طراحان گرافیک است، چاپگرها و متون بلکه
+                                                            روزنامه.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="heading_tab_header">
+                                <div class="heading_s2">
+                                    <h4>بیشترین فروش</h4>
+                                </div>
+                                <div class="view_all">
+                                    <a href="#" class="text_default"><span>مشاهده همه</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="product_slider carousel_slider product_list owl-carousel owl-theme nav_style5"
+                                 data-nav="true" data-dots="false" data-loop="true" data-margin="20"
+                                 data-responsive='{"0":{"items": "1"}, "380":{"items": "1"}, "640":{"items": "2"}, "991":{"items": "1"}}'>
+                                {% for group in list_best_sellers_product_2 %}
+                                    <div class="item">
+                                        {% for product in group %}
+                                            <div class="product_wrap">
+                                                <div class="product_img">
+                                                    <a href="{{ product.get_absolute_url }}">
+                                                        <img src="{{ product.photo.url }}" alt="{{ product.name }}">
+                                                        <img class="product_hover_img"
+                                                             src="{{ product.photo.url }}" alt="{{ product.name }}">
+                                                    </a>
+                                                </div>
+                                                <div class="product_info">
+                                                    <h6 class="product_title"><a
+                                                            href="{{ product.get_absolute_url }}">{{ product.name }}</a>
+                                                    </h6>
+                                                    <div class="product_price">
+                                                        {% if product.discounted_price %}
+                                                            <span class="price">{{ product.discounted_price }} تومان</span>
+                                                            <del>{{ product.final_price }} تومان</del>
+                                                            <div class="on_sale">
+                                                                <span>٪{{ product.discount_percent }} تخفیف</span>
+                                                            </div>
+                                                        {% else %}
+                                                            <span class="price">{{ product.final_price }} تومان</span>
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="rating_wrap">
+                                                        <div class="rating">
+                                                            <div class="product_rate" style="width:
+                                                                    {% if product.get_avg_rate == 0 %}
+                                                                        0
+                                                                    {% elif product.get_avg_rate > 0 and product.get_avg_rate <= 0.5 %}
+                                                                        10%
+                                                                    {% elif product.get_avg_rate > 0.5 and product.get_avg_rate <= 1.0 %}
+                                                                        20%
+                                                                    {% elif product.get_avg_rate > 1.0 and product.get_avg_rate <= 1.5 %}
+                                                                        30%
+                                                                    {% elif product.get_avg_rate > 1.5 and product.get_avg_rate <= 2.0 %}
+                                                                        40%
+                                                                    {% elif product.get_avg_rate > 2.0 and product.get_avg_rate <= 2.5 %}
+                                                                        50%
+                                                                    {% elif product.get_avg_rate > 2.5 and product.get_avg_rate <= 3.0 %}
+                                                                        60%
+                                                                    {% elif product.get_avg_rate > 3.0 and product.get_avg_rate <= 3.5 %}
+                                                                        70%
+                                                                    {% elif product.get_avg_rate > 3.5 and product.get_avg_rate <= 4.0 %}
+                                                                        80%
+                                                                    {% elif product.get_avg_rate > 4.0 and product.get_avg_rate <= 4.5 %}
+                                                                        90%
+                                                                    {% elif product.get_avg_rate > 4.5 and product.get_avg_rate <= 5.0 %}
+                                                                        100%
+                                                                    {% endif %}
+                                                                    "></div>
+                                                        </div>
+                                                        <span class="rating_num">({{ product.rate_count }})</span>
+                                                    </div>
+                                                    <div class="pr_desc">
+                                                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و
+                                                            با
+                                                            استفاده از طراحان گرافیک است، چاپگرها و متون بلکه
+                                                            روزنامه.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {#    <!-- END SECTION SHOP -->#}
+
+    <!--START SECTION INFO CARD-->
+    {% include 'All_Template_Main/Footer/Info_Card_Footer.html' %}
+    <!--END SECTION INFO CARD-->
+
+    <!-- START SECTION SUBSCRIBE NEWSLETTER -->
+    {% include 'All_Template_Main/Content/Subscribe_News_Letters.html' %}
+    <!-- START SECTION SUBSCRIBE NEWSLETTER -->
+{% endblock %}
+
+{% block script_home_page %}
+    <!--Google Recaptcha Js-->
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+    <!-- Latest jQuery -->
+    <script src="{% static 'site_assets/js/jquery-1.12.4.min.js' %}"></script>
+    <!-- popper min js -->
+    <script src="{% static 'site_assets/js/popper.min.js' %}"></script>
+    <!-- Latest compiled and minified Bootstrap -->
+    <script src="{% static 'site_assets/bootstrap/js/bootstrap.min.js' %}"></script>
+    <!-- owl-carousel min js  -->
+    <script src="{% static 'site_assets/owlcarousel/js/owl.carousel.min.js' %}"></script>
+    <!-- magnific-popup min js  -->
+    <script src="{% static 'site_assets/js/magnific-popup.min.js' %}"></script>
+    <!-- waypoints min js  -->
+    <script src="{% static 'site_assets/js/waypoints.min.js' %}"></script>
+    <!-- parallax js  -->
+    <script src="{% static 'site_assets/js/parallax.js' %}"></script>
+    <!-- countdown js  -->
+    <script src="{% static 'site_assets/js/jquery.countdown.min.js' %}"></script>
+    <!-- imagesloaded js -->
+    <script src="{% static 'site_assets/js/imagesloaded.pkgd.min.js' %}"></script>
+    <!-- isotope min js -->
+    <script src="{% static 'site_assets/js/isotope.min.js' %}"></script>
+    <!-- jquery.dd.min js -->
+    <script src="{% static 'site_assets/js/jquery.dd.min.js' %}"></script>
+    <!-- slick js -->
+    <script src="{% static 'site_assets/js/slick.min.js' %}"></script>
+    <!-- elevatezoom js -->
+    <script src="{% static 'site_assets/js/jquery.elevatezoom.js' %}"></script>
+    <!-- scripts js -->
+    <script src="{% static 'site_assets/js/scripts.js' %}"></script>
+    {# Custom Js #}
+    <script src="{% static 'site_assets/js/ajax/index.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,7 @@
+<form action="" method="post" id="form-making-new-tag">
+    {% csrf_token %}
+    {{ tag_creation_form.tag_name }}
+    <div class="d-flex">
+        <button type="button" class="btn bg-gradient-success my-1 ml-auto waves-effect waves-light" id="btn-making-new-tag">افزودن تگ</button>
+    </div>
+</form>

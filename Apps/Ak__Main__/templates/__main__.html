@@ -1,0 +1,104 @@
+{% load static %}
+<!--Render Partial Tag-->
+{% load render_partial %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Meta -->
+    {% include 'All_Template_Main/Header_Main/Meta_Tags_Header_Main__.html' %}
+    <!-- SITE TITLE -->
+    <title>ARZAN KALA |
+        {% block title_home_page %}{% endblock %}
+        {% block title_checkout %}{% endblock %}
+        {% block title_about_us %}{% endblock %}
+
+    </title>
+    {% include 'All_Template_Main/Header_Main/CSS_Refrence_Header_Main__.html' %}
+    {% block Select2_Module %}{% endblock %}
+
+    <!-- Google Tag Manager -->
+    <script>(function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({
+            'gtm.start':
+                new Date().getTime(), event: 'gtm.js'
+        });
+        var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src =
+            'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-TH9PSBB');</script>
+    <!-- End Google Tag Manager -->
+    <!-- End Google Tag Manager -->
+</head>
+
+<body dir="rtl">
+<!-- Google Tag Manager (noscript) -->
+<noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TH9PSBB"
+            height="0" width="0" style="display:none;visibility:hidden"></iframe>
+</noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+
+<!-- LOADER -->
+<div class="preloader">
+    <div class="lds-ellipsis">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+</div>
+<!-- END LOADER -->
+
+
+<!-- START HEADER -->
+{% block header_home_page %}{% endblock %}
+{% block header_contact_us %}{% endblock %}
+{% block header_shop %}{% endblock %}
+{% block header_product_detail %}{% endblock %}
+{% block header_about_us %}{% endblock %}
+<!-- END HEADER -->
+
+{#--BreadCrumb--#}
+{% block breadcrumb_contact_us %}{% endblock %}
+{% block breadcrumb_shop %}{% endblock %}
+{% block breadcrumb_product_detail %}{% endblock %}
+{% block breadcrumb_checkout %}{% endblock %}
+{% block breadcrumb_about_us %}{% endblock %}
+
+
+<!-- START SECTION BANNER -->
+{% block banner_top_home_page %}{% endblock %}
+<!-- END SECTION BANNER -->
+
+<!-- END MAIN CONTENT -->
+<div class="main_content">
+    {% block content_home_page %}{% endblock %}
+    {% block content_checkout %}{% endblock %}
+    {% block content_contact_us %}{% endblock %}
+    {% block content_shop %}{% endblock %}
+    {% block content_product_detail %}{% endblock %}
+    {% block content_about_us %}{% endblock %}
+</div>
+<!-- END MAIN CONTENT -->
+
+<!-- START FOOTER -->
+{% render_partial 'Apps.SiteSettings_Apps__Ak.RenderPartial.views.Footer' %}
+<!-- END FOOTER -->
+
+<a href="#" class="scrollup" style="display: none;"><i class="ion-ios-arrow-up"></i></a>
+
+{% block script_home_page %}{% endblock %}
+{% block script_checkout_page %}{% endblock %}
+{% block script_contact_us %}{% endblock %}
+{% block script_shop %}{% endblock %}
+{% block script_product_detail %}{% endblock %}
+{% block script_about_us %}{% endblock %}
+<script src="{% static 'site_assets/js/ajax/shop-cart.js' %}"></script>
+</body>
+
+</html>

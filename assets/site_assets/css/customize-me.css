@@ -1,0 +1,64 @@
+/*=============================================================
+           Document
+    =============================
+    01.Form Error(Register,Login,ForgetPassword...) Style
+    02.Modal Welcome User After Register
+    03.Form Send Activation Mail Dashboard
+
+*=============================================================*/
+
+/*===================================*
+  01.Start Form Errors
+*===================================*/
+.RegisterFormErrors{
+	font-size: 0.8rem !important;
+	color: red !important;
+	padding-right: 0.4rem !important;
+	margin: 0.1rem 0 0 0 !important;
+}
+/*===================================*
+  02.Modal Welcome Register
+*===================================*/
+.custom-text-welcome-modal{
+	color: #2b2b2b !important;
+	font-weight: bold !important;
+}
+.custom-fullname-welcome-modal{
+	font-size: 1.1rem !important;
+	/*color: #4caf50 !important;*/
+}
+.custom-warn-welcome-modal-1{
+	color: #fcbe11 !important;
+}
+.custom-warn-welcome-modal-2{
+	color: #dc3545 !important;
+}
+/*===================================*
+  03.Form Send Activation Mail Dashboard
+*===================================*/
+.btn_form_send_activation_mail_dashboard{
+	background-color:inherit !important;
+	border: none !important;
+	display: inline-block !important;
+}
+.alert_send_activation_mail_dashboard{
+	direction: rtl !important;
+	display: flex !important;
+}
+/*Add Cart Icon Style*/
+.add-to-cart-icon{
+	opacity: 0;
+	background-color: #FF324D;
+	padding: 0.6rem;
+	border-radius: 50%;
+	color: white;
+	transition: all ease 1s;
+}
+.item:hover .add-to-cart-icon{
+	transition: all ease 0.3s;
+	opacity: 1;
+}
+/*Select 2 Ajax*/
+.select2-selection.select2-selection--single{
+	height: 2rem !important;
+}

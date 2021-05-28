@@ -1,0 +1,74 @@
+#tag_search_res_list li {
+    border-left: none;
+    border-right: none;
+    border-radius: 0 !important;
+}
+
+#tag_search_res_list {
+    height: 4rem;
+    overflow-y: scroll;
+}
+
+#list_tag_selected li {
+    border-radius: 1rem !important;
+}
+
+#list_tag_selected {
+    height: 4rem !important;
+    overflow-y: scroll !important;
+}
+
+/*Cat Search*/
+#cat_search_res_list li {
+    border-left: none;
+    border-right: none;
+    border-radius: 0 !important;
+}
+
+.remove_tag_from_list {
+    cursor: pointer !important;
+}
+
+.remove_cat_from_list {
+    cursor: pointer !important;
+}
+
+.selected_elem {
+    background-color: #F8F8F8 !important;
+}
+
+#cat_search_res_list {
+    height: 4rem;
+    overflow-y: scroll;
+}
+
+
+#list_cat_selected {
+    height: 4rem !important;
+    overflow-y: scroll !important;
+}
+
+#list_cat_selected li {
+    border-radius: 1rem !important;
+}
+
+.prev-icon-select-photo {
+    background-color: #f1f1f1;
+    display: inline-block;
+    padding: 2rem;
+    border-radius: 50%;
+}
+
+.prev-icon-select-photo i {
+    font-size: 4rem;
+    color: black;
+    opacity: 50%;
+}
+.bd-goto-today{
+    border-radius: 1rem !important;
+}
+#bd-main-date2{
+    border:none;
+    border-radius: 1rem !important;
+}
+
