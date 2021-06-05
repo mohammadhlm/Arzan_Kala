@@ -99,8 +99,13 @@ class Profile(models.Model):
 
     @property
     def get_cart_item_count(self):
-        return self.user.cart_set.filter(active=True).first().cart_item_set.all().count() if self.user.cart_set.filter(
-            active=True).count() > 0 else 0
+        Cart_qs = self.user.cart_set.filter(active=True)
+        if Cart_qs.exists():
+            Cart_Item_Qs = Cart_qs.first().cart_item_set.all()
+            if Cart_Item_Qs.exists() and Cart_Item_Qs.count() > 0:
+                return Cart_Item_Qs.count()
+            else:
+                return 0
 
     @property
     def get_cart_item(self):

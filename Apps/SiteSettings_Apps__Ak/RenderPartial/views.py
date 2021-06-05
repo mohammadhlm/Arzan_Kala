@@ -30,8 +30,9 @@ def header_one(request):
             "products") == "" else False
     }
     if request.user.is_authenticated:
-        Cart_qs = Cart.objects.filter(user=request.user)
+        Cart_qs = Cart.objects.filter(user=request.user,active=True)
         if Cart_qs.exists():
+            print(Cart_qs)
             context["total_product_price"] = Cart_qs.first().total_product_price
         else:
             context["total_product_price"] = 0
@@ -72,7 +73,7 @@ def header_two(request):
             "products") == "" else False
     }
     if request.user.is_authenticated:
-        Cart_qs = Cart.objects.filter(user=request.user)
+        Cart_qs = Cart.objects.filter(user=request.user,active=True)
         if Cart_qs.exists():
             context["total_product_price"] = Cart_qs.first().total_product_price
         else:
