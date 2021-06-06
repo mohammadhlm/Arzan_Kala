@@ -94,10 +94,8 @@
                                     {% if user.profile.get_cart_item_count %}
                                         {% for item in user.profile.get_cart_item %}
                                             <tr>
-                                                <td>
-                                                    <span class="product-name">
-                                                        <a href="{{ item.product.get_absolute_url }}">{{ item.product.name }}</a>
-                                                        * {{ item.count }}</span>
+                                                <td>{{ item.product.name }}<span
+                                                        class="product-qty">{{ item.count }}</span>
                                                 </td>
                                                 <td>{% if item.product.discounted_price %}
                                                     {{ item.product.discounted_price }}{% else %}
@@ -132,19 +130,17 @@
                                 </div>
                                 <div class="payment_option">
                                     <div class="custome-radio">
-                                        <input class="form-check-input" required="" type="radio" name="payment_option"
-                                               id="send_method1" value="0" checked="">
-                                        <label class="form-check-label" for="send_method1">پست پیشتاز</label>
-                                        <p data-method="0" class="payment-text">زمان ارساله مرسوله درون شهری 2 الی 24
-                                            ساعت و در شهرستان ها 24 الی 48 ساعت میباشد.</p>
-                                    </div>
-                                    <div class="custome-radio">
-                                        <input class="form-check-input" type="radio" name="payment_option"
-                                               id="send_method2" value="1">
-                                        <label class="form-check-label" for="send_method2">پست سفارشی</label>
-                                        <p data-method="1" class="payment-text">زمان ارسال مرسوله درون شهری 24 الی 48
-                                            ساعت و شهرستان ها 48 الی 72 ساعت میباشد.</p>
-                                    </div>
+                                    <input class="form-check-input" required="" type="radio" name="payment_option"
+                                           id="send_method1" value="0" checked="">
+                                    <label class="form-check-label" for="send_method1">پست پیشتاز</label>
+                                    <p data-method="0" class="payment-text">زمان ارساله مرسوله درون شهری 2 الی 24 ساعت و در شهرستان ها 24 الی 48 ساعت میباشد.</p>
+                                </div>
+                                <div class="custome-radio">
+                                    <input class="form-check-input" type="radio" name="payment_option"
+                                           id="send_method2" value="1">
+                                    <label class="form-check-label" for="send_method2">پست سفارشی</label>
+                                    <p data-method="1" class="payment-text">زمان ارسال مرسوله درون شهری 24 الی 48 ساعت و شهرستان ها 48 الی 72 ساعت میباشد.</p>
+                                </div>
                                 </div>
                             </div>
                             <a href="#" class="btn btn-fill-out btn-block">پرداخت</a>
@@ -152,17 +148,15 @@
                     </div>
                 </div>
             {% else %}
-                {# ------If User Is Not Authenticated------ #}
                 <div class="row">
                     <div class="col-12">
                         <div class="alert alert-warning">
-                            شما برای بررسی سبد خرید و پرداخت آن باید وارد حساب کاربری خود شوید از بخش منو بالا یا گزینه
-                            زیر میتوانید وارد حساب خود شوید
+                             شما برای بررسی سبد خرید و پرداخت آن باید وارد حساب کاربری خود شوید از بخش منو بالا یا گزینه زیر میتوانید وارد حساب خود شوید
                         </div>
                     </div>
                     <div class="col-lg-12">
                         <div class="toggle_info">
-                            <span><i class="fas fa-user"></i>مشتری برگشتی؟ <a href="{% url 'Ak_User_Account:Login' %}">برای ورود اینجا کلیک کنید</a></span>
+                        <span><i class="fas fa-user"></i>مشتری برگشتی؟ <a href="{% url 'Ak_User_Account:Login' %}">برای ورود اینجا کلیک کنید</a></span>
                         </div>
                     </div>
                 </div>
