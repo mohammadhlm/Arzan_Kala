@@ -204,8 +204,6 @@ def checkout(request):
                                                                                                          key):
                         setattr(request.user, key, value)
                         request.user.save()
-
-
                 except:
                     Completion_User__Information.add_error(key, "مقدار وارد شده صحیح نمیباشد")
 
