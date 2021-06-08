@@ -169,7 +169,7 @@ class Post_Products(models.Model):
     brand = models.ForeignKey(Brand_Model, on_delete=models.SET_NULL, null=True)
     category = models.ManyToManyField(Category_Product, verbose_name="انتخاب دسته بندی محصول",
                                       help_text="لطفا حداقل 5 دسته بندی برای محصول خود انتخاب کنید")
-    discounted_price = models.FloatField(verbose_name="قیمت با تخفیف محصول", blank=True, default=None)
+    discounted_price = models.FloatField(verbose_name="قیمت با تخفیف محصول", blank=True, null=True)
     discount_percent = models.IntegerField(verbose_name="درصد تخفیف", blank=True, null=True)
     final_price = models.FloatField(verbose_name="قیمت نهایی محصول")
     publication_date = models.DateTimeField(verbose_name="تاریخ انتشار", default=timezone.now)

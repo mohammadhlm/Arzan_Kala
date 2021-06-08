@@ -1,6 +1,7 @@
 from django import forms
 from Apps.Usrs_Apps__Ak.Ak_User_Account.models import Contact
 from Apps.Product_Apps__Ak.models import Comment, Rating
+import re
 
 
 class Contact_Form(forms.ModelForm):
@@ -118,6 +119,16 @@ class Completion_User_Information(forms.Form):
     select_city = forms.CharField(widget=forms.Select(attrs={
         "class": "form-control js-data-city-to-ajax"
     }))
+    select_post_method = forms.ChoiceField(choices=[
+        (0, "پیشتاز"),
+        (1, "سفارشی"),
+    ],
+        widget=forms.RadioSelect(
+            attrs={
+                "class": "d-none"
+            },
+        ),
+    )
 
     def clean_phone_number(self):
         if re.search('(^0?[\d]{10}$)', str(self.cleaned_data.get("phone_number")).strip()) is None:

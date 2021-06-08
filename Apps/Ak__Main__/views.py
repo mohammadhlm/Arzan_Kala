@@ -174,16 +174,18 @@ def rating_for_product(request, slug):
 
 
 from .forms import Completion_User_Information
+from Apps.Product_Apps__Ak.Extension import Calculate__Postage
 
 
 def checkout(request):
+    # print(request.POST)
     context = {}
     if request.user.is_authenticated:
         initial_form_value = {}
         for form_field in Completion_User_Information.__dict__.get("declared_fields"):
             if form_field != "first_name" and form_field != "last_name" and form_field != "select_city":
                 if hasattr(request.user.profile, form_field) and getattr(request.user.profile,
-                                                                                     form_field) != "":
+                                                                         form_field) != "":
                     initial_form_value[form_field] = getattr(request.user.profile, form_field)
             elif form_field != "select_city":
                 if hasattr(request.user, form_field) and getattr(request.user, form_field) != "":
@@ -192,8 +194,6 @@ def checkout(request):
         Completion_User__Information = Completion_User_Information(request.POST or None, initial=initial_form_value)
         context["Completion_User__Information"] = Completion_User__Information
         if Completion_User__Information.is_valid():
-            # Calculate Postage
-
             for key, value in Completion_User__Information.cleaned_data.items():
                 try:
                     if key != "first_name" and key != "last_name" and key != "select_city" and hasattr(
@@ -204,8 +204,25 @@ def checkout(request):
                                                                                                          key):
                         setattr(request.user, key, value)
                         request.user.save()
+
+                    elif key == "select_post_method":
+                        Cart_Qs = request.user.cart_set.filter(active=True)
+                        if Cart_Qs:
+                            Calc_Postage = Cart_Qs.first().Calculate_Postage(
+                                from_city="3208",
+                                to_city=Completion_User__Information.cleaned_data.get("select_city"),
+                                post_method=Completion_User__Information.cleaned_data.get("select_post_method"),
+                            )
+                            # print(Calc_Postage)
                 except:
                     Completion_User__Information.add_error(key, "مقدار وارد شده صحیح نمیباشد")
+                    return JsonResponse(Completion_User__Information.errors, safe=False)
+            return JsonResponse({
+                "status_code": 200,
+                "Calc_Postage": Calc_Postage,
+            })
+        elif Completion_User__Information.errors:
+            return JsonResponse(Completion_User__Information.errors, safe=False)
 
     return render(request, "checkout.html", context)
 

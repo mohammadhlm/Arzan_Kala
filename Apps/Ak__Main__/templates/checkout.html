@@ -55,7 +55,8 @@
                         <div class="heading_s1">
                             <h4>جزئیات صورتحساب</h4>
                         </div>
-                        <form method="post">
+                        <form method="post" id="Completion_User__Information">
+                            {% csrf_token %}
                             <div class="form-group">
                                 {{ Completion_User__Information.first_name }}
                             </div>
@@ -119,7 +120,7 @@
                                     </tr>
                                     <tr>
                                         <th>جمع</th>
-                                        <td class="product-subtotal">349000 تومان</td>
+                                        <td class="product-subtotal" id="total_pr_price"> تومان</td>
                                     </tr>
                                     </tfoot>
                                 </table>
@@ -131,9 +132,10 @@
                                 <div class="payment_option">
                                     <div class="custome-radio">
                                     <input class="form-check-input" required="" type="radio" name="payment_option"
-                                           id="send_method1" value="0" checked="">
+                                           id="send_method1" value="0">
                                     <label class="form-check-label" for="send_method1">پست پیشتاز</label>
                                     <p data-method="0" class="payment-text">زمان ارساله مرسوله درون شهری 2 الی 24 ساعت و در شهرستان ها 24 الی 48 ساعت میباشد.</p>
+                                        {{ Completion_User__Information.select_post_method }}
                                 </div>
                                 <div class="custome-radio">
                                     <input class="form-check-input" type="radio" name="payment_option"
@@ -221,4 +223,6 @@
             }
         });
     </script>
+    {# Checkout Script #}
+    <script src="{% static 'site_assets/js/ajax/checkout.js' %}"></script>
 {% endblock %}
