@@ -23,10 +23,8 @@ def replace_dot_price(price):
 
 
 def Calc_Price(Product_Cost, Postage_Cost):
-    Total = Product_Cost + Postage_Cost
-    if "." in str(Total):
-        Str_Total = round(Total)
-        Total = Str_Total
+    Total = Product_Cost if ".0" not in str(Product_Cost) else int(
+        str(Product_Cost)[0:str(Product_Cost).find(".")]) + Postage_Cost
     return Total
 
 
@@ -45,7 +43,7 @@ def Calculate__Postage(from_city, to_city, price, weight, post_method):
     new_result_list = list(item for item in result_list if item != "\n")
     if int(post_method) == 1 and re.search("([\d]+,[\d]+)", new_result_list[1].text).group():
         Str_Postal_Cost = str(new_result_list[1].text).replace(",", ".")
-        Postal_Cost = float(Str_Postal_Cost)
+        Postal_Cost = int(str(round(float(Str_Postal_Cost))) + "00")
         Total_Cost = Calc_Price(Product_Cost=price, Postage_Cost=Postal_Cost)
         context = {
             "Total_Cost": Total_Cost,
@@ -55,7 +53,7 @@ def Calculate__Postage(from_city, to_city, price, weight, post_method):
         return context
     elif int(post_method) == 0 and re.search("([\d]+,[\d]+)", new_result_list[3].text).group():
         Str_Postal_Cost = str(new_result_list[3].text).replace(",", ".")
-        Postal_Cost = float(Str_Postal_Cost)
+        Postal_Cost = int(str(round(float(Str_Postal_Cost))) + "00")
         Total_Cost = Calc_Price(Product_Cost=price, Postage_Cost=Postal_Cost)
         context = {
             "Total_Cost": Total_Cost,

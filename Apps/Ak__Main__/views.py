@@ -200,8 +200,7 @@ def checkout(request):
                             request.user.profile, key):
                         setattr(request.user.profile, key, value)
                         request.user.profile.save()
-                    elif key == "first_name" and key == "last_name" and key != "select_city" and hasattr(request.user,
-                                                                                                         key):
+                    elif key == "first_name" or key == "last_name" and key != "select_city" and hasattr(request.user,key):
                         setattr(request.user, key, value)
                         request.user.save()
 
