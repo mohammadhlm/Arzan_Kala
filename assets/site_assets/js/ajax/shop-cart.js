@@ -17,6 +17,11 @@ $("#cart-item-list_drop__down").on("click", "a.item_remove", function () {
     delete_or_add_product_ajax($(this).find("i").attr("id").split("_")[1])
 })
 
+//Add Cart Item In List Product Detail
+$("#btn-addtocart_Product_Detail").on("click", function () {
+    delete_or_add_product_ajax($(this).find("i").attr("id").split("_")[1])
+})
+
 //Delete Or Add Product To Cart
 function delete_or_add_product_ajax(product_id) {
     let form_data = new FormData()
@@ -48,6 +53,11 @@ function delete_or_add_product_ajax(product_id) {
 
                 $("#product_total_price").html(Response.total_product_price)
                 $('.amount').html(Response.total_product_price)
+                toastr.success(Response.msg, {
+                    tapToDismiss: false,
+                    positionClass: "toast-top-center",
+                    progressBar: true,
+                })
             } else if (Response.status === 700) {
                 $('li#item_' + Response.delete_product_id).remove()
                 let isnum = /^\d+$/.test($('#cart-item-count').html());
@@ -57,7 +67,18 @@ function delete_or_add_product_ajax(product_id) {
                     $('#cart-item-count').html(product__counter);
                     $("#product_total_price").html(Response.total_product_price)
                     $('.amount').html(Response.total_product_price)
+                    toastr.warning(Response.msg, {
+                        tapToDismiss: false,
+                        positionClass: "toast-top-center",
+                        progressBar: true,
+                    })
                 }
+            }else if(Response.status === 900){
+                 toastr.warning(Response.msg, {
+                        tapToDismiss: false,
+                        positionClass: "toast-top-center",
+                        progressBar: true,
+                    })
             }
         }
     })

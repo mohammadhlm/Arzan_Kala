@@ -48,7 +48,8 @@ def Calculate__Postage(from_city, to_city, price, weight, post_method):
         context = {
             "Total_Cost": Total_Cost,
             "Total_Cost_Show": replace_dot_price(Total_Cost),
-            "Postal_Cost": Postal_Cost
+            "Postal_Cost": Postal_Cost,
+            "to_city_code": to_city,
         }
         return context
     elif int(post_method) == 0 and re.search("([\d]+,[\d]+)", new_result_list[3].text).group():
@@ -58,6 +59,7 @@ def Calculate__Postage(from_city, to_city, price, weight, post_method):
         context = {
             "Total_Cost": Total_Cost,
             "Total_Cost_Show": replace_dot_price(Total_Cost),
-            "Postal_Cost": Postal_Cost
+            "Postal_Cost": Postal_Cost,
+            "to_city_code": to_city,
         }
         return context

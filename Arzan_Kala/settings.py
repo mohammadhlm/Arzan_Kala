@@ -15,6 +15,7 @@ from pathlib import Path
 from django.urls import reverse_lazy
 # Protected Secret Key
 from dotenv import load_dotenv
+
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -37,7 +38,7 @@ ALLOWED_HOSTS = []
 # DEBUG = False
 # ALLOWED_HOSTS = ['127.0.0.1']
 # ---------------------------------------
-
+LOGIN_URL = reverse_lazy("Ak_User_Account:Login")
 # Application definition
 
 INSTALLED_APPS = [
@@ -48,6 +49,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # -----Install Apps Ak-----#
+    # ----GateWay App-----#
+    'Apps.GateWay__Ak',
     # ----Home App-----#
     'Apps.Ak__Main__',
     # -----User App----#
@@ -128,6 +131,10 @@ DATABASES = {
         'PORT': '5432',
     }
 }
+
+# GateWay
+# gate_way_api_key = str(os.getenv('api_key'))
+gate_way_api_key = "test"
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators

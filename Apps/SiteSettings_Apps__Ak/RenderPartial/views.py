@@ -130,39 +130,58 @@ def remove_product_from_cart(request):
 
             # "This section is for the logged in user whose selected product is not in the cart and a new item is added to the cart"
             else:
-                new_cart_item = Cart_Item.objects.create(cart_id=Cart_qs.first().id,
-                                                         product_id=Product__Add_To_Cart.cleaned_data.get("product_id"),
-                                                         count=1)
-                return JsonResponse({
-                    "status_code": 200,
-                    "status": 800,
-                    "product_id": new_cart_item.product.id,
-                    "item_product_photo_url": new_cart_item.product.photo.url,
-                    "product_name": new_cart_item.product.name,
-                    'item_count': new_cart_item.count,
-                    "item_total": new_cart_item.total,
-                    "get_absolute_url": new_cart_item.product.get_absolute_url,
-                    'total_product_price': new_cart_item.cart.total_product_price,
-                    "msg": "محصول با موفقیت به سبد خرید شما افزوده شد"
-                })
+                if Post_Products.objects.filter(id=Product__Add_To_Cart.cleaned_data.get("product_id"),
+                                                status="PB").first().inventory > 0:
+                    new_cart_item = Cart_Item.objects.create(cart_id=Cart_qs.first().id,
+                                                             product_id=Product__Add_To_Cart.cleaned_data.get(
+                                                                 "product_id"),
+                                                             count=1)
+                    return JsonResponse({
+                        "status_code": 200,
+                        "status": 800,
+                        "product_id": new_cart_item.product.id,
+                        "item_product_photo_url": new_cart_item.product.photo.url,
+                        "product_name": new_cart_item.product.name,
+                        'item_count': new_cart_item.count,
+                        "item_total": new_cart_item.total,
+                        "get_absolute_url": new_cart_item.product.get_absolute_url,
+                        'total_product_price': new_cart_item.cart.total_product_price,
+                        "msg": "محصول با موفقیت به سبد خرید شما افزوده شد"
+                    })
+                else:
+                    return JsonResponse({
+                        "status_code": 200,
+                        "status": 900,
+                        "msg": "محصول در فروشگاه موجود نیست..."
+                    })
 
         # "This section is for the logged in user who does not have an active purchase card and the purchase card is made for it and the product is added to the item of the purchase card.
         else:
-            Cart_q = Cart.objects.create(user_id=request.user.id, active=True)
-            Cart_Item.objects.create(cart_id=Cart_q.id, product_id=Product__Add_To_Cart.cleaned_data.get("product_id"),
-                                     count=1)
-            return JsonResponse({
-                "status_code": 200,
-                "status": 800,
-                "product_id": Cart_Item.product.id,
-                "item_product_photo_url": Cart_Item.product.photo.url,
-                "product_name": Cart_Item.product.name,
-                'item_count': Cart_Item.count,
-                "item_total": Cart_Item.total,
-                "get_absolute_url": Cart_Item.product.get_absolute_url,
-                'total_product_price': Cart_Item.cart.total_product_price,
-                "msg": "محصول با موفقیت به لیست سبد خرید شما افزوده شد"
-            })
+            if Post_Products.objects.filter(id=Product__Add_To_Cart.cleaned_data.get("product_id"),
+                                            status="PB").first().inventory > 0:
+                Cart_q = Cart.objects.create(user_id=request.user.id, active=True)
+                Cart_Item.objects.create(cart_id=Cart_q.id,
+                                         product_id=Product__Add_To_Cart.cleaned_data.get("product_id"),
+                                         count=1)
+                return JsonResponse({
+                    "status_code": 200,
+                    "status": 800,
+                    "product_id": Cart_Item.product.id,
+                    "item_product_photo_url": Cart_Item.product.photo.url,
+                    "product_name": Cart_Item.product.name,
+                    'item_count': Cart_Item.count,
+                    "item_total": Cart_Item.total,
+                    "get_absolute_url": Cart_Item.product.get_absolute_url,
+                    'total_product_price': Cart_Item.cart.total_product_price,
+                    "msg": "محصول با موفقیت به لیست سبد خرید شما افزوده شد"
+                })
+            else:
+                return JsonResponse({
+                    "status_code": 200,
+                    "status": 900,
+                    "msg": "محصول در فروشگاه موجود نیست..."
+                })
+
 
     # "This section is for a user who is not logged in and the product cookie is available in the user's browser"
     elif Product__Add_To_Cart.is_valid() and not request.user.is_authenticated and request.COOKIES.get(
@@ -195,33 +214,42 @@ def remove_product_from_cart(request):
 
         # "This section is for a user who is not logged in and the product is not in the cookie and the product is added to the user cart"
         else:
-            txt.append(str(Product__Add_To_Cart.cleaned_data.get("product_id")))
-            total_product_price = 0
-            for pr_id in txt:
-                Pr_qs = Post_Products.objects.filter(id=int(pr_id))
-                if Pr_qs.exists():
-                    total_product_price += Pr_qs.first().discounted_price if Pr_qs.first().discounted_price else Pr_qs.first().final_price
-            txt = '-'.join(str(product_id) for product_id in txt)
-            response = JsonResponse({
-                'status_code': 200,
-                'status': 800,
-                "product_id": product_qs.id,
-                "item_product_photo_url": product_qs.photo.url,
-                "product_name": product_qs.name,
-                'item_count': 1,
-                "item_total": product_qs.discounted_price if product_qs.discounted_price else product_qs.final_price,
-                "get_absolute_url": product_qs.get_absolute_url,
-                'total_product_price': total_product_price,
-                "msg": "محصول با موفقیت به لیست سبد خرید شما افزوده شد"
-            })
-            response.set_cookie('products', txt, max_age=None)
-            return response
+            if Post_Products.objects.filter(id=Product__Add_To_Cart.cleaned_data.get("product_id"),
+                                            status="PB").first().inventory > 0:
+                txt.append(str(Product__Add_To_Cart.cleaned_data.get("product_id")))
+                total_product_price = 0
+                for pr_id in txt:
+                    Pr_qs = Post_Products.objects.filter(id=int(pr_id))
+                    if Pr_qs.exists():
+                        total_product_price += Pr_qs.first().discounted_price if Pr_qs.first().discounted_price else Pr_qs.first().final_price
+                txt = '-'.join(str(product_id) for product_id in txt)
+                response = JsonResponse({
+                    'status_code': 200,
+                    'status': 800,
+                    "product_id": product_qs.id,
+                    "item_product_photo_url": product_qs.photo.url,
+                    "product_name": product_qs.name,
+                    'item_count': 1,
+                    "item_total": product_qs.discounted_price if product_qs.discounted_price else product_qs.final_price,
+                    "get_absolute_url": product_qs.get_absolute_url,
+                    'total_product_price': total_product_price,
+                    "msg": "محصول با موفقیت به لیست سبد خرید شما افزوده شد"
+                })
+                response.set_cookie('products', txt, max_age=None)
+                return response
+            else:
+                return JsonResponse({
+                    "status_code": 200,
+                    "status": 900,
+                    "msg": "محصول در فروشگاه موجود نیست..."
+                })
 
     # "This part is related to the user who is not logged in and the product cookie is not found in its browser or the product is not available in it, in this part the product cookie is made for it again and the product is added to the user's shopping cart list."
     elif Product__Add_To_Cart.is_valid() and not request.user.is_authenticated and request.COOKIES.get(
             "products") is None or "":
         product_qs = Post_Products.objects.filter(id=Product__Add_To_Cart.cleaned_data.get("product_id"))
-        if product_qs.exists():
+        if product_qs.exists() and Post_Products.objects.filter(id=Product__Add_To_Cart.cleaned_data.get("product_id"),
+                                                                status="PB").first().inventory > 0:
             product_qs = product_qs.first()
             response = JsonResponse({
                 'status_code': 200,
@@ -237,6 +265,12 @@ def remove_product_from_cart(request):
             })
             response.set_cookie('products', str(Product__Add_To_Cart.cleaned_data.get("product_id")), max_age=None)
             return response
+        else:
+            return JsonResponse({
+                "status_code": 200,
+                "status": 900,
+                "msg": "محصول در فروشگاه موجود نیست..."
+            })
     context = {
         'Product__Add_To_Cart': Product__Add_To_Cart
     }

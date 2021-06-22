@@ -20,6 +20,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('ckeditor/', include('ckeditor_uploader.urls')),
@@ -34,6 +35,8 @@ urlpatterns = [
     path('', include('Apps.Product_Apps__Ak.urls', namespace="Ak_Product_Apps")),
     # Django Social Auth
     path('', include('social_django.urls', namespace='social')),
+    # GetWay Urls
+    # path('', include('pay_ir.api.urls'))
 
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

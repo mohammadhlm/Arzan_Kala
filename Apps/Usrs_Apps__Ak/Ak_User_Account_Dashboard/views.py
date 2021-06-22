@@ -62,6 +62,7 @@ def change_user_information(request):
         "Change__User__Information": Change__User__Information
     })
 
+
 @login_required()
 def logout_user(request):
     if request.user.is_authenticated:

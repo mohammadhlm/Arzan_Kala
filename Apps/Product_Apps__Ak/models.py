@@ -302,8 +302,10 @@ class Cart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_time = models.DateTimeField(auto_now_add=True)
     pay_time = models.DateTimeField(blank=True, null=True)
-    active = models.BooleanField(default=False)
+    active = models.BooleanField(default=True)
     Postage = models.FloatField(null=True, blank=True)
+    to_city_code = models.CharField(null=True, blank=True, max_length=10)
+    posting_method = models.CharField(null=True, blank=True, max_length=10)
 
     def __str__(self):
         return self.user.get_full_name()

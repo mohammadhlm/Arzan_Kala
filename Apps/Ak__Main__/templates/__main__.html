@@ -12,6 +12,7 @@
         {% block title_home_page %}{% endblock %}
         {% block title_checkout %}{% endblock %}
         {% block title_about_us %}{% endblock %}
+        {% block title_order_completed %}{% endblock %}
 
     </title>
     {% include 'All_Template_Main/Header_Main/CSS_Refrence_Header_Main__.html' %}
@@ -61,6 +62,7 @@
 {% block header_shop %}{% endblock %}
 {% block header_product_detail %}{% endblock %}
 {% block header_about_us %}{% endblock %}
+{% block header_order_completed %}{% endblock %}
 <!-- END HEADER -->
 
 {#--BreadCrumb--#}
@@ -69,7 +71,7 @@
 {% block breadcrumb_product_detail %}{% endblock %}
 {% block breadcrumb_checkout %}{% endblock %}
 {% block breadcrumb_about_us %}{% endblock %}
-
+{% block breadcrumb_order_completed %}{% endblock %}
 
 <!-- START SECTION BANNER -->
 {% block banner_top_home_page %}{% endblock %}
@@ -83,6 +85,7 @@
     {% block content_shop %}{% endblock %}
     {% block content_product_detail %}{% endblock %}
     {% block content_about_us %}{% endblock %}
+    {% block content_order_completed %}{% endblock %}
 </div>
 <!-- END MAIN CONTENT -->
 
@@ -98,7 +101,10 @@
 {% block script_shop %}{% endblock %}
 {% block script_product_detail %}{% endblock %}
 {% block script_about_us %}{% endblock %}
+{% block script_order_completed %}{% endblock %}
 <script src="{% static 'site_assets/js/ajax/shop-cart.js' %}"></script>
+{# Toaster Component Js #}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 </body>
 
 </html>

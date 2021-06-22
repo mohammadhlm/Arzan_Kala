@@ -1,10 +1,18 @@
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
+from django.urls import reverse
+from django.contrib.auth.decorators import login_required
+from Apps.GateWay__Ak.models import Trans_Verify
+from Apps.GateWay__Ak.Py_Ir_GateWay.Client import Py_Ir
 # Create your views here.
 from Apps.Product_Apps__Ak.models import Comment, Rating
 from .forms import Comment_Form, Rating_Form
-from Apps.Product_Apps__Ak.models import Home_Slider
+from Apps.Product_Apps__Ak.models import Home_Slider, Cart, Cart_Item
+
+# GetWay Api
+from Arzan_Kala.settings import gate_way_api_key
+from django.utils import timezone
 
 
 def grouped_object(list_obj):
@@ -12,7 +20,7 @@ def grouped_object(list_obj):
     range_number = int(len(list_obj) / 3) + 1 if type(len(list_obj) / 3) == float else int(len(list_obj) / 3)
     for _ in range(range_number):
         list_grouped.append(
-            [list_obj.pop(len(list_obj) - 1) for i in range(3 if len(list_obj) >= 3 else len(list_obj))])
+            [list_obj.pop(len(list_obj) - 1) for _ in range(3 if len(list_obj) >= 3 else len(list_obj))])
     return list_grouped
 
 
@@ -178,9 +186,9 @@ from Apps.Product_Apps__Ak.Extension import Calculate__Postage
 
 
 def checkout(request):
-    # print(request.POST)
     context = {}
-    if request.user.is_authenticated:
+    if request.user.is_authenticated and request.COOKIES.get(
+            "products") is None:
         initial_form_value = {}
         for form_field in Completion_User_Information.__dict__.get("declared_fields"):
             if form_field != "first_name" and form_field != "last_name" and form_field != "select_city":
@@ -200,7 +208,8 @@ def checkout(request):
                             request.user.profile, key):
                         setattr(request.user.profile, key, value)
                         request.user.profile.save()
-                    elif key == "first_name" or key == "last_name" and key != "select_city" and hasattr(request.user,key):
+                    elif key == "first_name" or key == "last_name" and key != "select_city" and hasattr(request.user,
+                                                                                                        key):
                         setattr(request.user, key, value)
                         request.user.save()
 
@@ -212,17 +221,41 @@ def checkout(request):
                                 to_city=Completion_User__Information.cleaned_data.get("select_city"),
                                 post_method=Completion_User__Information.cleaned_data.get("select_post_method"),
                             )
-                            # print(Calc_Postage)
+                            Cart_Qs_Obj = Cart_Qs.first()
+                            Cart_Qs_Obj.to_city_code = Completion_User__Information.cleaned_data.get("select_city")
+                            Cart_Qs_Obj.posting_method = Completion_User__Information.cleaned_data.get(
+                                "select_post_method")
+                            Cart_Qs_Obj.save()
                 except:
                     Completion_User__Information.add_error(key, "مقدار وارد شده صحیح نمیباشد")
                     return JsonResponse(Completion_User__Information.errors, safe=False)
+
             return JsonResponse({
                 "status_code": 200,
                 "Calc_Postage": Calc_Postage,
             })
         elif Completion_User__Information.errors:
             return JsonResponse(Completion_User__Information.errors, safe=False)
-
+    elif request.user.is_authenticated and request.COOKIES.get(
+            "products") is not None:
+        COOKIE = request.COOKIES.get("products")
+        txt = re.search("([\d\-]+)", COOKIE).group() if re.search("([\d\-]+)",
+                                                                  COOKIE) is not None else f"{COOKIE}" if str(
+            COOKIE).isdigit() else ""
+        txt = txt.split("-") if "-" in txt else [txt] if txt.isdigit() else []
+        if len(txt) != 0:
+            Cart_Obj = Cart.objects.filter(user_id=request.user.id, active=True)
+            if Cart_Obj.exists():
+                for Product_Id in txt:
+                    Product_Obj = Post_Products.objects.filter(id=Product_Id)
+                    if Product_Obj.exists():
+                        Cart_Item.objects.create(cart=Cart_Obj.first(), product=Product_Obj.first(), count=1)
+            else:
+                Cart_Obj = Cart.objects.create(user_id=request.user.id, active=True)
+                for Product_Id in txt:
+                    Product_Obj = Post_Products.objects.filter(id=Product_Id)
+                    if Product_Obj.exists():
+                        Cart_Item.objects.create(cart=Cart_Obj.first(), product=Product_Obj.first(), count=1)
     return render(request, "checkout.html", context)
 
 
@@ -235,3 +268,50 @@ def about_us(request):
         "About_Us_Qs": About_Us_Qs
     }
     return render(request, "about-us.html", context)
+
+
+# @login_required(login_url=reverse("Ak_User_Account:Login"))
+def Send_Payment_Gateway_Request(request):
+    Cart_Qs = get_object_or_404(Cart, active=True, user=request.user)
+    if Cart_Qs:
+        Calc_Postage = Cart_Qs.Calculate_Postage(
+            from_city="3208",
+            to_city=str(Cart_Qs.to_city_code),
+            post_method=str(Cart_Qs.posting_method),
+        )
+        Cart_Qs.Postage = Calc_Postage.get("Postal_Cost")
+        Cart_Qs.save()
+        Amount = Calc_Postage.get("Total_Cost")
+        Client_Req_Obj = Py_Ir(Api_Key=gate_way_api_key)
+        Pay_Response = Client_Req_Obj.request_payment_link(amount=Amount,
+                                                           redirect_url=f"{request.META['HTTP_HOST']}/verify")
+        return redirect(Pay_Response.get("payment_url"))
+
+
+@login_required()
+def Verify_Gate_Way_Request(request, *args, **kwargs):
+    Client_Req_Obj = Py_Ir(Api_Key=gate_way_api_key)
+    Response = Client_Req_Obj.bank_transaction_verification(
+        Request_Object=request,
+        status=request.GET.get("status"),
+        token=request.GET.get("token"),
+        request_user_id=request.user.id
+    )
+
+    if Response["status"] == 1:
+        Cart_Object = Cart.objects.filter(user_id=request.user.id, active=True)
+        if Cart_Object:
+            Cart_Object = Cart_Object.first()
+            Cart_Object.active = False
+            Cart_Object.pay_time = timezone.now()
+            Cart_Object.save()
+
+            for Cart_Item_Obj in Cart_Object.cart_item_set.all():
+                Product = Post_Products.objects.filter(id=Cart_Item_Obj.product_id).first()
+                Product.inventory -= 1
+                Product.sold += 1
+                Product.save()
+    context = {
+        "Response": Response,
+    }
+    return render(request, "order-completed.html", context)
