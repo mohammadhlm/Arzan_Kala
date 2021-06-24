@@ -42,6 +42,9 @@ from .views import (
     LoginAdmin,
     LogOut_Admin_View,
     IndexView,
+
+    # Wallet
+    WALLET_VIEW,
 )
 from django.contrib.auth import views as auth_views
 
@@ -81,6 +84,9 @@ urlpatterns = [
     path('email-management/', email_management, name="email_management_view"),
     path('send-mail/', creating_sending_mail, name="creating_sending_mail_view"),
     path("removed-mail/", remove_mail, name="removed_mail_view"),
+
+    # Wallet View
+    path("wallet/", WALLET_VIEW, name="wallet_view"),
 
     path('', IndexView, name='dashboard'),
     path('login/', LoginAdmin, name='AdminAuth'),

@@ -136,6 +136,9 @@ DATABASES = {
 # gate_way_api_key = str(os.getenv('api_key'))
 gate_way_api_key = "test"
 
+LOGIN_PAY_PHONE_NUMBER = "09010976959"
+LOGIN_PAY_PASSWORD = str(os.getenv('LOGIN_PAY_PASSWORD'))
+
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 

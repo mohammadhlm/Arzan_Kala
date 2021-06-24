@@ -93,98 +93,8 @@
                         </div>
                     </div>
                     {# Monitor Systerm Performance #}
-                    <div class="row">
-                        <div class="col-lg-3 col-sm-6 col-12">
-                            <div class="card">
-          <div class="card-header d-flex justify-content-between pb-0">
-              <h4 class="card-title">پشتیبانی ردیاب</h4>
-              <div class="dropdown chart-dropdown">
-                  <button class="btn btn-sm border-0 dropdown-toggle p-50" type="button" id="dropdownItem4"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 7 روز اخیر</button>
-                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownItem4">
-                    <a class="dropdown-item" href="#">28 روز اخیر</a>
-                    <a class="dropdown-item" href="#">ماه اخیر</a>
-                    <a class="dropdown-item" href="#">سال اخیر</a>
-                  </div>
-              </div>
-          </div>
-          <div class="card-content">
-              <div class="card-body pt-0">
-                 <div class="row">
-                      <div class="col-sm-2 col-12 d-flex flex-column flex-wrap text-center">
-                          <h1 class="font-large-2 text-bold-700 mt-2 mb-0">163</h1>
-                          <small>تیکت ها</small>
-                      </div>
-                      <div class="col-sm-10 col-12 d-flex justify-content-center">
-                          <div id="support-tracker-chart"></div>
-                      </div>
-                  </div>
-                  <div class="chart-info d-flex justify-content-between">
-                      <div class="text-center">
-                          <p class="mb-50">تیکت های جدید</p>
-                          <span class="font-large-1">29</span>
-                      </div>
-                      <div class="text-center">
-                          <p class="mb-50">تیکت های  باز</p>
-                          <span class="font-large-1">63</span>
-                      </div>
-                      <div class="text-center">
-                          <p class="mb-50">زمان پاسخ</p>
-                          <span class="font-large-1">1 روز</span>
-                      </div>
-                  </div>
-              </div>
-          </div>
-        </div>
-                        </div>
+                    <div class="row" id="wallet_card_section">
 
-                        <div class="col-lg-3 col-sm-6 col-12">
-                            <div class="card">
-                                <div class="card-header d-flex align-items-start pb-0">
-                                    <div>
-                                        <h2 class="text-bold-700 mb-0">{{ total_sale|default_if_none:0 }}</h2>
-                                        <p>درآمد حاصل شده</p>
-                                    </div>
-                                    <div class="avatar bg-rgba-primary p-50 m-0">
-                                        <div class="avatar-content">
-                                            <i class="feather icon-credit-card text-success font-medium-5"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-sm-6 col-12">
-                            <div class="card">
-                                <div class="card-header d-flex align-items-start pb-0">
-                                    <div>
-                                        <h2 class="text-bold-700 mb-0">{{ active_cart_count }}</h2>
-                                        <p>سبد خرید پرداخت نشده</p>
-                                    </div>
-                                    <div class="avatar bg-rgba-primary p-50 m-0">
-                                        <div class="avatar-content">
-                                            <i class="feather icon-shopping-cart text-danger font-medium-5"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-sm-6 col-12">
-                            <div class="card">
-                                <div class="card-header d-flex align-items-start pb-0">
-                                    <div>
-                                        <h2 class="text-bold-700 mb-0">{{ total_product_count|default_if_none:"0" }}</h2>
-                                        <p>محصول فروخته شده</p>
-                                    </div>
-                                    <div class="avatar bg-rgba-primary p-50 m-0">
-                                        <div class="avatar-content">
-                                            <i class="feather icon-package text-warning font-medium-5"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
 
@@ -245,4 +155,8 @@
 
 {% block page_js_dashboard_home %}
     <script src="{% static 'AdminPanel/app-assets/js/scripts/pages/dashboard-ecommerce.min.js' %}"></script>
+{% endblock %}
+
+{% block ajax_dashboard_home %}
+    <script src="{% static 'AdminPanel/app-assets/js/ajax/dashboard-index/dashboard.js' %}"></script>
 {% endblock %}

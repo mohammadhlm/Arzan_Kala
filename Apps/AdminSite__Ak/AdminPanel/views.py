@@ -47,10 +47,23 @@ def IndexView(request, *args, **kwargs):
         "total_product_count": total_product_count["cart_item__count__count"] if total_product_count.get(
             "cart_item__count__count") is not None else None,
         "active_cart_count": active_cart_count,
-
-        "last_sales": last_sales
+        "last_sales": last_sales,
     }
     return render(request, template_name='AdminPanel/dashboard.html', context=context)
+
+
+from Apps.GateWay__Ak.Py_Ir_GateWay.Wallet import WALLET
+from Arzan_Kala.settings import LOGIN_PAY_PHONE_NUMBER, LOGIN_PAY_PASSWORD
+
+
+@user_passes_test(lambda user: user.is_superuser, login_url="AdminSite__Ak:AdminAuth")
+def WALLET_VIEW(request):
+    if not request.is_ajax():
+        return redirect('AdminSite__Ak:dashboard')
+    Wallet_Obj = WALLET(LOGIN_PAY_PHONE_NUMBER, LOGIN_PAY_PASSWORD)
+    return render(request, "AdminPanel/Wallet-Card/Card.html", {
+        "Wallet_List": Wallet_Obj.GET_WALLET_LIST(),
+    })
 
 
 @user_passes_test(lambda user: user.is_superuser, login_url="AdminSite__Ak:AdminAuth")
@@ -221,13 +234,13 @@ def save_information_edit_user(request, pk):
             user.profile.save()
             return JsonResponse({
                 'bool': True,
-                'src':user.profile.user_profile.url,
+                'src': user.profile.user_profile.url,
                 'text': 'نمایه کاربر با موفقیت حذف شد',
             })
         user__information_editing_form.save()
         return JsonResponse({
             'bool': True,
-            'src':user.profile.user_profile.url,
+            'src': user.profile.user_profile.url,
             'text': 'تغییرات با موفقیت اعمال شد',
         })
     context = {"user__information_editing_form": user__information_editing_form}
@@ -612,7 +625,6 @@ def create_slider_view(request):
 @user_passes_test(lambda user: user.is_superuser, login_url="AdminSite__Ak:AdminAuth")
 def view_settings(request):
     return render(request, 'AdminPanel/Settings/view-settings.html', {
-
     })
 
 
@@ -628,8 +640,8 @@ def customizer_theme(request):
     if customizer__theme__form.is_valid():
         customizer__theme__form.save()
         return JsonResponse({
-            "status":200,
-            "messages":"تغییرات حالت ظاهری پنل ادمین با موفقیت ذخیره شد..."
+            "status": 200,
+            "messages": "تغییرات حالت ظاهری پنل ادمین با موفقیت ذخیره شد..."
         })
     return render(request, "AdminPanel/__Main__/Customizer__Main__.html",
                   {'customizer__theme__form': customizer__theme__form, 'customize_obj': customize_obj})
