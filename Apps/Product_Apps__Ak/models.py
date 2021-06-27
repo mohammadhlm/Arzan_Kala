@@ -293,6 +293,7 @@ class Comment(models.Model):
     body = models.TextField(max_length=200)
     created_on = models.DateTimeField(auto_now_add=True)
     approved = models.BooleanField(default=False, blank=True)
+    Illegal = models.BooleanField(default=False,blank=True)
 
     def __str__(self):
         return self.product.name + f"({self.user.get_full_name()})"

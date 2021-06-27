@@ -1,4 +1,5 @@
 from django.urls import path, include, reverse_lazy
+from django.contrib.auth import views as auth_views
 from .views import (
     # -- User Apps
     list_user_view,
@@ -45,8 +46,10 @@ from .views import (
 
     # Wallet
     WALLET_VIEW,
+
+    # Comment List
+    Comment_List,
 )
-from django.contrib.auth import views as auth_views
 
 app_name = 'AdminSite__Ak'
 urlpatterns = [
@@ -87,6 +90,9 @@ urlpatterns = [
 
     # Wallet View
     path("wallet/", WALLET_VIEW, name="wallet_view"),
+
+    # Comment List
+    path('comment-list/', Comment_List, name='Comment_List'),
 
     path('', IndexView, name='dashboard'),
     path('login/', LoginAdmin, name='AdminAuth'),

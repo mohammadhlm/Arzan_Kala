@@ -13,7 +13,7 @@
 
     {#<!--Start Title-->#}
     <title>
-    پنل مدیریت |
+        پنل مدیریت |
         {% block title_dashboard_main %}{% endblock %}
         {% block title_product_list %}{% endblock %}
         {% block title_edit_user %}{% endblock %}
@@ -36,7 +36,7 @@
     {% block vendor_css_dashboard_home %}{% endblock %}
     <!--Email Management-->
     {% block vendor_css_email_management %}{% endblock %}
-    {% block vendor_css_creating_sending_mail%}{% endblock %}
+    {% block vendor_css_creating_sending_mail %}{% endblock %}
 
     <!------ BEGIN: Theme CSS------>
     {% include 'AdminPanel/__Main__/Css/begin_theme_css.html' %}
@@ -53,6 +53,8 @@
     {% block page_css_product_add %}{% endblock %}
     {% block page_css_product_list %}{% endblock %}
     {% block page_css_invoice %}{% endblock %}
+    <!--Comment List-->
+    {% block page_css_comment_list %}{% endblock %}
     <!--Email Management-->
     {% block page_css_email_management %}{% endblock %}
     <!------ BEGIN: Custom CSS------>
@@ -66,11 +68,12 @@
 
 <!-- BEGIN: Body-->
 {% if request.path == Email_Managemet_Url %}
-      <!-- BEGIN: Body-->
-  <body class="vertical-layout vertical-menu-modern content-left-sidebar email-application navbar-floating footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="content-left-sidebar">
+    <!-- BEGIN: Body-->
+    <body class="vertical-layout vertical-menu-modern content-left-sidebar email-application navbar-floating footer-static  "
+          data-open="click" data-menu="vertical-menu-modern" data-col="content-left-sidebar">
 {% else %}
-<body class="vertical-layout vertical-menu-modern 2-columns  navbar-floating footer-static  " data-open="click"
-      data-menu="vertical-menu-modern" data-col="2-columns">
+    <body class="vertical-layout vertical-menu-modern 2-columns  navbar-floating footer-static  " data-open="click"
+          data-menu="vertical-menu-modern" data-col="2-columns">
 {% endif %}
 <!-- BEGIN: Header-->
 {% render_partial 'Apps.AdminSite__Ak.AdminPanel.views.admin_header_view' %}
@@ -94,6 +97,8 @@
 {% block invoice_content %}{% endblock %}
 {#<!--Block Settings-->#}
 {% block view_settings %}{% endblock %}
+{#<!--Block Comment List-->#}
+{% block comment_list_content %}{% endblock %}
 {#<!--Block Email Management-->#}
 {% block content_email_management %}{% endblock %}
 {% block content_creating_sending_email %}{% endblock %}
@@ -159,6 +164,8 @@
 <!--Dashboard Home-->
 {% block page_js_dashboard_home %}{% endblock %}
 {% block ajax_dashboard_home %}{% endblock %}
+<!--Comment List-->
+{% block comment_list_page_js %}{% endblock %}
 <!--Email Management-->
 {% block page_js_email_management %}{% endblock %}
 {% block page_js_creating_sending_mail %}{% endblock %}

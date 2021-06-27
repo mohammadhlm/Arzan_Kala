@@ -13,7 +13,7 @@ from django.contrib.auth.models import User
 from django.db.models import Sum, Count
 
 from Apps.SiteSettings_Apps__Ak.SiteSettings.models import BrandPhotoModel
-from Apps.Product_Apps__Ak.models import Cart, Brand_Model, Home_Slider
+from Apps.Product_Apps__Ak.models import Cart, Brand_Model, Home_Slider, Comment
 from Apps.SiteSettings_Apps__Ak.SiteSettings.models import SiteSettings
 from Apps.AdminSite__Ak.AdminPanel.models import Email_Management
 from Apps.AdminSite__Ak.AdminPanel.forms.email_management import Email_Management_Form, remove_mail_form
@@ -634,7 +634,6 @@ from .forms.customizer_theme_form import customizer_theme_form
 
 @user_passes_test(lambda user: user.is_superuser, login_url="AdminSite__Ak:AdminAuth")
 def customizer_theme(request):
-    print(request.POST)
     customize_obj = Customize_Theme.objects.first()
     customizer__theme__form = customizer_theme_form(request.POST or None, instance=customize_obj)
     if customizer__theme__form.is_valid():
@@ -645,3 +644,64 @@ def customizer_theme(request):
         })
     return render(request, "AdminPanel/__Main__/Customizer__Main__.html",
                   {'customizer__theme__form': customizer__theme__form, 'customize_obj': customize_obj})
+
+
+# ------------------------------------
+# ----------- User Comment -----------
+from .forms.Comment_List_Form import Get_Comment, Change_Comment_Mode_Form
+
+
+@user_passes_test(lambda user: user.is_superuser, login_url="AdminSite__Ak:AdminAuth")
+def Comment_List(request):
+    print(request.POST)
+    Get__Comment = Get_Comment(request.GET or None)
+    Change__Comment_Mode_Form = Change_Comment_Mode_Form(request.POST or None)
+    if Get__Comment.is_valid():
+        Cm_MODE = Get__Comment.cleaned_data.get("Select_Mode")
+        if Cm_MODE == "AL":
+            return render(request, "AdminPanel/Products/product-comment/comment-data.html", {
+                "Comment_Obj": Comment.objects.all(),
+            })
+        elif Cm_MODE == "IG":
+            return render(request, "AdminPanel/Products/product-comment/comment-data.html", {
+                "Comment_Obj": Comment.objects.filter(Illegal=True).all(),
+            })
+        elif Cm_MODE == "AC":
+            return render(request, "AdminPanel/Products/product-comment/comment-data.html", {
+                "Comment_Obj": Comment.objects.filter(approved=True).all(),
+            })
+        elif Cm_MODE == "AP":
+            return render(request, "AdminPanel/Products/product-comment/comment-data.html", {
+                "Comment_Obj": Comment.objects.filter(approved=False,Illegal=False).all(),
+            })
+
+    if Change__Comment_Mode_Form.is_valid():
+        Mode = Change__Comment_Mode_Form.cleaned_data.get("Select_Mode")
+        Comment_obj = Comment.objects.filter(id=Change__Comment_Mode_Form.cleaned_data.get("Comment_Id"))
+        if Comment_obj:
+            Comment_obj = Comment_obj.first()
+            if Mode == "IG":
+                Comment_obj.approved = False
+                Comment_obj.Illegal = True
+                Comment_obj.save()
+                return JsonResponse({
+                    "status": 200,
+                    "message": "پیام به لیست غیر مجاز ها افزوده شد جهت مشاهده صفحه را دوباره بارگذاری نمایید..."
+                })
+            if Mode == 'AC':
+                Comment_obj.approved = True
+                Comment_obj.Illegal = False
+                Comment_obj.save()
+                return JsonResponse({
+                    "status": 200,
+                    "message": "پیام به لیست تایید شده ها افزوده شد جهت مشاهده صفحه را دوباره بارگذاری نمایید..."
+                })
+            if Mode == 'AP':
+                Comment_obj.approved = False
+                Comment_obj.Illegal = False
+                Comment_obj.save()
+                return JsonResponse({
+                    "status": 200,
+                    "message": "پیام به لیست در انتظار تایید افزوده شد جهت مشاهده صفحه را دوباره بارگذاری نمایید..."
+                })
+    return render(request, template_name='AdminPanel/Products/product-comment/comment-list.html')
